@@ -8,8 +8,10 @@ public class Zeitungsverlag {
     private List<Redaktion> redaktion;
 
     public Redaktion getRedaktion(String name) {
+
     }
 
     public void addRedaktion(Redaktion redaktion) {
+
     }
 }
