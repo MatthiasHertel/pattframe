@@ -22,6 +22,10 @@ public class Configuration {
             error = e.getMessage();
             return false;
         }
+        catch (NullPointerException e) {
+            error = e.getMessage();
+            return false;
+        }
         return true;
     }
 
