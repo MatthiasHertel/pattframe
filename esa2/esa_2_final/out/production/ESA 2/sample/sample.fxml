@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <ImageView fx:id="imageViewPferd1" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@horse.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageViewPferd2" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@horse.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageViewPferd3" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@horse.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageViewPferd4" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@horse.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageViewPferd5" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@horse.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imageViewPferd6" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@horse.png" />
+         </image>
+      </ImageView>
+       <ImageView fx:id="imageViewPferd7" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@horse.png" />
+           </image>
+       </ImageView>
+       <ImageView fx:id="imageViewPferd8" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@horse.png" />
+           </image>
+       </ImageView>
+       <ImageView fx:id="imageViewPferd9" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@horse.png" />
+           </image>
+       </ImageView>
+       <ImageView fx:id="imageViewPferd10" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@horse.png" />
+           </image>
+       </ImageView>
+       <ImageView fx:id="imageViewPferd11" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="410.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@horse.png" />
+           </image>
+       </ImageView>
+       <ImageView fx:id="imageViewPferd12" fitHeight="30.0" fitWidth="30.0" layoutX="750.0" layoutY="450.0" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@horse.png" />
+           </image>
+       </ImageView>
+
+      <Button layoutX="6.0" layoutY="561.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="789.0" text="Start" />
+      <Line layoutX="760.0" layoutY="40.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="80.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="120.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="160.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="200.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="240.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="280.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="320.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="360.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="400.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="440.0" startX="-540.0" />
+      <Line layoutX="760.0" layoutY="480.0" startX="-540.0" />
+
+
+       <Label layoutX="40.0" text="Wurf" underline="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+       <Label layoutX="100.0" text="Punkte" underline="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+       
+       <Label fx:id="labelWurf1" layoutX="50.0" layoutY="32.0" text="0" />
+      <Label fx:id="labelWurf2" layoutX="50.0" layoutY="72.0" text="0" />
+      <Label fx:id="labelWurf3" layoutX="50.0" layoutY="112.0" text="0" />
+      <Label fx:id="labelWurf4" layoutX="50.0" layoutY="152.0" text="0" />
+      <Label fx:id="labelWurf5" layoutX="50.0" layoutY="192.0" text="0" />
+      <Label fx:id="labelWurf6" layoutX="50.0" layoutY="232.0" text="0" />
+
+      <Label fx:id="labelWurf7" layoutX="50.0" layoutY="272.0" text="0" />
+      <Label fx:id="labelWurf8" layoutX="50.0" layoutY="312.0" text="0" />
+      <Label fx:id="labelWurf9" layoutX="50.0" layoutY="352.0" text="0" />
+      <Label fx:id="labelWurf10" layoutX="50.0" layoutY="392.0" text="0" />
+      <Label fx:id="labelWurf11" layoutX="50.0" layoutY="432.0" text="0" />
+      <Label fx:id="labelWurf12" layoutX="50.0" layoutY="472.0" text="0" />
+
+       <Label fx:id="labelPunkte1" layoutX="110.0" layoutY="32.0" text="0" />
+       <Label fx:id="labelPunkte2" layoutX="110.0" layoutY="72.0" text="0" />
+       <Label fx:id="labelPunkte3" layoutX="110.0" layoutY="112.0" text="0" />
+       <Label fx:id="labelPunkte4" layoutX="110.0" layoutY="152.0" text="0" />
+       <Label fx:id="labelPunkte5" layoutX="110.0" layoutY="192.0" text="0" />
+       <Label fx:id="labelPunkte6" layoutX="110.0" layoutY="232.0" text="0" />
+
+       <Label fx:id="labelPunkte7" layoutX="110.0" layoutY="272.0" text="0" />
+       <Label fx:id="labelPunkte8" layoutX="110.0" layoutY="312.0" text="0" />
+       <Label fx:id="labelPunkte9" layoutX="110.0" layoutY="352.0" text="0" />
+       <Label fx:id="labelPunkte10" layoutX="110.0" layoutY="392.0" text="0" />
+       <Label fx:id="labelPunkte11" layoutX="110.0" layoutY="432.0" text="0" />
+       <Label fx:id="labelPunkte12" layoutX="110.0" layoutY="472.0" text="0" />
+
+   </children>
+</AnchorPane>
