@@ -7,5 +7,6 @@ public class Redaktion {
     private List<Mitarbeiter> mitarbeiter;
 
     public Redakteur getChefdeakteur() {
+
     }
 }
