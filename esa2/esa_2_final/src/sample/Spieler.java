@@ -57,7 +57,10 @@ public class Spieler extends Thread{
   private void spieleEineRunde() {
       mySpielbrett.getKugel().rolle();
       System.out.println("Punktwert nach Wurf vom Spielbrett: " + mySpielbrett.getPunkt());
+
       myPferd.setzeZug(mySpielbrett.getPunkt());
+
+
 //      viewController.updatePferd(this);
 
 //      synchronized (viewController) {
@@ -66,12 +69,12 @@ public class Spieler extends Thread{
 
 
 
-      Platform.runLater(new Runnable() {
-          @Override
-          public void run() {
-              viewController.updateView(thisSpieler);;
-          }
-      });
+//      Platform.runLater(new Runnable() {
+//          @Override
+//          public void run() {
+//              viewController.updateView(thisSpieler);
+//          }
+//      });
   }
 
   public int getWurfAnzahl() {

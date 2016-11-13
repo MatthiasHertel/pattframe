@@ -1,19 +1,38 @@
 package sample;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class Pferd {
 
-  private Integer position = 0;
+    private IntegerProperty position;
+
+    public final int getPosition() {
+        if (position != null)
+            return position.get();
+        return 0;
+    }
+
+    public final void setPosition(int start) {
+        this.positionProperty().set(start);
+    }
+
+
+
+    public final IntegerProperty positionProperty() {
+        if (position == null) {
+            position = new SimpleIntegerProperty(0);
+        }
+        return position;
+    }
 
   
   public Pferd() {
   }
 
   public void setzeZug(int punktwert) {
-      this.position += punktwert;
+      System.out.println("");
+      this.setPosition(this.getPosition() + punktwert);
   }
-
-    public int getPosition() {
-        return this.position;
-    }
 
 }
