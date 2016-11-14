@@ -1,10 +1,12 @@
 package org.blueberry.kentuckyderby;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class UserInterface {
 
@@ -14,27 +16,23 @@ public class UserInterface {
     private double width, height;
 
     public void construct(Configuration config) {
-        width = Double.parseDouble(config.getItem("window.width"));
-        height = Double.parseDouble(config.getItem("window.height"));
-        title = config.getItem("application.title");
-        icon = new Image(config.getItem("window.icon"));
-
-        root = new AnchorPane();
-        Region raceTrack = new Region();
-        AnchorPane.setTopAnchor(raceTrack, 10.0);
-        AnchorPane.setLeftAnchor(raceTrack, 10.0);
-        AnchorPane.setRightAnchor(raceTrack, 10.0);
-
-        root.getChildren().add(raceTrack);
-        String style = "-fx-background-image: url(" + config.getItem("racetrack.background-image") + "); -fx-background-repeat: repeat-x;";
-        raceTrack.setStyle(style);
-        raceTrack.setPrefHeight(400.0);
+        try {
+            root = FXMLLoader.load(getClass().getResource("kentucky-derby.fxml"));
+            title = config.getItem("application.title");
+            icon = new Image(config.getItem("window.icon"));
+            width = Double.parseDouble(config.getItem("window.width"));
+            height = Double.parseDouble(config.getItem("window.height"));
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void assemble(Stage stage) {
         Scene scene = new Scene(root, width, height);
+        scene.getStylesheets().add("stylesheets/main.css");
         stage.setScene(scene);
-        stage.setTitle(title);
+        stage.setTitle(title); // TODO: Möglichkeit title ins fxml?
         stage.getIcons().add(icon);
         stage.show();
     }

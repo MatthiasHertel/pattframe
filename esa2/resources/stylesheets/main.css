@@ -1,0 +1,4 @@
+.racetrack {
+    -fx-background-image: url("../images/racetrack.png");
+    -fx-background-repeat: repeat-x;
+}
