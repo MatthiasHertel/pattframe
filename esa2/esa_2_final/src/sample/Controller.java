@@ -1,5 +1,9 @@
 package sample;
 
+import javafx.application.Platform;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.IntegerBinding;
+import javafx.beans.binding.NumberBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -94,8 +98,6 @@ public class Controller {
 
 
 
-    
-
     @FXML
     private void handleButtonAction(ActionEvent event){
 
@@ -126,23 +128,33 @@ public class Controller {
         labelPunkteListe.add(labelPunkte12);
 
 
+
+
         System.out.println("Starte Spiel...");
 
         Spiel spiel = Spiel.getInstance();
 
+//        for(int i = 0; i < 5; i++){
         for(int i = 0; i < spiel.getMaxSpieler(); i++){
             Spieler spieler = new Spieler(this, i);
-            spieler.getPferd().positionProperty().addListener(new ChangeListener<Object>() {
-                @Override
-                public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
-                    pferdeListe.get(spieler.getSpielerId()).setLayoutX(750 - (spieler.getPferd().getPosition() * 20));
-//                    labelPunkteListe.get(spieler.getSpielerId()).setText(Integer.toString(spieler.getPferd().getPosition()));
-                }
-            });
+//            spieler.getPferd().positionProperty().addListener(new ChangeListener<Object>() {
+//                @Override
+//                public void changed(ObservableValue<?> o, Object oldVal, Object newVal) {
+//                    pferdeListe.get(spieler.getSpielerId()).setLayoutX(750 - (spieler.getPferd().getPosition() * 20));
+////                    labelPunkte1.setText(new Integer(spieler.getPferd().getPosition()).toString());
+////                    System.out.println("Pferdeposition geändert");
+//
+//                }
+//            });
+
+
+
+//            labelPunkte1.textProperty().bind(spieler.getPferd().positionProperty().asString());
 
             spiel.addSpieler(spieler);
+//            labelPunkteListe.get(i).textProperty().bind(spieler.getPferd().positionProperty().asString());
+            //pferdeListe.get(i).layoutXProperty().bind(spieler.getPferd().positionProperty());
         }
-
 
 //        Spieler spieler = new Spieler(this, 0);
 //        spieler.getPferd().positionProperty().addListener(new ChangeListener<Object>() {
@@ -153,6 +165,54 @@ public class Controller {
 //        });
 //
 //        spiel.addSpieler(spieler);
+
+
+//        labelPunkteListe.get(0).textProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty().asString());
+//        labelPunkte1.textProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty().asString());
+//        labelPunkte1.textProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty().asString());
+
+//        imageViewPferd1.layoutXProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty());
+
+
+//        NumberBinding bla = spiel.getMySpieler().get(4).getPferd().positionProperty().multiply(20).negate();
+//        NumberBinding bla = spiel.getMySpieler().get(4).getPferd().positionProperty().add(1);
+//        DoubleBinding bla = spiel.getMySpieler().get(4).getPferd().positionProperty().add(1.0);
+
+//        imageViewPferd4.layoutXProperty().setValue(750);
+        imageViewPferd1.xProperty().unbind();
+        imageViewPferd1.xProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd2.xProperty().bind(spiel.getMySpieler().get(1).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd3.xProperty().bind(spiel.getMySpieler().get(2).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd4.xProperty().bind(spiel.getMySpieler().get(3).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd5.xProperty().bind(spiel.getMySpieler().get(4).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd6.xProperty().bind(spiel.getMySpieler().get(5).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd7.xProperty().bind(spiel.getMySpieler().get(6).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd8.xProperty().bind(spiel.getMySpieler().get(7).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd9.xProperty().bind(spiel.getMySpieler().get(8).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd10.xProperty().bind(spiel.getMySpieler().get(9).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd11.xProperty().bind(spiel.getMySpieler().get(10).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd12.xProperty().bind(spiel.getMySpieler().get(11).getPferd().positionProperty().multiply(20).negate());
+
+
+
+        labelPunkte1.textProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty().asString());
+        labelPunkte2.textProperty().bind(spiel.getMySpieler().get(1).getPferd().positionProperty().asString());
+        labelPunkte3.textProperty().bind(spiel.getMySpieler().get(2).getPferd().positionProperty().asString());
+        labelPunkte4.textProperty().bind(spiel.getMySpieler().get(3).getPferd().positionProperty().asString());
+        labelPunkte5.textProperty().bind(spiel.getMySpieler().get(4).getPferd().positionProperty().asString());
+        labelPunkte6.textProperty().bind(spiel.getMySpieler().get(5).getPferd().positionProperty().asString());
+        labelPunkte7.textProperty().bind(spiel.getMySpieler().get(6).getPferd().positionProperty().asString());
+        labelPunkte8.textProperty().bind(spiel.getMySpieler().get(7).getPferd().positionProperty().asString());
+        labelPunkte9.textProperty().bind(spiel.getMySpieler().get(8).getPferd().positionProperty().asString());
+        labelPunkte10.textProperty().bind(spiel.getMySpieler().get(9).getPferd().positionProperty().asString());
+        labelPunkte11.textProperty().bind(spiel.getMySpieler().get(10).getPferd().positionProperty().asString());
+        labelPunkte12.textProperty().bind(spiel.getMySpieler().get(11).getPferd().positionProperty().asString());
+
+
+
+
+
+
 
 
 
@@ -166,7 +226,12 @@ public class Controller {
 
 
 
-    public void updateView(Spieler spieler){
+
+//        imageViewPferd4.layoutXProperty().bind(spiel.getMySpieler().get(4).getPferd().positionProperty());
+
+
+
+        public void updateView(Spieler spieler){
 
 //        switch(spieler.getSpielerId() +1 ){
 //            case 29:

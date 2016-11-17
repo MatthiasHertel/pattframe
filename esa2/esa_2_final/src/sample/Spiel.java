@@ -34,9 +34,8 @@ public class Spiel {
 
       for (Spieler spieler: mySpieler) {
 //          spieler.spiele();
-          ((Thread)spieler).start();
-//          Thread thread = new Thread(spieler);
-//          thread.start();
+//          ((Thread)spieler).start();
+            spieler.spielen();
       }
   }
 
@@ -50,6 +49,11 @@ public class Spiel {
 
   public void clear(){
       this.mySpieler = new Vector<Spieler>();
+  }
+
+
+  public Vector<Spieler> getMySpieler(){
+      return this.mySpieler;
   }
 
 }

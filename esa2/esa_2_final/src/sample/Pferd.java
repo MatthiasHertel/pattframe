@@ -28,11 +28,11 @@ public class Pferd {
 
   
   public Pferd() {
+
   }
 
   public void setzeZug(int punktwert) {
-      System.out.println("");
-      this.setPosition(this.getPosition() + punktwert);
+      setPosition(getPosition() + punktwert);
   }
 
 }
