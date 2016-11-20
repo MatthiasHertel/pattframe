@@ -13,7 +13,7 @@ public class Spielbrett {
     private int lochAnzahlPunktwert1 = 7;
     private int lochAnzahlPunktwert2 = 7;
     private int lochAnzahlPunktwert3 = 2;
-    private int lochAnzahlPunktwert0 = 10;
+    private int lochAnzahlPunktwert0 = 1;
 
   public Spielbrett() {
       this.myKugel = new Kugel(this);

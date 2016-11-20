@@ -94,6 +94,7 @@ public class Controller {
 
     ArrayList<ImageView> pferdeListe = new ArrayList<ImageView>();
     ArrayList<Label> labelPunkteListe = new ArrayList<Label>();
+    ArrayList<Label> labelWurfListe = new ArrayList<Label>();
 
 
 
@@ -126,6 +127,19 @@ public class Controller {
         labelPunkteListe.add(labelPunkte10);
         labelPunkteListe.add(labelPunkte11);
         labelPunkteListe.add(labelPunkte12);
+
+        labelWurfListe.add(labelWurf1);
+        labelWurfListe.add(labelWurf2);
+        labelWurfListe.add(labelWurf3);
+        labelWurfListe.add(labelWurf4);
+        labelWurfListe.add(labelWurf5);
+        labelWurfListe.add(labelWurf6);
+        labelWurfListe.add(labelWurf7);
+        labelWurfListe.add(labelWurf8);
+        labelWurfListe.add(labelWurf9);
+        labelWurfListe.add(labelWurf10);
+        labelWurfListe.add(labelWurf11);
+        labelWurfListe.add(labelWurf12);
 
 
 
@@ -207,6 +221,21 @@ public class Controller {
         labelPunkte10.textProperty().bind(spiel.getMySpieler().get(9).getPferd().positionProperty().asString());
         labelPunkte11.textProperty().bind(spiel.getMySpieler().get(10).getPferd().positionProperty().asString());
         labelPunkte12.textProperty().bind(spiel.getMySpieler().get(11).getPferd().positionProperty().asString());
+
+
+
+        labelWurf1.textProperty().bind(spiel.getMySpieler().get(0).wurfAnzahlPropertyProperty().asString());
+        labelWurf2.textProperty().bind(spiel.getMySpieler().get(1).wurfAnzahlPropertyProperty().asString());
+        labelWurf3.textProperty().bind(spiel.getMySpieler().get(2).wurfAnzahlPropertyProperty().asString());
+        labelWurf4.textProperty().bind(spiel.getMySpieler().get(3).wurfAnzahlPropertyProperty().asString());
+        labelWurf5.textProperty().bind(spiel.getMySpieler().get(4).wurfAnzahlPropertyProperty().asString());
+        labelWurf6.textProperty().bind(spiel.getMySpieler().get(5).wurfAnzahlPropertyProperty().asString());
+        labelWurf7.textProperty().bind(spiel.getMySpieler().get(6).wurfAnzahlPropertyProperty().asString());
+        labelWurf8.textProperty().bind(spiel.getMySpieler().get(7).wurfAnzahlPropertyProperty().asString());
+        labelWurf9.textProperty().bind(spiel.getMySpieler().get(8).wurfAnzahlPropertyProperty().asString());
+        labelWurf10.textProperty().bind(spiel.getMySpieler().get(9).wurfAnzahlPropertyProperty().asString());
+        labelWurf11.textProperty().bind(spiel.getMySpieler().get(10).wurfAnzahlPropertyProperty().asString());
+        labelWurf12.textProperty().bind(spiel.getMySpieler().get(11).wurfAnzahlPropertyProperty().asString());
 
 
 
