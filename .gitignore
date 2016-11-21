@@ -2,4 +2,5 @@
 *.vpp.*
 *.vux
 *.idea
-
+*.iml
+*out/*
