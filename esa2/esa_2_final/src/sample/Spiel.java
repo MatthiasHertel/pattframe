@@ -2,48 +2,37 @@ package sample;
 
 import java.util.Vector;
 
-/*
- */
 public class Spiel {
 
   private final Integer maxSpieler = 12;
 
   private static Spiel instance = new Spiel();
 
-    /**
-   * 
-   * @element-type Spieler
-   */
+
   private Vector<Spieler>  mySpieler = new Vector<Spieler>();
 
   private Spiel() {
   }
 
   public static Spiel getInstance() {
-
-    return instance;
+      return instance;
   }
 
   public void addSpieler(Spieler spieler) {
-      this.mySpieler.add(spieler);
-  }
-
-  public void startSpiel() {
-//      ((Spieler)mySpieler.elementAt(0)).spiele();
-//      mySpieler.elementAt(0).spiele();
-
-      for (Spieler spieler: mySpieler) {
-//          spieler.spiele();
-//          ((Thread)spieler).start();
-            spieler.spielen();
+      if(mySpieler.size() < maxSpieler){
+          this.mySpieler.add(spieler);
       }
   }
 
-  public void setMaxSpieler(int anzahl) {
+  public void startSpiel() {
+
+      for (Spieler spieler: mySpieler) {
+            spieler.spiele();
+      }
   }
 
-  public int getMaxSpieler() {
 
+  public int getMaxSpieler() {
       return maxSpieler;
   }
 

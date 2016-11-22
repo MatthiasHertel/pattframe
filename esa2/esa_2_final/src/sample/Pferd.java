@@ -14,9 +14,8 @@ public class Pferd {
     }
 
     public final void setPosition(int start) {
-        this.positionProperty().set(start);
+        positionProperty().set(start);
     }
-
 
 
     public final IntegerProperty positionProperty() {
@@ -26,13 +25,8 @@ public class Pferd {
         return position;
     }
 
-  
-  public Pferd() {
 
-  }
-
-  public void setzeZug(int punktwert) {
-      setPosition(getPosition() + punktwert);
-  }
+    public Pferd() {
+    }
 
 }
