@@ -6,11 +6,12 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
 
-public class Spieler {
+public class Spieler implements ISpieler{
 
-    private StringProperty wurfAnzahlProperty;
+    private StringProperty wurfAnzahlP;
     private Spielbrett mySpielbrett;
-    private Pferd myPferd;
+//    private Pferd myPferd;
+    private ISpielFigur myPferd;
     private int wurfAnzahl = 0;
 
 
@@ -44,11 +45,12 @@ public class Spieler {
     }
 
 
-    public final StringProperty wurfAnzahlPropertyProperty() {
-        if (wurfAnzahlProperty == null) {
-            wurfAnzahlProperty = new SimpleStringProperty("");
+    @Override
+    public final StringProperty wurfAnzahlPProperty() {
+        if (wurfAnzahlP == null) {
+            wurfAnzahlP = new SimpleStringProperty("");
         }
-        return wurfAnzahlProperty;
+        return wurfAnzahlP;
     }
 
 
@@ -60,12 +62,17 @@ public class Spieler {
     public void spiele() {
         SpieleService spieleService = new SpieleService();
         myPferd.positionProperty().bind(spieleService.valueProperty());
-        wurfAnzahlPropertyProperty().bind(spieleService.messageProperty());
+        wurfAnzahlPProperty().bind(spieleService.messageProperty());
         spieleService.start();
     }
 
 
-    public Pferd getPferd() {
+//    public Pferd getPferd() {
+//        return this.myPferd;
+//    }
+
+    @Override
+    public ISpielFigur getSpielFigur() {
         return this.myPferd;
     }
 

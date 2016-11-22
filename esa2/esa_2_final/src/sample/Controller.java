@@ -53,50 +53,51 @@ public class Controller {
 
         System.out.println("Starte Spiel...");
 
-        Spiel spiel = Spiel.getInstance();
+        ISpiel spiel = Spiel.getInstance();
 
-        for(int i = 0; i < spiel.getMaxSpieler(); i++){
+        for(int i = 0; i < spiel.getSpielerAnzahl(); i++){
+
             spiel.addSpieler(new Spieler());
         }
 
-        imageViewPferd1.xProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd2.xProperty().bind(spiel.getMySpieler().get(1).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd3.xProperty().bind(spiel.getMySpieler().get(2).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd4.xProperty().bind(spiel.getMySpieler().get(3).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd5.xProperty().bind(spiel.getMySpieler().get(4).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd6.xProperty().bind(spiel.getMySpieler().get(5).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd7.xProperty().bind(spiel.getMySpieler().get(6).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd8.xProperty().bind(spiel.getMySpieler().get(7).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd9.xProperty().bind(spiel.getMySpieler().get(8).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd10.xProperty().bind(spiel.getMySpieler().get(9).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd11.xProperty().bind(spiel.getMySpieler().get(10).getPferd().positionProperty().multiply(20).negate());
-        imageViewPferd12.xProperty().bind(spiel.getMySpieler().get(11).getPferd().positionProperty().multiply(20).negate());
+        imageViewPferd1.xProperty().bind(spiel.getAllSpieler().get(0).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd2.xProperty().bind(spiel.getAllSpieler().get(1).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd3.xProperty().bind(spiel.getAllSpieler().get(2).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd4.xProperty().bind(spiel.getAllSpieler().get(3).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd5.xProperty().bind(spiel.getAllSpieler().get(4).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd6.xProperty().bind(spiel.getAllSpieler().get(5).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd7.xProperty().bind(spiel.getAllSpieler().get(6).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd8.xProperty().bind(spiel.getAllSpieler().get(7).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd9.xProperty().bind(spiel.getAllSpieler().get(8).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd10.xProperty().bind(spiel.getAllSpieler().get(9).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd11.xProperty().bind(spiel.getAllSpieler().get(10).getSpielFigur().positionProperty().multiply(20).negate());
+        imageViewPferd12.xProperty().bind(spiel.getAllSpieler().get(11).getSpielFigur().positionProperty().multiply(20).negate());
 
-        labelPunkte1.textProperty().bind(spiel.getMySpieler().get(0).getPferd().positionProperty().asString());
-        labelPunkte2.textProperty().bind(spiel.getMySpieler().get(1).getPferd().positionProperty().asString());
-        labelPunkte3.textProperty().bind(spiel.getMySpieler().get(2).getPferd().positionProperty().asString());
-        labelPunkte4.textProperty().bind(spiel.getMySpieler().get(3).getPferd().positionProperty().asString());
-        labelPunkte5.textProperty().bind(spiel.getMySpieler().get(4).getPferd().positionProperty().asString());
-        labelPunkte6.textProperty().bind(spiel.getMySpieler().get(5).getPferd().positionProperty().asString());
-        labelPunkte7.textProperty().bind(spiel.getMySpieler().get(6).getPferd().positionProperty().asString());
-        labelPunkte8.textProperty().bind(spiel.getMySpieler().get(7).getPferd().positionProperty().asString());
-        labelPunkte9.textProperty().bind(spiel.getMySpieler().get(8).getPferd().positionProperty().asString());
-        labelPunkte10.textProperty().bind(spiel.getMySpieler().get(9).getPferd().positionProperty().asString());
-        labelPunkte11.textProperty().bind(spiel.getMySpieler().get(10).getPferd().positionProperty().asString());
-        labelPunkte12.textProperty().bind(spiel.getMySpieler().get(11).getPferd().positionProperty().asString());
+        labelPunkte1.textProperty().bind(spiel.getAllSpieler().get(0).getSpielFigur().positionProperty().asString());
+        labelPunkte2.textProperty().bind(spiel.getAllSpieler().get(1).getSpielFigur().positionProperty().asString());
+        labelPunkte3.textProperty().bind(spiel.getAllSpieler().get(2).getSpielFigur().positionProperty().asString());
+        labelPunkte4.textProperty().bind(spiel.getAllSpieler().get(3).getSpielFigur().positionProperty().asString());
+        labelPunkte5.textProperty().bind(spiel.getAllSpieler().get(4).getSpielFigur().positionProperty().asString());
+        labelPunkte6.textProperty().bind(spiel.getAllSpieler().get(5).getSpielFigur().positionProperty().asString());
+        labelPunkte7.textProperty().bind(spiel.getAllSpieler().get(6).getSpielFigur().positionProperty().asString());
+        labelPunkte8.textProperty().bind(spiel.getAllSpieler().get(7).getSpielFigur().positionProperty().asString());
+        labelPunkte9.textProperty().bind(spiel.getAllSpieler().get(8).getSpielFigur().positionProperty().asString());
+        labelPunkte10.textProperty().bind(spiel.getAllSpieler().get(9).getSpielFigur().positionProperty().asString());
+        labelPunkte11.textProperty().bind(spiel.getAllSpieler().get(10).getSpielFigur().positionProperty().asString());
+        labelPunkte12.textProperty().bind(spiel.getAllSpieler().get(11).getSpielFigur().positionProperty().asString());
 
-        labelWurf1.textProperty().bind(spiel.getMySpieler().get(0).wurfAnzahlPropertyProperty());
-        labelWurf2.textProperty().bind(spiel.getMySpieler().get(1).wurfAnzahlPropertyProperty());
-        labelWurf3.textProperty().bind(spiel.getMySpieler().get(2).wurfAnzahlPropertyProperty());
-        labelWurf4.textProperty().bind(spiel.getMySpieler().get(3).wurfAnzahlPropertyProperty());
-        labelWurf5.textProperty().bind(spiel.getMySpieler().get(4).wurfAnzahlPropertyProperty());
-        labelWurf6.textProperty().bind(spiel.getMySpieler().get(5).wurfAnzahlPropertyProperty());
-        labelWurf7.textProperty().bind(spiel.getMySpieler().get(6).wurfAnzahlPropertyProperty());
-        labelWurf8.textProperty().bind(spiel.getMySpieler().get(7).wurfAnzahlPropertyProperty());
-        labelWurf9.textProperty().bind(spiel.getMySpieler().get(8).wurfAnzahlPropertyProperty());
-        labelWurf10.textProperty().bind(spiel.getMySpieler().get(9).wurfAnzahlPropertyProperty());
-        labelWurf11.textProperty().bind(spiel.getMySpieler().get(10).wurfAnzahlPropertyProperty());
-        labelWurf12.textProperty().bind(spiel.getMySpieler().get(11).wurfAnzahlPropertyProperty());
+        labelWurf1.textProperty().bind(spiel.getAllSpieler().get(0).wurfAnzahlPProperty());
+        labelWurf2.textProperty().bind(spiel.getAllSpieler().get(1).wurfAnzahlPProperty());
+        labelWurf3.textProperty().bind(spiel.getAllSpieler().get(2).wurfAnzahlPProperty());
+        labelWurf4.textProperty().bind(spiel.getAllSpieler().get(3).wurfAnzahlPProperty());
+        labelWurf5.textProperty().bind(spiel.getAllSpieler().get(4).wurfAnzahlPProperty());
+        labelWurf6.textProperty().bind(spiel.getAllSpieler().get(5).wurfAnzahlPProperty());
+        labelWurf7.textProperty().bind(spiel.getAllSpieler().get(6).wurfAnzahlPProperty());
+        labelWurf8.textProperty().bind(spiel.getAllSpieler().get(7).wurfAnzahlPProperty());
+        labelWurf9.textProperty().bind(spiel.getAllSpieler().get(8).wurfAnzahlPProperty());
+        labelWurf10.textProperty().bind(spiel.getAllSpieler().get(9).wurfAnzahlPProperty());
+        labelWurf11.textProperty().bind(spiel.getAllSpieler().get(10).wurfAnzahlPProperty());
+        labelWurf12.textProperty().bind(spiel.getAllSpieler().get(11).wurfAnzahlPProperty());
 
         spiel.startSpiel();
         spiel.clear();

@@ -2,14 +2,14 @@ package sample;
 
 import java.util.Vector;
 
-public class Spiel {
+public class Spiel implements ISpiel{
 
-  private final Integer maxSpieler = 12;
+  private final Integer SpielerAnzahl = 12;
 
   private static Spiel instance = new Spiel();
 
 
-  private Vector<Spieler>  mySpieler = new Vector<Spieler>();
+  private Vector<ISpieler>  allSpieler = new Vector<>();
 
   private Spiel() {
   }
@@ -18,31 +18,34 @@ public class Spiel {
       return instance;
   }
 
-  public void addSpieler(Spieler spieler) {
-      if(mySpieler.size() < maxSpieler){
-          this.mySpieler.add(spieler);
+  public void addSpieler(ISpieler spieler) {
+      if(allSpieler.size() < SpielerAnzahl){
+          this.allSpieler.add(spieler);
       }
   }
 
+  @Override
   public void startSpiel() {
 
-      for (Spieler spieler: mySpieler) {
+      for (ISpieler spieler: allSpieler) {
             spieler.spiele();
       }
   }
 
 
-  public int getMaxSpieler() {
-      return maxSpieler;
+  @Override
+  public int getSpielerAnzahl() {
+      return SpielerAnzahl;
   }
 
   public void clear(){
-      this.mySpieler = new Vector<Spieler>();
+      this.allSpieler = new Vector<>();
   }
 
 
-  public Vector<Spieler> getMySpieler(){
-      return this.mySpieler;
+  @Override
+  public Vector<ISpieler> getAllSpieler(){
+      return this.allSpieler;
   }
 
 }
