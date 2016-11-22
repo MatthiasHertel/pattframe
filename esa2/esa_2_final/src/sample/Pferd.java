@@ -3,6 +3,9 @@ package sample;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+// Klasse Pferd
+// als konkrete Spielfigur liefert und setzt die Position
+
 public class Pferd implements ISpielFigur {
 
     private IntegerProperty position;
@@ -26,10 +29,6 @@ public class Pferd implements ISpielFigur {
             position = new SimpleIntegerProperty(0);
         }
         return position;
-    }
-
-
-    public Pferd() {
     }
 
 }

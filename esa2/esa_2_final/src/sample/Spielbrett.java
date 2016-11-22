@@ -2,9 +2,15 @@ package sample;
 
 import java.util.Vector;
 
+// Klasse Spielbrett
+// verwaltet alle spielbrettrelevanten Elemente (Kugel und Löcher)
+
 public class Spielbrett {
     private Vector<Loch> myLoch = new Vector<Loch>();
     private Kugel myKugel;
+
+    // Jedes Instanz der Klasse Spielbrett  beinhaltet eine feste Anzahl Löcher mit einem fest bestimmten Punktwert
+    // Wenn eine Kugel in kein Loch fällt wird das über den Punktwert = 0 ausgedrückt.
 
     public Spielbrett(int lochAnzahlPunktwert1, int lochAnzahlPunktwert2, int lochAnzahlPunktwert3, int lochAnzahlPunktwert0) {
         this.myKugel = new Kugel(this);
@@ -31,6 +37,7 @@ public class Spielbrett {
         }
         return 0;
     }
+
 
     public void clear() {
         for (Loch loch : myLoch) {

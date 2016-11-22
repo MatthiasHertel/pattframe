@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
+// Controller Klasse für die View
+// instanziert die GUI Elemente
 
 public class Controller {
 
@@ -47,6 +49,7 @@ public class Controller {
     @FXML    private Label labelPunkte11;
     @FXML    private Label labelPunkte12;
 
+    // ActionEvent für das Starten des SPieles an Button gebunden
 
     @FXML
     private void handleButtonAction(ActionEvent event){
@@ -55,10 +58,13 @@ public class Controller {
 
         ISpiel spiel = Spiel.getInstance();
 
+
         for(int i = 0; i < spiel.getSpielerAnzahl(); i++){
 
             spiel.addSpieler(new Spieler());
         }
+
+        // Binding der Pferdposition
 
         imageViewPferd1.xProperty().bind(spiel.getAllSpieler().get(0).getSpielFigur().positionProperty().multiply(20).negate());
         imageViewPferd2.xProperty().bind(spiel.getAllSpieler().get(1).getSpielFigur().positionProperty().multiply(20).negate());
@@ -72,6 +78,8 @@ public class Controller {
         imageViewPferd10.xProperty().bind(spiel.getAllSpieler().get(9).getSpielFigur().positionProperty().multiply(20).negate());
         imageViewPferd11.xProperty().bind(spiel.getAllSpieler().get(10).getSpielFigur().positionProperty().multiply(20).negate());
         imageViewPferd12.xProperty().bind(spiel.getAllSpieler().get(11).getSpielFigur().positionProperty().multiply(20).negate());
+
+        // Bindings an die Labels zur Update der View
 
         labelPunkte1.textProperty().bind(spiel.getAllSpieler().get(0).getSpielFigur().positionProperty().asString());
         labelPunkte2.textProperty().bind(spiel.getAllSpieler().get(1).getSpielFigur().positionProperty().asString());

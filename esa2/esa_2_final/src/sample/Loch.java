@@ -1,5 +1,8 @@
 package sample;
 
+// Klasse Loch
+// abstrahiert das Loch auf dem Spielbrett mit einem bestimmten Punktwert
+
 public class Loch {
 
     private int punktwert;

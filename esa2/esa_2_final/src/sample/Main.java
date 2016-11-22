@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+// Einstiegspunkt für die Applikation
+// läd die fmxl daten und repräsentiert sie in der view
+
 public class Main extends Application {
 
     @Override
