@@ -1,12 +1,12 @@
 package org.blueberry.spaceinvaders;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+        import javafx.application.Application;
+        import javafx.scene.Scene;
+        import javafx.scene.image.Image;
+        import javafx.scene.image.ImageView;
+        import javafx.scene.layout.AnchorPane;
+        import javafx.scene.layout.Pane;
+        import javafx.stage.Stage;
 
 public class SpaceInvaders extends Application {
 
@@ -15,21 +15,21 @@ public class SpaceInvaders extends Application {
         AnchorPane root = new AnchorPane();
         Pane display = new Pane();
         Scene scene = new Scene(root, 800.0, 600.0);
-        ImageView invader = new ImageView(new Image("images/invader.png"));
+        ImageView invader = new ImageView(new Image(String.valueOf(getClass().getResource("../../../images/invader.png"))));
 
         AnchorPane.setTopAnchor(display, 10.0);
         AnchorPane.setLeftAnchor(display, 10.0);
         AnchorPane.setRightAnchor(display, 10.0);
-        
+
         display.setPrefHeight(400.0);
         display.setStyle("-fx-background-color: black");
         display.getChildren().add(invader);
 
         root.getChildren().add(display);
-        
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Space Invaders");
-        primaryStage.getIcons().add(new Image("images/beuth-logo.png"));
+        primaryStage.getIcons().add(new Image(String.valueOf(getClass().getResource("../../../images/beuth-logo.png"))));
         primaryStage.show();
     }
 
