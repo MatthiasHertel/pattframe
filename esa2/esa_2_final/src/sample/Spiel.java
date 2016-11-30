@@ -2,54 +2,63 @@ package sample;
 
 import java.util.Vector;
 
-/*
- */
-public class Spiel {
+// Klasse Spiel
+// als konkretes Kentucky Derby Spiel (Singleton Pattern)
+// verwaltet alle spielrelevaten Elemente
 
-  private final Integer maxSpieler = 12;
+
+public class Spiel implements ISpiel{
+
+  private final Integer SpielerAnzahl = 12;
+  private Vector<ISpieler>  allSpieler = new Vector<>();
+
+  // Singleton Pattern
 
   private static Spiel instance = new Spiel();
-
-    /**
-   * 
-   * @element-type Spieler
-   */
-  private Vector<Spieler>  mySpieler = new Vector<Spieler>();
 
   private Spiel() {
   }
 
   public static Spiel getInstance() {
-
-    return instance;
+      return instance;
   }
 
-  public void addSpieler(Spieler spieler) {
-      this.mySpieler.add(spieler);
-  }
+  // implementiert methoden aus dem interface
 
-  public void startSpiel() {
-//      ((Spieler)mySpieler.elementAt(0)).spiele();
-//      mySpieler.elementAt(0).spiele();
-
-      for (Spieler spieler: mySpieler) {
-//          spieler.spiele();
-          ((Thread)spieler).start();
-//          Thread thread = new Thread(spieler);
-//          thread.start();
+  @Override
+  public void addSpieler(ISpieler spieler) {
+      if(allSpieler.size() < SpielerAnzahl){
+          this.allSpieler.add(spieler);
       }
   }
 
-  public void setMaxSpieler(int anzahl) {
+  // implementiert methoden aus dem interface
+
+  @Override
+  public void startSpiel() {
+
+      for (ISpieler spieler: allSpieler) {
+            spieler.spiele();
+      }
   }
 
-  public int getMaxSpieler() {
+  // implementiert methoden aus dem interface
 
-      return maxSpieler;
+  @Override
+  public int getSpielerAnzahl() {
+      return SpielerAnzahl;
   }
 
+  // implementiert methoden aus dem interface
+  @Override
   public void clear(){
-      this.mySpieler = new Vector<Spieler>();
+      this.allSpieler = new Vector<>();
+  }
+
+  // implementiert methoden aus dem interface
+  @Override
+  public Vector<ISpieler> getAllSpieler(){
+      return this.allSpieler;
   }
 
 }
