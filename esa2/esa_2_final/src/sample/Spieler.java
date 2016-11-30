@@ -1,91 +1,81 @@
 package sample;
 
-import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 
-public class Spieler extends Thread{
+// Klasse Spieler
+// als konkreter Spieler implementiert
 
-    private int wurfAnzahl = 0;
+
+public class Spieler implements ISpieler{
+
+    private StringProperty wurfAnzahlP;
     private Spielbrett mySpielbrett;
-    private Pferd myPferd;
-    private int spielerId;
-    private Controller viewController;
-    private Spieler thisSpieler;
+//    private Pferd myPferd;
+    private ISpielFigur myPferd;
+    private int wurfAnzahl = 0;
 
-    @Override
-    public  void run(){
-        spiele();
+
+    // Task parallelisiert die Spieleraktivität (rollt Kugel, Pferdposition und Wurfanzahl wird über Properties aktualisiert.)
+
+
+    public class SpieleService extends Service {
+        @Override
+        protected Task createTask() {
+            return new Task() {
+
+                @Override
+                protected Void call() {
+                    while (myPferd.getPosition() < 27) {
+
+                        mySpielbrett.getKugel().rolle();
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            Thread.currentThread().interrupt();
+                        }
+
+                        updateValue(myPferd.getPosition() + mySpielbrett.getPunkt());
+                        updateMessage(Integer.toString(wurfAnzahl++));
+
+                        mySpielbrett.clear();
+                    }
+                    return null;
+                }
+            };
+        }
     }
 
-  public Spieler(Controller viewController, int id) {
-      this.mySpielbrett = new Spielbrett();
-      this.myPferd = new Pferd();
-      this.spielerId = id;
-      this.viewController = viewController;
+    // implementiert methoden aus dem interface
+    @Override
+    public final StringProperty wurfAnzahlPProperty() {
+        if (wurfAnzahlP == null) {
+            wurfAnzahlP = new SimpleStringProperty("");
+        }
+        return wurfAnzahlP;
+    }
 
-      thisSpieler = this;
-  }
+    // Jeder Spieler bekommt ein Spielbrett mit einer festen Lochanzahl verschiedenen Punktwerten und ein Pferd zugeordnet.
 
-  public void spiele() {
-      while(this.myPferd.getPosition() < 27){
-          spieleEineRunde();
-          mySpielbrett.clear();
-          this.wurfAnzahl += 1;
-          try {
-              Thread.sleep(200);
-          } catch (InterruptedException e) {
-              e.printStackTrace();
-              Thread.currentThread().interrupt();
-          }
-      }
+    public Spieler() {
+        this.mySpielbrett = new Spielbrett(7, 7, 2, 10);
+        this.myPferd = new Pferd();
+    }
 
-//      viewController.updateLabel(this);
+    // Methode zum Binding der Properties und zum Aufruf des Services
+    public void spiele() {
+        SpieleService spieleService = new SpieleService();
+        myPferd.positionProperty().bind(spieleService.valueProperty());
+        wurfAnzahlPProperty().bind(spieleService.messageProperty());
+        spieleService.start();
+    }
 
-//      synchronized (viewController) {
-//          viewController.updateLabel(this);
-//      }
-
-
-//      Platform.runLater(new Runnable() {
-//          @Override
-//          public void run() {
-//              viewController.updateLabelWurf(thisSpieler);
-//          }
-//      });
-
-  }
-
-  private void spieleEineRunde() {
-      mySpielbrett.getKugel().rolle();
-      System.out.println("Punktwert nach Wurf vom Spielbrett: " + mySpielbrett.getPunkt());
-
-      myPferd.setzeZug(mySpielbrett.getPunkt());
-
-
-//      viewController.updatePferd(this);
-
-//      synchronized (viewController) {
-//          viewController.updatePferd(this);
-//      }
-
-
-
-//      Platform.runLater(new Runnable() {
-//          @Override
-//          public void run() {
-//              viewController.updateView(thisSpieler);
-//          }
-//      });
-  }
-
-  public int getWurfAnzahl() {
-      return this.wurfAnzahl;
-  }
-
-  public int getSpielerId(){
-      return this.spielerId;
-  }
-
-    public Pferd getPferd() {
+    // implementiert methoden aus dem interface
+    @Override
+    public ISpielFigur getSpielFigur() {
         return this.myPferd;
     }
 
