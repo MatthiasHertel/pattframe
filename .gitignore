@@ -4,3 +4,7 @@
 *.idea
 *.iml
 *out/*
+
+/esa2/esa_2_final/Esa2.docx
+/esa2/esa_2_final/Esa2.pdf
+/.gitignore

@@ -1,0 +1,28 @@
+package org.blueberry.spaceinvaders;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
+public class SpaceInvaders extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("SpaceInvaders.fxml"));
+        primaryStage.setScene(new Scene(root));
+
+        primaryStage.setTitle("Space Invaders");
+//        primaryStage.getIcons().add(new Image(String.valueOf(getClass().getResource("../../../images/beuth-logo.png"))));
+        primaryStage.getIcons().add(new Image("images/beuth-logo.png"));
+
+        primaryStage.show();
+    }
+
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
