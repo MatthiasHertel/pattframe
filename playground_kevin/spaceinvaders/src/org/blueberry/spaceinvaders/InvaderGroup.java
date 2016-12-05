@@ -7,6 +7,8 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection.*;
+
 /**
  * Created by KK on 27.11.2016.
  */
@@ -110,36 +112,20 @@ public class InvaderGroup {
 
     private void setNextGroupMoveDirection(){
 
-        switch (moveDirection){
-            case RIGHT: {
-                if (testNextGroupMove(moveDirection)){
-                    lastLeftRightDirection = MoveDirection.RIGHT;
-                }
-                else {
-                    if(testNextGroupMove(MoveDirection.DOWN))
-                        moveDirection = MoveDirection.DOWN;
-                    else
-                        moveDirection = MoveDirection.NONE;
-                }
-                break;
+        if (moveDirection == RIGHT || moveDirection == LEFT){
+            if (testNextGroupMove(moveDirection)){
+                lastLeftRightDirection = moveDirection;
             }
-            case LEFT: {
-                if (testNextGroupMove(moveDirection)){
-                    lastLeftRightDirection = MoveDirection.LEFT;
-                }
-                else {
-                    if(testNextGroupMove(MoveDirection.DOWN))
-                        moveDirection = MoveDirection.DOWN;
-                    else
-                        moveDirection = MoveDirection.NONE;
-                }
-                break;
+            else {
+                if(testNextGroupMove(MoveDirection.DOWN))
+                    moveDirection = DOWN;
+                else
+                    moveDirection = NONE;
             }
-            case DOWN: {
-                moveDirection = lastLeftRightDirection == MoveDirection.LEFT ? MoveDirection.RIGHT : MoveDirection.LEFT;
-                setNextGroupMoveDirection();
-                break;
-            }
+        }
+        else if (moveDirection == DOWN){
+            moveDirection = lastLeftRightDirection == LEFT ? RIGHT : LEFT;
+            setNextGroupMoveDirection();
         }
     }
 
@@ -152,13 +138,12 @@ public class InvaderGroup {
 
             setNextGroupMoveDirection();
 
-            if (moveDirection != MoveDirection.NONE){
+            if (moveDirection != NONE){
                 super.start();
             }
             else {
                 this.cancel();
             }
-
         }
 
         @Override
