@@ -152,7 +152,6 @@ public class InvaderGroup {
 
                 @Override
                 protected Void call() {
-//                    invaders.forEach(Sprite::move());
                     for(Sprite invader: invaders){
                         invader.move(moveGapX, moveGapY);
                     }
