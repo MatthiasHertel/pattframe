@@ -149,6 +149,9 @@ public class InvaderGroup {
 
     public class MoveService extends ScheduledService {
 
+        private int xPixels;
+        private int yPixels;
+
         @Override
         public void start(){
             this.setPeriod(Duration.millis(stepDuration));
@@ -156,6 +159,8 @@ public class InvaderGroup {
             setNextGroupMoveDirection();
 
             if (moveDirection != NONE){
+                xPixels = getMoveXPixels();
+                yPixels = getMoveYPixels();
                 super.start();
             }
             else {
@@ -170,7 +175,7 @@ public class InvaderGroup {
                 @Override
                 protected Void call() {
                     for(Sprite invader: invaders){
-                        invader.move(getMoveXPixels(), getMoveYPixels());
+                        invader.move(xPixels, yPixels);
                     }
                     return null;
                 }
