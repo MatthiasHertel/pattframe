@@ -1,5 +1,7 @@
 package org.blueberry.spaceinvaders;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -11,32 +13,28 @@ public class Invader implements Sprite {
     private Image image1;
     private Image image2;
     private ImageView view;
-    private int positionX;
-    private int positionY;
+    private IntegerProperty positionX;
+    private IntegerProperty positionY;
     private int type;
     private int value;
 
 
     public Invader(int type, int positionX, int positionY){
 
-        this.positionX = positionX;
-        this.positionY = positionY;
+        this.positionY = new SimpleIntegerProperty(positionY);
+        this.positionX = new SimpleIntegerProperty(positionX);
 
 
         switch (type){
 
             case 1 :{
                 this.value = 10;
-//                image1 = new Image(String.valueOf(getClass().getResource("../../../images/invader1a.png")));
-//                image2 = new Image(String.valueOf(getClass().getResource("../../../images/invader1b.png")));
                 image1 = new Image("images/invader1a.png");
                 image2 = new Image("images/invader1b.png");
                 break;
             }
             case 2 :{
                 this.value = 20;
-//                image1 = new Image(String.valueOf(getClass().getResource("../../../images/invader2a.png")));
-//                image2 = new Image(String.valueOf(getClass().getResource("../../../images/invader2b.png")));
                 image1 = new Image("images/invader2a.png");
                 image2 = new Image("images/invader2b.png");
                 break;
@@ -44,8 +42,6 @@ public class Invader implements Sprite {
             }
             case 3 :{
                 this.value = 30;
-//                image1 = new Image(String.valueOf(getClass().getResource("../../../images/invader3a.png")));
-//                image2 = new Image(String.valueOf(getClass().getResource("../../../images/invader3b.png")));
                 image1 = new Image("images/invader3a.png");
                 image2 = new Image("images/invader3b.png");
                 break;
@@ -61,34 +57,18 @@ public class Invader implements Sprite {
         view.setPreserveRatio(true);
 //        view.setImage(image1);
 
-        view.setX(positionX);
-        view.setY(positionY);
-
+        view.xProperty().bind(positionXProperty());
+        view.yProperty().bind(positionYProperty());
     }
+
+
+
 
     @Override
     public void move(int x, int y) {
 
-        switch (InvaderGroup.getInstance().getMoveDirection()){
-            case RIGHT: {
-                positionX += x;
-                view.setX(positionX);
-                break;
-            }
-
-            case LEFT: {
-                positionX -= x;
-                view.setX(positionX);
-                break;
-            }
-            case DOWN: {
-                positionY += y;
-                view.setY(positionY);
-                break;
-            }
-        }
-
-
+        positionX.set(getPositionX() + x);
+        positionY.set(getPositionY() + y);
         changeView();
     }
 
@@ -108,20 +88,38 @@ public class Invader implements Sprite {
         }
     }
 
-
     @Override
     public ImageView getView(){
         return view;
     }
 
+
+
+//    Methoden für Properties positionX/Y
+
+    public IntegerProperty positionXProperty(){
+        return positionX;
+    }
+
+    public IntegerProperty positionYProperty(){
+        return positionY;
+    }
+
+    public void setPositionX(int value){
+        positionX.set(value);
+    }
+    public void setPositionY(int value){
+            positionY.set(value);
+        }
+
     @Override
     public int getPositionX(){
-        return positionX;
+        return positionX.get();
     }
 
     @Override
     public int getPositionY(){
-        return positionY;
+        return positionY.get();
     }
 }
 

@@ -28,8 +28,8 @@ public class InvaderGroup {
     private MoveDirection moveDirection = MoveDirection.RIGHT;
     private MoveDirection lastLeftRightDirection;
 
-    private int moveGapX = 10; //TODO vielleicht config ala Olli
-    private int moveGapY = 10;
+    private int moveXPixels = 10; //TODO vielleicht config ala Olli
+    private int moveYPixels = 10;
 
 
     private int invaderWidth = 30; //TODO anders ermitteln
@@ -68,9 +68,6 @@ public class InvaderGroup {
         stepDuration -= millis;
     }
 
-    public void setMoveDirection(MoveDirection direction){
-        this.moveDirection = direction;
-    }
 
     public MoveDirection getMoveDirection(){
         return moveDirection;
@@ -129,6 +126,26 @@ public class InvaderGroup {
         }
     }
 
+    private int getMoveXPixels(){
+        if (moveDirection == DOWN || moveDirection == NONE){
+            return 0;
+        }
+        if (moveDirection == RIGHT){
+            return moveXPixels;
+        }
+        if (moveDirection == LEFT){
+            return moveXPixels * -1;
+        }
+        return 0;
+    }
+
+    private int getMoveYPixels(){
+        if (moveDirection == DOWN){
+            return moveYPixels;
+        }
+        return 0;
+    }
+
 
     public class MoveService extends ScheduledService {
 
@@ -153,7 +170,7 @@ public class InvaderGroup {
                 @Override
                 protected Void call() {
                     for(Sprite invader: invaders){
-                        invader.move(moveGapX, moveGapY);
+                        invader.move(getMoveXPixels(), getMoveYPixels());
                     }
                     return null;
                 }
