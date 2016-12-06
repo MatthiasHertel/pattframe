@@ -2,6 +2,7 @@ package org.blueberry.spaceinvaders;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -15,9 +16,6 @@ public class Invader implements IGunSprite {
     private ImageView view;
     private IntegerProperty positionX;
     private IntegerProperty positionY;
-
-    private IntegerProperty xMiddle = new SimpleIntegerProperty(0);
-    private IntegerProperty yMiddle = new SimpleIntegerProperty(0);
 
     private int id;
     private int value;
@@ -55,7 +53,6 @@ public class Invader implements IGunSprite {
         }
 
 
-
         view = new ImageView(image1);
         view.setFitHeight(23);
 //        view.setFitWidth(23);
@@ -64,8 +61,6 @@ public class Invader implements IGunSprite {
         view.xProperty().bind(positionXProperty());
         view.yProperty().bind(positionYProperty());
 
-        xMiddle.bind(positionXProperty().add(view.getImage().widthProperty().divide(2)));
-        yMiddle.bind(positionYProperty().add(view.getImage().heightProperty().divide(2)));
     }
 
 
@@ -136,38 +131,8 @@ public class Invader implements IGunSprite {
         return positionY.get();
     }
 
-    @Override
-    public int getXMiddle() {
-        return xMiddle.get();
-    }
-
-    @Override
-    public void setXMiddle(int value) {
-        xMiddle.set(value);
-    }
-
-
-
-    @Override
-    public IntegerProperty xMiddle() {
-        return xMiddle;
-    }
-
-    @Override
-    public int getYMiddle() {
-        return yMiddle.get();
-    }
-
-    @Override
-    public void setYMiddle(int value) {
-        yMiddle.set(value);
-    }
-
-
-
-    @Override
-    public IntegerProperty yMiddle() {
-        return yMiddle;
+    public Rectangle2D getBoundary() {
+        return new Rectangle2D(getPositionX(), getPositionY(), 33, 23);
     }
 
 }

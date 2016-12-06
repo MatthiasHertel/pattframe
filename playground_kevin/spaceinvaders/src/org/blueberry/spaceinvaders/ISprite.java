@@ -1,6 +1,6 @@
 package org.blueberry.spaceinvaders;
 
-import javafx.beans.property.IntegerProperty;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 
 /**
@@ -13,10 +13,5 @@ public interface ISprite {
     int getPositionX();
     int getPositionY();
 
-    int getXMiddle();
-    void setXMiddle(int value);
-    IntegerProperty xMiddle();
-    int getYMiddle();
-    void setYMiddle(int value);
-    IntegerProperty yMiddle();
+    Rectangle2D getBoundary();
 }

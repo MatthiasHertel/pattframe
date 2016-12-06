@@ -3,8 +3,7 @@ package org.blueberry.spaceinvaders;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -21,10 +20,6 @@ public class Bullet implements ISprite {
     private ImageView view;
     private Timeline timeLine;
 
-    private IntegerProperty xMiddle = new SimpleIntegerProperty(0);
-    private IntegerProperty yMiddle = new SimpleIntegerProperty(0);
-
-
 
     public Bullet(int positionX, int positionY){
 
@@ -37,28 +32,13 @@ public class Bullet implements ISprite {
         timeLine = new Timeline();
         timeLine.getKeyFrames().add(keyFrame);
 
-        xMiddle.bind(view.xProperty().add(view.getImage().widthProperty().divide(2)));
-        yMiddle.bind(view.yProperty().add(view.getImage().heightProperty().divide(2)));
     }
 
 
-    private int getDistance(int x1, int y1, int x2, int y2){
-        if(x1 > x2){
-            int x = x2;
-            x2 = x1;
-            x1 = x;
-        }
-        if(y1 > y2){
-            int y = y2;
-            y2 = y1;
-            y1 = y;
-        }
-        return (int) Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
-    }
 
-    private boolean bulletInInvader(IGunSprite invader){
-//        if()
-        return false;
+
+    private boolean intersects(IGunSprite invader){
+        return invader.getBoundary().intersects(getBoundary());
     }
 
     public IGunSprite collisionedInvader(List<IGunSprite> invaders){
@@ -66,8 +46,8 @@ public class Bullet implements ISprite {
         for (IGunSprite invader: invaders){
 //            System.out.println("Distance" + getDistance(invader.getPositionX(), invader.getPositionY(), (int)view.getX(), (int)view.getY()));
 //            System.out.println("Distance" + getDistance(invader.getXMiddle(), invader.getYMiddle(), (int)view.getX(), (int)view.getY()));
-//            if (getDistance(invader.getPositionX(), invader.getPositionY(), (int)view.getX(), (int)view.getY()) < 10){
-            if (getDistance(invader.getXMiddle(), invader.getYMiddle(), getXMiddle(), getYMiddle()) < 20){
+
+              if(intersects(invader)){
                 timeLine.stop();
                 return invader;
             }
@@ -103,39 +83,9 @@ public class Bullet implements ISprite {
         return 0;
     }
 
-    @Override
-    public int getXMiddle() {
-        return xMiddle.get();
-    }
 
     @Override
-    public void setXMiddle(int value) {
-        xMiddle.set(value);
+    public Rectangle2D getBoundary() {
+        return new Rectangle2D(view.getX(), view.getY(), view.getImage().getWidth(), view.getImage().getHeight());
     }
-
-
-
-    @Override
-    public IntegerProperty xMiddle() {
-        return xMiddle;
-    }
-
-    @Override
-    public int getYMiddle() {
-        return yMiddle.get();
-    }
-
-    @Override
-    public void setYMiddle(int value) {
-        yMiddle.set(value);
-    }
-
-
-
-    @Override
-    public IntegerProperty yMiddle() {
-        return yMiddle;
-    }
-
-
 }

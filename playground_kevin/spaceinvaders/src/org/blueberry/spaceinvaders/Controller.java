@@ -3,9 +3,12 @@ package org.blueberry.spaceinvaders;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 
 public class Controller {
@@ -64,6 +67,10 @@ public class Controller {
 
         for (ISprite invader : InvaderGroup.getInstance().getInvaders()){
             display.getChildren().add(invader.getView());
+
+//            Rectangle rect = new Rectangle(invader.getBoundary().getMinX(), invader.getBoundary().getMinY(), invader.getBoundary().getWidth(), invader.getBoundary().getHeight());
+//            rect.setStroke(Color.RED);
+//            display.getChildren().add(rect);
         }
 
         InvaderGroup.getInstance().move();
@@ -95,14 +102,10 @@ public class Controller {
                 System.out.println("Schussanimation fertig");
             });
 
-            ship.getBullet().getTimeLine().currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-//            ship.getBullet().getView().yProperty().addListener((observable1, oldValue1, newValue1) -> {
+//            ship.getBullet().getTimeLine().currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            ship.getBullet().getView().yProperty().addListener((observable1, oldValue1, newValue1) -> {
 
-
-                System.out.println("Bulletycheck middle: " + ship.getBullet().getYMiddle());
-                System.out.println("Bulletycheck posx: " + ship.getBullet().getView().getY());
                 IGunSprite colInvader = ship.getBullet().collisionedInvader(InvaderGroup.getInstance().getInvaders());
-
 
                 if (colInvader != null) {
                     removeBullet(ship.getBullet());
@@ -111,13 +114,10 @@ public class Controller {
                     removeInvader(colInvader);
 
 
-                    System.out.println("Invader getroffen" + colInvader.getPositionX() + "  " + colInvader.getPositionY());
+                    System.out.println("Invader getroffen " + colInvader.getPositionX() + "  " + colInvader.getPositionY());
 
                     colInvader = null;
                 }
-//                System.out.println(ship.getBullet().collisionDetected(InvaderGroup.getInstance().getInvaders()));
-//                System.out.println(ship.getBullet().getTimeLine().getCurrentTime());
-
             });
 
 

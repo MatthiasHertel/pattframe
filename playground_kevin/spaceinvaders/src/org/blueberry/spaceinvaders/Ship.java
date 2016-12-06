@@ -1,7 +1,6 @@
 package org.blueberry.spaceinvaders;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -15,20 +14,14 @@ public class Ship implements IGunSprite {
     private ImageView view;
     private Bullet bullet;
 
-    private IntegerProperty xMiddle = new SimpleIntegerProperty(0);
-    private IntegerProperty yMiddle = new SimpleIntegerProperty(0);
 
     public Ship(){
         positionX = Border.getInstance().getXend() / 2;
         positionY = Border.getInstance().getYend() + 50;
 
-//        view = new ImageView(new Image(String.valueOf(getClass().getResource("../../../images/ship.png"))));
         view = new ImageView(new Image("images/ship.png"));
         view.setX(positionX);
         view.setY(positionY);
-
-        xMiddle.bind(view.xProperty().add(view.getImage().widthProperty().divide(2)));
-        yMiddle.bind(view.yProperty().add(view.getImage().heightProperty().divide(2)));
 
     }
 
@@ -37,10 +30,9 @@ public class Ship implements IGunSprite {
     }
 
     public void newBullet(){
-        System.out.println("xmiddle/ymiddle: " + getXMiddle() + " " + getYMiddle());
-        System.out.println("view x: " + view.getX() );
-        System.out.println("view.getImage().widthProperty() x: " + view.getImage().getWidth() );
-        bullet = new Bullet(getXMiddle(), getYMiddle());
+        int xMiddle = (int) (view.getX() + view.getImage().getWidth() / 2);
+        int yMiddle = (int) (view.getY() + view.getImage().getHeight() / 2);
+        bullet = new Bullet(xMiddle, yMiddle);
     }
 
     public void removeBullet(){
@@ -54,8 +46,6 @@ public class Ship implements IGunSprite {
             positionX += x;
             view.setX(positionX);
         }
-
-
 
     }
 
@@ -83,39 +73,9 @@ public class Ship implements IGunSprite {
     }
 
     @Override
-    public int getXMiddle() {
-        return xMiddle.get();
+    public Rectangle2D getBoundary() {
+        return new Rectangle2D(positionX, positionY, view.getImage().getWidth(), view.getImage().getHeight());
     }
-
-    @Override
-    public void setXMiddle(int value) {
-        xMiddle.set(value);
-    }
-
-
-
-    @Override
-    public IntegerProperty xMiddle() {
-        return xMiddle;
-    }
-
-    @Override
-    public int getYMiddle() {
-        return yMiddle.get();
-    }
-
-    @Override
-    public void setYMiddle(int value) {
-        yMiddle.set(value);
-    }
-
-
-
-    @Override
-    public IntegerProperty yMiddle() {
-        return yMiddle;
-    }
-
 
 
 }
