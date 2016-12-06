@@ -3,6 +3,7 @@ package org.blueberry.spaceinvaders;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 
 /**
  * Created by KK on 28.11.2016.
@@ -13,6 +14,7 @@ public class Ship implements IGunSprite {
     private int positionY;
     private ImageView view;
     private Bullet bullet;
+    private AudioClip shootSound;
 
 
     public Ship(){
@@ -22,6 +24,9 @@ public class Ship implements IGunSprite {
         view = new ImageView(new Image("images/ship.png"));
         view.setX(positionX);
         view.setY(positionY);
+
+//        AudioClip shootSound = new AudioClip("audio/shoot.wav");
+        shootSound = new AudioClip(getClass().getResource("/audio/shoot.wav").toExternalForm());
 
     }
 
@@ -52,6 +57,7 @@ public class Ship implements IGunSprite {
     @Override
     public void shoot() {
 
+        shootSound.play();
         bullet.move(0, 0);
         System.out.println("Schuss");
 
