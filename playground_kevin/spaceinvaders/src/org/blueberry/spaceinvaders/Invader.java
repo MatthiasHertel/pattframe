@@ -8,21 +8,26 @@ import javafx.scene.image.ImageView;
 /**
  * Created by KK on 25.11.2016.
  */
-public class Invader implements Sprite {
+public class Invader implements IGunSprite {
 
     private Image image1;
     private Image image2;
     private ImageView view;
     private IntegerProperty positionX;
     private IntegerProperty positionY;
-    private int type;
+
+    private IntegerProperty xMiddle = new SimpleIntegerProperty(0);
+    private IntegerProperty yMiddle = new SimpleIntegerProperty(0);
+
+    private int id;
     private int value;
 
 
-    public Invader(int type, int positionX, int positionY){
+    public Invader(int id, int type, int positionX, int positionY){
 
         this.positionY = new SimpleIntegerProperty(positionY);
         this.positionX = new SimpleIntegerProperty(positionX);
+        this.id = id;
 
 
         switch (type){
@@ -55,10 +60,12 @@ public class Invader implements Sprite {
         view.setFitHeight(23);
 //        view.setFitWidth(23);
         view.setPreserveRatio(true);
-//        view.setImage(image1);
 
         view.xProperty().bind(positionXProperty());
         view.yProperty().bind(positionYProperty());
+
+        xMiddle.bind(positionXProperty().add(view.getImage().widthProperty().divide(2)));
+        yMiddle.bind(positionYProperty().add(view.getImage().heightProperty().divide(2)));
     }
 
 
@@ -70,6 +77,7 @@ public class Invader implements Sprite {
         positionX.set(getPositionX() + x);
         positionY.set(getPositionY() + y);
         changeView();
+
     }
 
     @Override
@@ -87,6 +95,12 @@ public class Invader implements Sprite {
             view.setImage(image1);
         }
     }
+
+    public int getValue(){
+        return value;
+    }
+
+
 
     @Override
     public ImageView getView(){
@@ -121,5 +135,40 @@ public class Invader implements Sprite {
     public int getPositionY(){
         return positionY.get();
     }
+
+    @Override
+    public int getXMiddle() {
+        return xMiddle.get();
+    }
+
+    @Override
+    public void setXMiddle(int value) {
+        xMiddle.set(value);
+    }
+
+
+
+    @Override
+    public IntegerProperty xMiddle() {
+        return xMiddle;
+    }
+
+    @Override
+    public int getYMiddle() {
+        return yMiddle.get();
+    }
+
+    @Override
+    public void setYMiddle(int value) {
+        yMiddle.set(value);
+    }
+
+
+
+    @Override
+    public IntegerProperty yMiddle() {
+        return yMiddle;
+    }
+
 }
 

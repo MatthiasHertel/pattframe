@@ -19,6 +19,7 @@ public class SpaceInvaders extends Application {
         primaryStage.getIcons().add(new Image("images/beuth-logo.png"));
 
         primaryStage.show();
+        root.requestFocus();
     }
 
 

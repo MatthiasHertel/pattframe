@@ -23,7 +23,7 @@ public class InvaderGroup {
         createGroup();
     }
 
-    private List<Sprite> invaders = new ArrayList<>();
+    private List<IGunSprite> invaders = new ArrayList<>();
     private int stepDuration = 500;
     private MoveDirection moveDirection = MoveDirection.RIGHT;
     private MoveDirection lastLeftRightDirection;
@@ -38,6 +38,7 @@ public class InvaderGroup {
 
 
     private void createGroup(){
+        int id = 0;
         int positionY = 300;
         int invaderType = 1;
 
@@ -47,7 +48,7 @@ public class InvaderGroup {
             if (y == 4) invaderType = 3;
 
             for (int x = 0; x < 11; x++){
-                invaders.add(new Invader(invaderType, x *50, positionY));
+                invaders.add(new Invader(id++, invaderType, x *50, positionY));
             }
 
             positionY -= 50;
@@ -60,12 +61,16 @@ public class InvaderGroup {
         moveService.start();
     }
 
-    public List<Sprite> getInvaders(){
+    public List<IGunSprite> getInvaders(){
         return invaders;
     }
 
     public void setStepDuration(int millis){
         stepDuration -= millis;
+    }
+
+    public void removeInvader(IGunSprite invader){
+        invaders.remove(invader);
     }
 
 
@@ -78,7 +83,7 @@ public class InvaderGroup {
 
         switch (direction){
             case RIGHT: {
-                for(Sprite invader: invaders){
+                for(ISprite invader: invaders){
 //                    if(invader.getPositionX() + invader.getView().getFitWidth() > Border.getInstance().getXend()){
                     if(invader.getPositionX() + 2*invaderWidth > Border.getInstance().getXend()){
                         return false;
@@ -87,7 +92,7 @@ public class InvaderGroup {
                 return true;
             }
             case LEFT: {
-                for(Sprite invader: invaders){
+                for(ISprite invader: invaders){
                     if(invader.getPositionX() - invaderWidth < Border.getInstance().getXstart()){
                         return false;
                     }
@@ -95,7 +100,7 @@ public class InvaderGroup {
                 return true;
             }
             case DOWN: {
-                for(Sprite invader: invaders){
+                for(ISprite invader: invaders){
                     if(invader.getPositionY()  >  Border.getInstance().getYend()){
                         return false;
                     }
@@ -174,7 +179,7 @@ public class InvaderGroup {
 
                 @Override
                 protected Void call() {
-                    for(Sprite invader: invaders){
+                    for(IGunSprite invader: invaders){
                         invader.move(xPixels, yPixels);
                     }
                     return null;
