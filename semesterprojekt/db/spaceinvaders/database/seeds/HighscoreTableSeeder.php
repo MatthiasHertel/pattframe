@@ -15,7 +15,7 @@ class HighscoreTableSeeder extends Seeder
     {
         //
         $faker = Faker::create();
-            	foreach (range(1,10) as $index) {
+            	foreach (range(1,100) as $index) {
         	        DB::table('highscore')->insert([
         	            'name' => $faker->name,
         	            'punkte' => $faker->numberBetween(200,1000),
