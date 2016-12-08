@@ -40,6 +40,9 @@
 
               </tbody>
             </table>
+            <div class="text-center">
+              {!! $highscores->links() !!}
+            </div>
           </div>
       </div>
 
