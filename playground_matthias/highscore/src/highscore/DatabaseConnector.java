@@ -14,8 +14,13 @@ public class DatabaseConnector {
     private Statement myStatement;
     private ObservableList<Highscore> highscoreList;
     public void launchConnection(){
+        //        bind credentials ... TODO come from .env file
+        String url = "jdbc:mysql://192.168.111.111:3306/spaceinvaders";
+        String username = "homestead";
+        String password = "secret";
+
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://192.168.111.111:3306/spaceinvaders", "homestead", "secret");
+            connection = DriverManager.getConnection(url, username, password);
             myStatement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
