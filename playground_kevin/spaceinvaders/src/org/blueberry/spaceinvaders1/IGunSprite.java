@@ -1,4 +1,4 @@
-package org.blueberry.spaceinvaders;
+package org.blueberry.spaceinvaders1;
 
 /**
  * Created by KK on 05.12.2016.

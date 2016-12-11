@@ -1,4 +1,4 @@
-package org.blueberry.spaceinvaders;
+package org.blueberry.spaceinvaders1;
 
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
@@ -7,7 +7,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection.*;
+import static org.blueberry.spaceinvaders1.InvaderGroup.MoveDirection.*;
 
 /**
  * Created by KK on 27.11.2016.

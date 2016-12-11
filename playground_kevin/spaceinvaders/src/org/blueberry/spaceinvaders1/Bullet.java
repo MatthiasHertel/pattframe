@@ -1,4 +1,4 @@
-package org.blueberry.spaceinvaders;
+package org.blueberry.spaceinvaders1;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -19,7 +19,6 @@ public class Bullet implements ISprite {
 
     private ImageView view;
     private Timeline timeLine;
-
 
     public Bullet(int positionX, int positionY){
 

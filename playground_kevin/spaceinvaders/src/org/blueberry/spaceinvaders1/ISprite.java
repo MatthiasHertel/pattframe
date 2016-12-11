@@ -1,4 +1,4 @@
-package org.blueberry.spaceinvaders;
+package org.blueberry.spaceinvaders1;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;

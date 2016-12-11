@@ -1,4 +1,4 @@
-package org.blueberry.spaceinvaders;
+package org.blueberry.spaceinvaders1;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,7 @@ public class SpaceInvaders extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("SpaceInvaders.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../../../views/SpaceInvaders.fxml"));
         primaryStage.setScene(new Scene(root));
 
         primaryStage.setTitle("Space Invaders");

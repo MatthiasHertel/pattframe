@@ -1,4 +1,4 @@
-package org.blueberry.spaceinvaders;
+package org.blueberry.spaceinvaders1;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -25,8 +25,8 @@ public class Ship implements IGunSprite {
         view.setX(positionX);
         view.setY(positionY);
 
-//        AudioClip shootSound = new AudioClip("audio/shoot.wav");
-        shootSound = new AudioClip(getClass().getResource("/audio/shoot.wav").toExternalForm());
+//        AudioClip shootSound = new AudioClip("graphics/shoot.wav");
+        shootSound = new AudioClip(getClass().getResource("/graphics/shoot.wav").toExternalForm());
 
     }
 
