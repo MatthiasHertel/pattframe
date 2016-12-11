@@ -54,9 +54,14 @@ public class DatabaseConnector {
     public void insertHighscore(Highscore highscore){
         try {
             PreparedStatement ps = connection
-                    .prepareStatement("INSERT INTO highscore (name, punkte) VALUES  (?,?);");
+                    .prepareStatement("INSERT INTO highscore (name, punkte, created_at, updated_at ) VALUES  (?,?,?,?);");
             ps.setString(1, highscore.getName());
             ps.setInt(2, highscore.getPunkte());
+            java.util.Date dt = new java.util.Date();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentTime = sdf.format(dt);
+            ps.setString(3, currentTime);
+            ps.setString(4, currentTime);
             ps.executeUpdate();
             ps.close();
 
@@ -68,10 +73,14 @@ public class DatabaseConnector {
     public void updateHighscore(Highscore highscore){
         try {
             PreparedStatement ps = connection
-                    .prepareStatement("UPDATE highscore SET name = ? , punkte = ? WHERE ID = ?");
+                    .prepareStatement("UPDATE highscore SET name = ? , punkte = ? , updated_at = ? WHERE ID = ?");
             ps.setString(1, highscore.getName());
             ps.setInt(2, highscore.getPunkte());
-            ps.setInt(3, highscore.getId());
+            java.util.Date dt = new java.util.Date();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentTime = sdf.format(dt);
+            ps.setString(3, currentTime);
+            ps.setInt(4, highscore.getId());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
