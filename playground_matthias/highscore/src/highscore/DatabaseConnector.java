@@ -21,17 +21,19 @@ public class DatabaseConnector {
 
         try {
             connection = DriverManager.getConnection(url, username, password);
-            myStatement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     public ObservableList<Highscore> getHighscoreList(){
         String query = "SELECT * FROM highscore";
+
         highscoreList = FXCollections.observableArrayList();
 
         try {
-            ResultSet selectionResult = myStatement.executeQuery(query);
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet selectionResult = ps.executeQuery();
+
 
             while (selectionResult.next()){
                 Integer dbId = selectionResult.getInt("ID");
@@ -41,6 +43,8 @@ public class DatabaseConnector {
                 Highscore selectedHighscore = new Highscore(id,name, punkte);
                 highscoreList.add(selectedHighscore);
             }
+
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,29 +52,40 @@ public class DatabaseConnector {
     }
 
     public void insertHighscore(Highscore highscore){
-        String query = "INSERT INTO highscore (name, punkte) VALUES  (\'" + highscore.getName() + "\',\'"+ highscore.getPunkte() +"\' );";
-        System.out.println(query);
         try {
-            myStatement.execute(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public void updateHighscore(Highscore highscore){
-        String query = "UPDATE highscore SET name = \'" + highscore.getName() + "\', punkte = \'" + highscore.getPunkte() + "\' WHERE ID = " + highscore.getId() + ";";
-        System.out.println(query);
-        try {
-            myStatement.execute(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    public void deleteHighscore(Highscore highscore){
-        String query = "DELETE FROM highscore WHERE id = " + highscore.getId() + ";";
-        System.out.println(query);
+            PreparedStatement ps = connection
+                    .prepareStatement("INSERT INTO highscore (name, punkte) VALUES  (?,?);");
+            ps.setString(1, highscore.getName());
+            ps.setInt(2, highscore.getPunkte());
+            ps.executeUpdate();
+            ps.close();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateHighscore(Highscore highscore){
         try {
-            myStatement.execute(query);
+            PreparedStatement ps = connection
+                    .prepareStatement("UPDATE highscore SET name = ? , punkte = ? WHERE ID = ?");
+            ps.setString(1, highscore.getName());
+            ps.setInt(2, highscore.getPunkte());
+            ps.setInt(3, highscore.getId());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteHighscore(Highscore highscore){
+        try {
+            PreparedStatement ps = connection
+                    .prepareStatement("DELETE FROM highscore WHERE id = ?;");
+            ps.setInt(1, highscore.getId());
+            ps.executeUpdate();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,10 +93,10 @@ public class DatabaseConnector {
 
     public void resetHighscore () {
         String query = "TRUNCATE highscore;";
-        System.out.println(query);
-
         try {
-            myStatement.execute(query);
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.executeUpdate();
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
