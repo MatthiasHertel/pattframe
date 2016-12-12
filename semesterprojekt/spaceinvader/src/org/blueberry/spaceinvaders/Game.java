@@ -78,4 +78,8 @@ public class Game {
         loadAssets(theme);
         invaderGroup.createGroup(Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x")), Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.y")));
     }
+
+    public void play(){
+        invaderGroup.move();
+    }
 }

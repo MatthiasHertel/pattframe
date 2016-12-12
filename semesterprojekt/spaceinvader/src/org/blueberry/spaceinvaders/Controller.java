@@ -27,9 +27,9 @@ public class Controller {
     private void handleButtonAction(ActionEvent event){
 //        InvaderGroup.getInstance().setStepDuration(50);
 
-        for (Invader invader: Game.getInstance().getInvaderGroup().getInvaderList()){
-            invader.move(10, 10);
-        }
+//        for (Invader invader: Game.getInstance().getInvaderGroup().getInvaderList()){
+//            invader.move(10, 10);
+//        }
 
     }
 
@@ -52,6 +52,9 @@ public class Controller {
         game.createInvaderGroup();
 
         addInvadersToPane(display, (game.getInvaderGroup().getInvaderList()));
+
+        game.play();
+
 
 //        display.getChildren().add(new ImageView(game.getInvader1a()));
 

@@ -15,6 +15,9 @@ public class Invader extends ImageView {
     private Image image2;
 
     public Invader(Image image1, Image image2, int positionX, int positionY, int value){
+
+        this.value = value;
+
         this.image1 = image1;
         this.image2 = image2;
 
@@ -22,8 +25,6 @@ public class Invader extends ImageView {
         this.setY(positionY);
         this.setImage(this.image1);
         this.setCache(true);
-        this.value = value;
-
         this.setPreserveRatio(true);
 
         int invaderHeigthSuggestion = Integer.parseInt(SpaceInvaders.getSettings("invader.height"));
@@ -38,8 +39,6 @@ public class Invader extends ImageView {
             this.width = invaderWidthSuggestion;
             this.height = (int) this.getLayoutBounds().getHeight();
         }
-
-
     }
 
 
