@@ -1,5 +1,6 @@
 package org.blueberry.spaceinvaders;
 
+import javafx.animation.AnimationTimer;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.scene.image.Image;
@@ -32,7 +33,7 @@ public class InvaderGroup {
     private MoveDirection moveDirection = MoveDirection.RIGHT;
     private MoveDirection lastLeftRightDirection;
 
-    private int stepDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.2"));
+    private int stepDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.3"));
 
     private InvaderGroup() {
 //        createGroup();
@@ -99,9 +100,12 @@ public class InvaderGroup {
 
 
     public void move(){
-        MoveService moveService = new MoveService();
-        moveService.setDelay(Duration.seconds(3));
-        moveService.start();
+//        MoveService moveService = new MoveService();
+//        moveService.setDelay(Duration.seconds(3));
+//        moveService.start();
+
+        MoveAnimation moveAnimation = new MoveAnimation();
+        moveAnimation.start();
     }
 
 
@@ -218,6 +222,41 @@ public class InvaderGroup {
         }
     }
 
+
+    public class MoveAnimation extends AnimationTimer{
+
+        long lastTime = System.nanoTime();
+        private int xPixels;
+        private int yPixels;
+
+        @Override
+        public void handle(long now) {
+
+            if (now > lastTime + stepDuration * 1000000){
+
+                lastTime = now;
+
+                setNextGroupMoveDirection();
+
+                if (moveDirection != NONE){
+                    xPixels = getMoveXPixels();
+                    yPixels = getMoveYPixels();
+
+                    for(Invader invader: invaderList){
+                        invader.move(xPixels, yPixels);
+                    }
+                }
+                else {
+                    this.stop();
+                }
+
+
+            }
+
+            System.out.println("LastTime: " + lastTime);
+
+        }
+    }
 
 
 
