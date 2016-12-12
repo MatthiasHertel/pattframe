@@ -27,31 +27,25 @@ public class Controller {
     private void handleButtonAction(ActionEvent event){
 //        InvaderGroup.getInstance().setStepDuration(50);
 
-//        for (Invader invader: Game.getInstance().getInvaderGroup().getInvaderList()){
-//            invader.move(10, 10);
-//        }
-
     }
 
-    public void addInvadersToPane(AnchorPane anchorPane, List<Invader> invaderList){
 
-        for (Invader invader: invaderList){
-            anchorPane.getChildren().add(invader);
-        }
-    }
+
+
 
     @FXML
     public void initialize() {
 
-//        scoreLabel1.setText("bla");
-        scoreLabel1.setText(SpaceInvaders.getSettings("invader.gap.x"));
+
 
         Game game = Game.getInstance();
 //        game.setTheme("theme1"); //optional we
 
-        game.createInvaderGroup();
+        game.setPane(display);
+        game.constructGame();
 
-        addInvadersToPane(display, (game.getInvaderGroup().getInvaderList()));
+
+//        addInvadersToPane(display, (game.getInvaderGroup().getInvaderList()));
 
         game.play();
 
