@@ -31,8 +31,16 @@ public class Ship extends ImageView{
 
 
 
-    public void move(int x, int y) {
+    public void move(InvaderGroup.MoveDirection direction) {
         int positionX = (int)getX();
+        int x = 0;
+
+        if (direction == InvaderGroup.MoveDirection.RIGHT){
+            x = Integer.parseInt(SpaceInvaders.getSettings("ship.move.step"));
+        }
+        else  if (direction == InvaderGroup.MoveDirection.LEFT){
+            x = Integer.parseInt(SpaceInvaders.getSettings("ship.move.step")) * -1;
+        }
 
         if(positionX + x + getFitWidth() < borderXEend && positionX + x > 0){
             positionX += x;
@@ -44,8 +52,8 @@ public class Ship extends ImageView{
 
 
         Game.getInstance().getAudioAsset("shipShoot").play();
+        bullet.move(InvaderGroup.MoveDirection.UP);
 
-//        bullet.move(0, 0);
         System.out.println("Schuss");
 
     }

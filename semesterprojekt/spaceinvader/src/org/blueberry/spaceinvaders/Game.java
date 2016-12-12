@@ -1,14 +1,24 @@
 package org.blueberry.spaceinvaders;
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.Timeline;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.blueberry.spaceinvaders.Game.GameStatus.*;
+import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection.*;
+
 
 /**
  * Created by KK on 09.12.2016.
@@ -25,9 +35,14 @@ public class Game {
 
     private Map<String, Image> imageAssets = new HashMap<String, Image>();
     private Map<String, AudioClip> audioAssets = new HashMap<String, AudioClip>();
+    private List<Timeline> allActiveTimeLines = new ArrayList<>();
     private InvaderGroup invaderGroup;
     private AnchorPane display;
     private Ship ship;
+    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
+//    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(GameStatus.PAUSE);
+
+    private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.3"));
 
 
 
@@ -85,28 +100,64 @@ public class Game {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case LEFT:
-                        ship.move(-10 , 0);
+                        ship.move(LEFT);
                         break;
                     case RIGHT:
-                        ship.move(10, 0);
+                        ship.move(RIGHT);
                         break;
                     case SPACE:
                         tryShipShoot();
                         break;
+                    case P:
+                        gameStatus.set(gameStatus.get() == PLAY ? PAUSE : PLAY);
+                        break;
                 }
+
             }
+        });
+
+        gameStatus.addListener((observable, oldValue, newValue) -> {
+            switch (newValue){
+                case PLAY:
+                    playActiveTimeLines(allActiveTimeLines);
+                    break;
+                case PAUSE:
+                    pauseActiveTimeLines(allActiveTimeLines);
+                    break;
+                case GAMEOVER : display.getChildren().add(new Label("GameOver!!"));
+                break;
+
+            }
+
+            display.getChildren().add(new Label(newValue.toString()));
         });
     }
 
+    private void pauseActiveTimeLines(List<Timeline> timeLines){
+        timeLines.forEach(Timeline::pause);
+        System.out.println("Anzahl aktiver TimeLines: " + timeLines.size());
+    }
+
+    private void playActiveTimeLines(List<Timeline> timeLines){
+        timeLines.forEach(Timeline::play);
+    }
+
+    public List<Timeline> getAllActiveTimeLines(){
+        return this.allActiveTimeLines;
+    }
+
+    private void removeBullet(Bullet bullet){
+        allActiveTimeLines.remove(bullet.getTimeLine());
+        display.getChildren().remove(bullet);
+        ship.removeBullet();
+    }
 
     private void tryShipShoot(){
 
-        if (ship.getBullet() == null){
+        if (ship.getBullet() == null && gameStatus.get() == PLAY){
             ship.newBullet();
             ship.getBullet().getTimeLine().setOnFinished(event -> {
-                display.getChildren().remove(ship.getBullet());
-                ship.removeBullet();
-//                removeBullet(ship.getBullet());
+                removeBullet(ship.getBullet());
                 System.out.println("Schussanimation fertig");
             });
 //
@@ -156,6 +207,57 @@ public class Game {
     }
 
     public void play(){
-        invaderGroup.move();
+
+        GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
+        gameAnimationTimer.start();
+
     }
+
+
+    public class GameAnimationTimer extends AnimationTimer {
+
+        long lastTime = System.nanoTime();
+
+        @Override
+        public void handle(long now) {
+
+            if (gameStatus.get() == PLAY) {
+
+                if (now > lastTime + invaderMoveDuration * 1000000) {
+                    lastTime = now;
+
+                    invaderGroup.move();
+
+                }
+
+//                System.out.println("LastTime: " + lastTime);
+
+            }
+        }
+    }
+
+
+
+
+    public final GameStatus getGameStatus() {
+        return gameStatus.get();
+    }
+
+    public final void setGameStatus(GameStatus status) {
+        gameStatusProperty().set(status);
+    }
+
+    public final ObjectProperty<GameStatus> gameStatusProperty() {
+        return gameStatus;
+    }
+
+
+
+    public enum GameStatus{
+        PLAY,
+        PAUSE,
+        GAMEOVER;
+    }
+
+
 }

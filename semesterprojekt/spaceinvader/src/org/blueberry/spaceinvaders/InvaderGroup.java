@@ -60,7 +60,7 @@ public class InvaderGroup {
         invaderList = invadersToList();
     }
 
-    //adds Invader, depends from typ(1,2,3) and values from application.properties
+    //adds Invader, depends from typ(1,2,3) and values from application.properties - called from createGroup
     private void addNewInvadersToGroup(List<List<Invader>> invaderGroup, int invaderType, int positionX, int positionY, int invaderXGap, int invaderYGap, int invaderWidth, int invaderHeight, int invaderPerLine){
         int invaderValue;
         Image image1;
@@ -100,12 +100,17 @@ public class InvaderGroup {
 
 
     public void move(){
-//        MoveService moveService = new MoveService();
-//        moveService.setDelay(Duration.seconds(3));
-//        moveService.start();
 
-        MoveAnimation moveAnimation = new MoveAnimation();
-        moveAnimation.start();
+        setNextGroupMoveDirection();
+
+        if (moveDirection != NONE){
+            for(Invader invader: invaderList){
+                invader.move(moveDirection);
+            }
+        }
+        else{
+            Game.getInstance().setGameStatus(Game.GameStatus.GAMEOVER);
+        }
     }
 
 
@@ -160,111 +165,13 @@ public class InvaderGroup {
         }
     }
 
-    private int getMoveXPixels(){
-
-        if (moveDirection == DOWN || moveDirection == NONE){
-            return 0;
-        }
-
-        int moveXPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.xpixel"));
-        if (moveDirection == RIGHT){
-            return moveXPixels;
-        }
-        if (moveDirection == LEFT){
-            return moveXPixels * -1;
-        }
-        return 0;
-    }
-
-    private int getMoveYPixels(){
-        if (moveDirection == DOWN){
-            return Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"));
-        }
-        return 0;
-    }
-    
-    
-    
-
-    public class MoveService extends ScheduledService {
-
-        private int xPixels;
-        private int yPixels;
-
-        @Override
-        public void start(){
-            this.setPeriod(Duration.millis(stepDuration));
-
-            setNextGroupMoveDirection();
-
-            if (moveDirection != NONE){
-                xPixels = getMoveXPixels();
-                yPixels = getMoveYPixels();
-                super.start();
-            }
-            else {
-                this.cancel();
-            }
-        }
-
-        @Override
-        protected Task createTask() {
-            return new Task() {
-
-                @Override
-                protected Void call() {
-                    for(Invader invader: invaderList){
-                        invader.move(xPixels, yPixels);
-                    }
-                    return null;
-                }
-            };
-        }
-    }
-
-
-    public class MoveAnimation extends AnimationTimer{
-
-        long lastTime = System.nanoTime();
-        private int xPixels;
-        private int yPixels;
-
-        @Override
-        public void handle(long now) {
-
-            if (now > lastTime + stepDuration * 1000000){
-
-                lastTime = now;
-
-                setNextGroupMoveDirection();
-
-                if (moveDirection != NONE){
-                    xPixels = getMoveXPixels();
-                    yPixels = getMoveYPixels();
-
-                    for(Invader invader: invaderList){
-                        invader.move(xPixels, yPixels);
-                    }
-                }
-                else {
-                    this.stop();
-                }
-
-
-            }
-
-            System.out.println("LastTime: " + lastTime);
-
-        }
-    }
-
-
 
 
     public enum MoveDirection{
         RIGHT,
         LEFT,
         DOWN,
+        UP,
         NONE;
     }
 

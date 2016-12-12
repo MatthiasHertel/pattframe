@@ -2,6 +2,9 @@ package org.blueberry.spaceinvaders;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection;
+import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection.*;
+
 
 /**
  * Created by KK on 09.12.2016.
@@ -13,6 +16,9 @@ public class Invader extends ImageView {
     private int height;
     private Image image1;
     private Image image2;
+
+    private int moveXPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.xpixel"));
+    private int moveYPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"));
 
     public Invader(Image image1, Image image2, int positionX, int positionY, int value){
 
@@ -47,9 +53,16 @@ public class Invader extends ImageView {
         this.setImage(this.getImage() == image1 ? image2 : image1);
     }
 
-    public void move(int x, int y) {
-        this.setX(this.getX() + x);
-        this.setY(this.getY() + y);
+    public void move(MoveDirection direction) {
+
+        switch (direction){
+            case DOWN: this.setY(this.getY() + moveYPixels);
+                break;
+            case RIGHT: this.setX(this.getX() + moveXPixels);
+                break;
+            case LEFT: this.setX(this.getX() + moveXPixels * -1);
+        }
+
         changeView();
     }
 
