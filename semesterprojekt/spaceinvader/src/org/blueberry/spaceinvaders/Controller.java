@@ -16,6 +16,9 @@ public class Controller {
     @FXML
     private Label scoreLabel1;
 
+    @FXML
+    private Label livesLabel;
+
 
 
 
@@ -39,6 +42,7 @@ public class Controller {
         game.constructGame();
 
         scoreLabel1.textProperty().bind(game.getPlayer().scoreProperty().asString());
+        livesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
 
         game.play();
 

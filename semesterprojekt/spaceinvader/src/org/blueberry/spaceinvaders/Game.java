@@ -11,10 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.blueberry.spaceinvaders.Game.GameStatus.*;
 import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection.*;
@@ -96,6 +93,7 @@ public class Game {
         loadAssets(SpaceInvaders.getSettings("game.standardtheme"));
         player = new Player();
 
+
     }
 
     public void constructGame(){
@@ -140,10 +138,17 @@ public class Game {
                 case GAMEOVER :
                     Label finshLabel = new Label("GameOver");
                     finshLabel.setLayoutX(100);
-                    finshLabel.setLayoutY(100);
+                    finshLabel.setLayoutY(500);
                     display.getChildren().add(finshLabel);
                 break;
 
+            }
+        });
+
+        player.livesProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Player Lives Changed: " + newValue);
+            if (newValue.intValue() == 0){
+                gameStatus.set(GAMEOVER);
             }
         });
     }
@@ -190,10 +195,24 @@ public class Game {
     }
 
     private void tryInvaderShoot(){
+
         if (currentInvaderBulletsCount < maxInvaderBulletsCount){
 
+            Random random = new Random();
+            int randomInt = random.nextInt(invaderGroup.getInvaderList().size());
+
+            System.out.println("RandomInt: " + randomInt);
+
+            // einen Invader bekommen, der momentan nicht schießt
+            Invader tempInvader = invaderGroup.getInvaderList().get(randomInt);
+            while (tempInvader.getBullet() != null){
+                randomInt = random.nextInt(invaderGroup.getInvaderList().size());
+                tempInvader = invaderGroup.getInvaderList().get(randomInt);
+            }
+
             currentInvaderBulletsCount++;
-            Invader shootInvader = invaderGroup.getInvaderList().get(4);
+            final Invader shootInvader = tempInvader;
+
             shootInvader.newBullet();
             shootInvader.getBullet().getTimeLine().setOnFinished(event -> {
                 removeBullet(shootInvader);
@@ -246,7 +265,8 @@ public class Game {
 
     public class GameAnimationTimer extends AnimationTimer {
 
-        long lastTime = System.nanoTime();
+        long invaderMoveLastTime = System.nanoTime();
+        long invaderShootLastTime = System.nanoTime();
         int count = 0;
 
         @Override
@@ -255,25 +275,38 @@ public class Game {
             if (gameStatus.get() == PLAY) {
 
                 //InvaderGroup bewegen (Zeitinterval application.properties: invader.move.speed.1)
-                if (now > lastTime + invaderMoveDuration * 1000000) {
-                    lastTime = now;
+                if (now > invaderMoveLastTime + invaderMoveDuration * 1000000) {
+                    invaderMoveLastTime = now;
 
                     count++;
 
                     invaderGroup.move();
 
-                    if (count > 10){
-                        count = 0;
-                        tryInvaderShoot();
-                    }
+//                    if (count > 10){
+//                        count = 0;
+//                        tryInvaderShoot();
+//                    }
 
                 }
+
+                tryInvaderShoot();
+
+//                //Invaderschuss absetzen
+//                if (now > (invaderShootLastTime + 100* 1000000)){
+//
+//                    System.out.println("Time: " + new Date().toString()  + "InvaderShootLastTime: " + (invaderShootLastTime + 5000* 1000000) + " now: " + now);
+//
+//
+//                    invaderShootLastTime = now;
+//                    tryInvaderShoot();
+//                }
 
                 // hat die schiffskanone einen invader getroffen
                 if(ship.getBullet() != null){
                     Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
                     if(collisionedInvader != null){
                         System.out.println("Invader getroffen");
+                        getAudioAsset("invaderKilled").play();
                         removeBullet(ship);
 
                         player.setScore(player.getScore() + collisionedInvader.getValue());
@@ -282,7 +315,22 @@ public class Game {
 
                 }
 
-//                System.out.println("LastTime: " + lastTime);
+
+                // hat ein Invader das ship getroffen
+                for (Invader invader: invaderGroup.getInvaderList()){
+                    if (invader.getBullet() != null){
+                        if (ship.intersects(invader.getBullet().getLayoutBounds())){
+                            System.out.println("Ship getroffen");
+                            getAudioAsset("shipExplosion").play();
+                            player.setlives(player.getlives() - 1);
+                            removeBullet(invader);
+                            currentInvaderBulletsCount--;
+                            break;
+                        }
+                    }
+                }
+
+//                System.out.println("LastTime: " + invaderMoveLastTime);
 
 
 

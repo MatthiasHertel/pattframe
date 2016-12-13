@@ -33,6 +33,9 @@ public class Ship extends ImageView implements IGunSprite{
 
     @Override
     public void move(InvaderGroup.MoveDirection direction) {
+        if (Game.getInstance().getGameStatus() != Game.GameStatus.PLAY){
+            return;
+        }
         int positionX = (int)getX();
         int x = 0;
 
