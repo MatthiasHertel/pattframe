@@ -3,12 +3,10 @@ package org.blueberry.spaceinvaders;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import static org.blueberry.spaceinvaders.Game.GameStatus.*;
 import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection;
 
 

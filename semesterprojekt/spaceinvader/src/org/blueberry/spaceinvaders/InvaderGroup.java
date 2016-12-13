@@ -1,11 +1,7 @@
 package org.blueberry.spaceinvaders;
 
-import javafx.animation.AnimationTimer;
-import javafx.concurrent.ScheduledService;
-import javafx.concurrent.Task;
-import javafx.scene.image.Image;
-import javafx.util.Duration;
 
+import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.List;
 

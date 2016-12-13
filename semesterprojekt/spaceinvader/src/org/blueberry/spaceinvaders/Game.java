@@ -39,10 +39,14 @@ public class Game {
     private InvaderGroup invaderGroup;
     private AnchorPane display;
     private Ship ship;
+    private Player player;
     private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
 //    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(GameStatus.PAUSE);
 
     private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.3"));
+
+
+    private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
 
 
 
@@ -86,6 +90,7 @@ public class Game {
 
     private Game(){
         loadAssets(SpaceInvaders.getSettings("game.standardtheme"));
+        player = new Player();
 
     }
 
@@ -94,6 +99,10 @@ public class Game {
         addInvadersToPane(display, invaderGroup.getInvaderList());
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
+
+
+        gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
+        display.getChildren().add(gameStatusLabel); //TODO: raus damit
 
         display.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -124,12 +133,14 @@ public class Game {
                 case PAUSE:
                     pauseActiveTimeLines(allActiveTimeLines);
                     break;
-                case GAMEOVER : display.getChildren().add(new Label("GameOver!!"));
+                case GAMEOVER :
+                    Label finshLabel = new Label("GameOver");
+                    finshLabel.setLayoutX(100);
+                    finshLabel.setLayoutY(100);
+                    display.getChildren().add(finshLabel);
                 break;
 
             }
-
-            display.getChildren().add(new Label(newValue.toString()));
         });
     }
 
@@ -147,9 +158,15 @@ public class Game {
     }
 
     private void removeBullet(Bullet bullet){
+        bullet.getTimeLine().stop();
         allActiveTimeLines.remove(bullet.getTimeLine());
         display.getChildren().remove(bullet);
         ship.removeBullet();
+    }
+
+    private void removeInvader(Invader invader){
+        display.getChildren().remove(invader);
+        invaderGroup.getInvaderList().remove(invader);
     }
 
     private void tryShipShoot(){
@@ -160,30 +177,10 @@ public class Game {
                 removeBullet(ship.getBullet());
                 System.out.println("Schussanimation fertig");
             });
-//
-////            ship.getBullet().getTimeLine().currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-//            ship.getBullet().getView().yProperty().addListener((observable1, oldValue1, newValue1) -> {
-//
-//                IGunSprite colInvader = ship.getBullet().collisionedInvader(InvaderGroup.getInstance().getInvaders());
-//
-//                if (colInvader != null) {
-//                    removeBullet(ship.getBullet());
-//
-//                    player.setScore(player.getScore() + ((Invader)colInvader).getValue());
-//                    removeInvader(colInvader);
-//
-//
-//                    System.out.println("Invader getroffen " + colInvader.getPositionX() + "  " + colInvader.getPositionY());
-//
-//                    colInvader = null;
-//                }
-//            });
-
 
             display.getChildren().add(ship.getBullet());
             ship.shoot();
         }
-
     }
 
 
@@ -213,6 +210,15 @@ public class Game {
 
     }
 
+    private Invader detectCollisionedInvader(Bullet bullet, List<Invader> invaders){
+        for(Invader invader : invaders){
+            if(bullet.intersects(invader.getLayoutBounds())){
+                return invader;
+            }
+        }
+        return null;
+    }
+
 
     public class GameAnimationTimer extends AnimationTimer {
 
@@ -223,14 +229,35 @@ public class Game {
 
             if (gameStatus.get() == PLAY) {
 
+                //InvaderGroup bewegen (Zeitinterval application.properties: invader.move.speed.1)
                 if (now > lastTime + invaderMoveDuration * 1000000) {
                     lastTime = now;
 
                     invaderGroup.move();
+                }
+
+                // hat die schiffskanone einen invader getroffen
+                if(ship.getBullet() != null){
+                    Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
+                    if(collisionedInvader != null){
+                        System.out.println("Invader getroffen");
+                        removeBullet(ship.getBullet());
+
+                        player.setScore(player.getScore() + collisionedInvader.getValue());
+                        removeInvader(collisionedInvader);
+                    }
 
                 }
 
 //                System.out.println("LastTime: " + lastTime);
+
+
+
+
+
+
+
+
 
             }
         }
@@ -251,6 +278,9 @@ public class Game {
         return gameStatus;
     }
 
+    public Player getPlayer(){
+        return player;
+    }
 
 
     public enum GameStatus{

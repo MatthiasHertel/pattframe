@@ -44,6 +44,8 @@ public class Controller {
         game.setPane(display);
         game.constructGame();
 
+        scoreLabel1.textProperty().bind(game.getPlayer().scoreProperty().asString());
+
 
 //        addInvadersToPane(display, (game.getInvaderGroup().getInvaderList()));
 
