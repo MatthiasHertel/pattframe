@@ -7,8 +7,5 @@
 <StackPane id="start-pane"
            xmlns="http://javafx.com/javafx/8.0.112"
            xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.oliverhuckfeldt.controllers.StartController">
-   <children>
-      <Button id="start-button" onAction="#toEditor" text="Start" />
-   </children>
+           fx:controller="com.oliverhuckfeldt.controllers.WelcomeController">
 </StackPane>

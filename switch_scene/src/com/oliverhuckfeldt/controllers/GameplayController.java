@@ -6,17 +6,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-public class EditorController {
+public class GameplayController {
 
     @FXML
     public void initialize() {
-        System.out.println("Editor!");
+        System.out.println("Settings!");
     }
 
     @FXML
-    public void toSettings() throws Exception {
-        Pane root = FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
-        Scene scene = new Scene(root, 400, 300);
+    public void toEditor() throws Exception {
+        Pane root = FXMLLoader.load(getClass().getResource("/fxml/gameplay.fxml"));
+        Scene scene = new Scene(root, 600, 300);
         Main.stage.setScene(scene);
     }
 }
