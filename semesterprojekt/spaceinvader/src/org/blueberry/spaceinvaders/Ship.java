@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 /**
  * Created by KK on 12.12.2016.
  */
-public class Ship extends ImageView{
+public class Ship extends ImageView implements IGunSprite{
 
     private int borderXSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xstart"));
     private int borderXEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xend"));
@@ -31,6 +31,7 @@ public class Ship extends ImageView{
 
 
 
+    @Override
     public void move(InvaderGroup.MoveDirection direction) {
         int positionX = (int)getX();
         int x = 0;
@@ -59,16 +60,19 @@ public class Ship extends ImageView{
     }
 
 
+    @Override
     public Bullet getBullet(){
         return bullet;
     }
 
+    @Override
     public void newBullet(){
         int bulletPositionX = (int) (getX() + Integer.parseInt(SpaceInvaders.getSettings("ship.width")) / 2);
         int bulletPositionY = (int)getY()-30;
         bullet = new Bullet(Game.getInstance().getImageAsset("shipBullet"), bulletPositionX, bulletPositionY);
     }
 
+    @Override
     public void removeBullet(){
         bullet = null;
     }

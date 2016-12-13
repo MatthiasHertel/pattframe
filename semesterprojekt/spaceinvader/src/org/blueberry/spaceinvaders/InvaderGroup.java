@@ -161,6 +161,13 @@ public class InvaderGroup {
         }
     }
 
+    public void removeInvader(Invader invader){
+        invaderList.remove(invader);
+        for (List<Invader> iList : invaders){
+            iList.remove(invader);
+        }
+    }
+
 
 
     public enum MoveDirection{

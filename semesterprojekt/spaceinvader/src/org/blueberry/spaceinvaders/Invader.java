@@ -9,13 +9,15 @@ import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection.*;
 /**
  * Created by KK on 09.12.2016.
  */
-public class Invader extends ImageView {
+public class Invader extends ImageView implements IGunSprite{
 
     private int value;
     private int width;
     private int height;
     private Image image1;
     private Image image2;
+
+    private Bullet bullet;
 
     private int moveXPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.xpixel"));
     private int moveYPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"));
@@ -53,6 +55,7 @@ public class Invader extends ImageView {
         this.setImage(this.getImage() == image1 ? image2 : image1);
     }
 
+    @Override
     public void move(MoveDirection direction) {
 
         switch (direction){
@@ -65,6 +68,33 @@ public class Invader extends ImageView {
 
         changeView();
     }
+
+    public void shoot() {
+
+
+//        Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound
+        bullet.move(MoveDirection.DOWN);
+
+        System.out.println("InvaderSchuss");
+    }
+
+    @Override
+    public void newBullet(){
+        int bulletPositionX = (int) (getX() + width / 2);
+        int bulletPositionY = (int)getY();
+        bullet = new Bullet(Game.getInstance().getImageAsset("invaderBullet"), bulletPositionX, bulletPositionY);
+    }
+
+    @Override
+    public Bullet getBullet(){
+        return bullet;
+    }
+
+    @Override
+    public void removeBullet(){
+        bullet = null;
+    }
+
 
     public int getValue(){
         return value;

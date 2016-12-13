@@ -13,7 +13,7 @@ import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection;
 /**
  * Created by KK on 12.12.2016.
  */
-public class Bullet extends ImageView {
+public class Bullet extends ImageView implements ISprite{
 
     private Timeline timeLine;
 
@@ -32,9 +32,10 @@ public class Bullet extends ImageView {
         return timeLine;
     }
 
+    @Override
     public void move(MoveDirection direction){
         int duration = Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.duration"));
-        int yEndPosition = direction == MoveDirection.DOWN ? Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend")) : Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.ystart"));
+        int yEndPosition = direction == MoveDirection.DOWN ? Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend")) + 100 : Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.ystart"));
 
         KeyValue keyValue = new KeyValue(this.yProperty(), yEndPosition);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(duration), keyValue);

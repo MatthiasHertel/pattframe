@@ -40,10 +40,12 @@ public class Game {
     private AnchorPane display;
     private Ship ship;
     private Player player;
+    private int currentInvaderBulletsCount = 0;
+    private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
     private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
 //    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(GameStatus.PAUSE);
 
-    private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.3"));
+    private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.2"));
 
 
     private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
@@ -58,6 +60,8 @@ public class Game {
         imageAssets.put("invader2b", new Image(theme + "/graphics/invader2b.png"));
         imageAssets.put("invader3a", new Image(theme + "/graphics/invader3a.png"));
         imageAssets.put("invader3b", new Image(theme + "/graphics/invader3b.png"));
+
+        imageAssets.put("invaderBullet", new Image(theme + "/graphics/invader_bullet.png"));
 
         imageAssets.put("shipBullet", new Image(theme + "/graphics/ship_bullet.png"));
         imageAssets.put("ship", new Image(theme + "/graphics/ship.png"));
@@ -157,16 +161,18 @@ public class Game {
         return this.allActiveTimeLines;
     }
 
-    private void removeBullet(Bullet bullet){
-        bullet.getTimeLine().stop();
-        allActiveTimeLines.remove(bullet.getTimeLine());
-        display.getChildren().remove(bullet);
-        ship.removeBullet();
+    private void removeBullet(IGunSprite sprite){
+        System.out.println("RemoveBulletAnfang Anzahl aktiver TimeLines: " + allActiveTimeLines.size());
+        sprite.getBullet().getTimeLine().stop();
+        allActiveTimeLines.remove(sprite.getBullet().getTimeLine());
+        display.getChildren().remove(sprite.getBullet());
+        sprite.removeBullet();
+        System.out.println("RemoveBulletEndeAnzahl aktiver TimeLines: " + allActiveTimeLines.size());
     }
 
     private void removeInvader(Invader invader){
         display.getChildren().remove(invader);
-        invaderGroup.getInvaderList().remove(invader);
+        invaderGroup.removeInvader(invader);
     }
 
     private void tryShipShoot(){
@@ -174,13 +180,31 @@ public class Game {
         if (ship.getBullet() == null && gameStatus.get() == PLAY){
             ship.newBullet();
             ship.getBullet().getTimeLine().setOnFinished(event -> {
-                removeBullet(ship.getBullet());
+                removeBullet(ship);
                 System.out.println("Schussanimation fertig");
             });
 
             display.getChildren().add(ship.getBullet());
             ship.shoot();
         }
+    }
+
+    private void tryInvaderShoot(){
+        if (currentInvaderBulletsCount < maxInvaderBulletsCount){
+
+            currentInvaderBulletsCount++;
+            Invader shootInvader = invaderGroup.getInvaderList().get(4);
+            shootInvader.newBullet();
+            shootInvader.getBullet().getTimeLine().setOnFinished(event -> {
+                removeBullet(shootInvader);
+                currentInvaderBulletsCount--;
+                System.out.println("Invader Schussanimation fertig");
+            });
+
+            display.getChildren().add(shootInvader.getBullet());
+            shootInvader.shoot();
+        }
+
     }
 
 
@@ -223,6 +247,7 @@ public class Game {
     public class GameAnimationTimer extends AnimationTimer {
 
         long lastTime = System.nanoTime();
+        int count = 0;
 
         @Override
         public void handle(long now) {
@@ -233,7 +258,15 @@ public class Game {
                 if (now > lastTime + invaderMoveDuration * 1000000) {
                     lastTime = now;
 
+                    count++;
+
                     invaderGroup.move();
+
+                    if (count > 10){
+                        count = 0;
+                        tryInvaderShoot();
+                    }
+
                 }
 
                 // hat die schiffskanone einen invader getroffen
@@ -241,7 +274,7 @@ public class Game {
                     Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
                     if(collisionedInvader != null){
                         System.out.println("Invader getroffen");
-                        removeBullet(ship.getBullet());
+                        removeBullet(ship);
 
                         player.setScore(player.getScore() + collisionedInvader.getValue());
                         removeInvader(collisionedInvader);
