@@ -1,0 +1,9 @@
+#start-pane {
+    -fx-background-image: url("../images/background.jpg");
+}
+
+#start-button {
+    -fx-background-color: #84a4ff;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+}
