@@ -112,37 +112,36 @@ public class InvaderGroup {
 
     private boolean testNextGroupMove(MoveDirection direction){
 
-        try {
-            switch (direction) {
-                case RIGHT: {
-                    for (List<Invader> invaderLine : invaders) {
+        switch (direction) {
+            case RIGHT: {
+                for (List<Invader> invaderLine : invaders) {
+                    if (invaderLine.size() > 0) {
                         Invader rightInvader = invaderLine.get(invaderLine.size() - 1);
                         if (rightInvader.getX() + 2 * rightInvader.getWidth() > borderXEend) {
                             return false;
                         }
                     }
-                    return true;
                 }
-                case LEFT: {
-                    for (List<Invader> invaderLine : invaders) {
+                return true;
+            }
+            case LEFT: {
+                for (List<Invader> invaderLine : invaders) {
+                    if (invaderLine.size() > 0) {
                         Invader leftInvader = invaderLine.get(0);
                         if (leftInvader.getX() - leftInvader.getWidth() < borderXSstart) {
                             return false;
                         }
                     }
-                    return true;
                 }
-                case DOWN: {
-                    if (invaderList.get(invaderList.size() - 1).getY() > borderYEend) {
-                        return false;
-                    }
-                    return true;
-                }
+                return true;
             }
-        }catch (IndexOutOfBoundsException e){
-            System.out.println("Exception bei Invaderbewegung: " +e.getStackTrace());
+            case DOWN: {
+                if (invaderList.get(invaderList.size() - 1).getY() > borderYEend) {
+                    return false;
+                }
+                return true;
+            }
         }
-
 
         return false;
     }
