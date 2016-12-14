@@ -152,20 +152,25 @@ public class Game {
                 case PAUSE:
                     pauseActiveTimeLines(allActiveTimeLines);
                     break;
-                case GAMEOVER :
+                case GAMEOVER:
                     Label finshLabel = new Label("GameOver");
                     finshLabel.setLayoutX(100);
                     finshLabel.setLayoutY(500);
                     display.getChildren().add(finshLabel);
-                break;
-
+                    break;
+                case WON:
+                    Label finshLabel2 = new Label("Du hast dieses Spiel gewonnen");
+                    finshLabel2.setLayoutX(100);
+                    finshLabel2.setLayoutY(500);
+                    display.getChildren().add(finshLabel2);
+                    break;
             }
         });
 
         player.livesProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Player Lives Changed: " + newValue);
             if (newValue.intValue() == 0){
-//                gameStatus.set(GAMEOVER);  //TODO: einkommentieren. damit Spielstatus zuende, wenn Player 0 leben hat
+                gameStatus.set(GAMEOVER);
             }
         });
     }
@@ -213,7 +218,7 @@ public class Game {
 
     private void tryInvaderShoot(){
 
-        if (currentInvaderBulletsCount < maxInvaderBulletsCount){
+        if (currentInvaderBulletsCount < maxInvaderBulletsCount && currentInvaderBulletsCount < invaderGroup.getInvaderList().size()){
 
             Random random = new Random();
             int randomInt = random.nextInt(invaderGroup.getInvaderList().size());
@@ -322,7 +327,9 @@ public class Game {
                         player.setScore(player.getScore() + collisionedInvader.getValue());
                         removeInvader(collisionedInvader);
                     }
-
+                    if(invaderGroup.getInvaderList().size() == 0){
+                        gameStatus.set(WON);
+                    }
                 }
 
 
@@ -377,6 +384,7 @@ public class Game {
     public enum GameStatus{
         PLAY,
         PAUSE,
+        WON,
         GAMEOVER;
     }
 
