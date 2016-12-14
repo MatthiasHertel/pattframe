@@ -42,7 +42,11 @@ public class Game {
     private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
 //    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(GameStatus.PAUSE);
 
-    private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.2"));
+    private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.1"));
+
+    private long invaderShootDelayMin = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.min"));
+    private long invaderShootDelayMax = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.max"));
+
 
 
     private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
@@ -148,7 +152,7 @@ public class Game {
         player.livesProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Player Lives Changed: " + newValue);
             if (newValue.intValue() == 0){
-                gameStatus.set(GAMEOVER);
+//                gameStatus.set(GAMEOVER);  //TODO: einkommentieren. damit Spielstatus zuende, wenn Player 0 leben hat
             }
         });
     }
@@ -268,6 +272,8 @@ public class Game {
         long invaderMoveLastTime = System.nanoTime();
         long invaderShootLastTime = System.nanoTime();
         int count = 0;
+        Random random = new Random();
+
 
         @Override
         public void handle(long now) {
@@ -277,29 +283,17 @@ public class Game {
                 //InvaderGroup bewegen (Zeitinterval application.properties: invader.move.speed.1)
                 if (now > invaderMoveLastTime + invaderMoveDuration * 1000000) {
                     invaderMoveLastTime = now;
-
-                    count++;
-
+                    System.out.println(" Inwederbewegung Time: " + new Date().toString() );
                     invaderGroup.move();
-
-//                    if (count > 10){
-//                        count = 0;
-//                        tryInvaderShoot();
-//                    }
-
                 }
 
-                tryInvaderShoot();
 
-//                //Invaderschuss absetzen
-//                if (now > (invaderShootLastTime + 100* 1000000)){
-//
-//                    System.out.println("Time: " + new Date().toString()  + "InvaderShootLastTime: " + (invaderShootLastTime + 5000* 1000000) + " now: " + now);
-//
-//
-//                    invaderShootLastTime = now;
-//                    tryInvaderShoot();
-//                }
+                //Invaderschuss absetzen
+                if (now > invaderShootLastTime + ((long) (random.nextDouble()*invaderShootDelayMax) + invaderShootDelayMin) * 1000000L) {
+                    invaderShootLastTime = now;
+                    System.out.println("Invadershoot Time: " + new Date().toString()  + "InvaderShootLastTime: " + invaderShootLastTime + " now: " + now);
+                    tryInvaderShoot();
+                }
 
                 // hat die schiffskanone einen invader getroffen
                 if(ship.getBullet() != null){
