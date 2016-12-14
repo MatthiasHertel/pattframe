@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
@@ -36,6 +37,8 @@ public class Game {
     private InvaderGroup invaderGroup;
     private AnchorPane display;
     private Ship ship;
+    private boolean shipSelfMove = Boolean.parseBoolean(SpaceInvaders.getSettings("ship.move.self"));
+
     private Player player;
     private int currentInvaderBulletsCount = 0;
     private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
@@ -115,10 +118,10 @@ public class Game {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case LEFT:
-                        ship.move(LEFT);
+                        ship.setMoveDirection(LEFT);
                         break;
                     case RIGHT:
-                        ship.move(RIGHT);
+                        ship.setMoveDirection(RIGHT);
                         break;
                     case SPACE:
                         tryShipShoot();
@@ -128,6 +131,16 @@ public class Game {
                         break;
                 }
 
+            }
+        });
+
+        display.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (shipSelfMove){return;}
+                if(event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT){
+                    ship.setMoveDirection(NONE);
+                }
             }
         });
 
@@ -279,6 +292,9 @@ public class Game {
         public void handle(long now) {
 
             if (gameStatus.get() == PLAY) {
+
+                // ship bewegen
+                ship.move(ship.getMoveDirection());
 
                 //InvaderGroup bewegen (Zeitinterval application.properties: invader.move.speed.1)
                 if (now > invaderMoveLastTime + invaderMoveDuration * 1000000) {

@@ -2,6 +2,8 @@ package org.blueberry.spaceinvaders;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import static org.blueberry.spaceinvaders.InvaderGroup.MoveDirection;
+
 
 /**
  * Created by KK on 12.12.2016.
@@ -13,6 +15,7 @@ public class Ship extends ImageView implements IGunSprite{
     private int borderYEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"));
 
     private Bullet bullet;
+    private MoveDirection moveDirection = MoveDirection.NONE;
 
     public Ship(Image image){
 
@@ -32,17 +35,17 @@ public class Ship extends ImageView implements IGunSprite{
 
 
     @Override
-    public void move(InvaderGroup.MoveDirection direction) {
-        if (Game.getInstance().getGameStatus() != Game.GameStatus.PLAY){
+    public void move(MoveDirection direction) {
+        if (Game.getInstance().getGameStatus() != Game.GameStatus.PLAY || direction == MoveDirection.NONE){
             return;
         }
         int positionX = (int)getX();
         int x = 0;
 
-        if (direction == InvaderGroup.MoveDirection.RIGHT){
+        if (direction == MoveDirection.RIGHT){
             x = Integer.parseInt(SpaceInvaders.getSettings("ship.move.step"));
         }
-        else  if (direction == InvaderGroup.MoveDirection.LEFT){
+        else  if (direction == MoveDirection.LEFT){
             x = Integer.parseInt(SpaceInvaders.getSettings("ship.move.step")) * -1;
         }
 
@@ -63,9 +66,12 @@ public class Ship extends ImageView implements IGunSprite{
     }
 
 
-    @Override
-    public Bullet getBullet(){
-        return bullet;
+    public void setMoveDirection(MoveDirection direction){
+        this.moveDirection = direction;
+    }
+
+    public MoveDirection getMoveDirection(){
+        return this.moveDirection;
     }
 
     @Override
@@ -78,6 +84,11 @@ public class Ship extends ImageView implements IGunSprite{
     @Override
     public void removeBullet(){
         bullet = null;
+    }
+
+    @Override
+    public Bullet getBullet(){
+        return bullet;
     }
 
 
