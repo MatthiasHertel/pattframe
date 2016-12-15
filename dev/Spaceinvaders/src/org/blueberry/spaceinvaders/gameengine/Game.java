@@ -367,7 +367,10 @@ public class Game {
 
     public void stop(){
         this.gameAnimationTimer.stop();
-//        ourInstance = null;
+    }
+
+    public void reset(){
+        ourInstance = new Game();
     }
 
 

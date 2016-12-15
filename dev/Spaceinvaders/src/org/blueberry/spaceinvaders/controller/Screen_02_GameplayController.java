@@ -67,6 +67,7 @@ public class Screen_02_GameplayController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        Game.getInstance().reset();
         Game game = Game.getInstance();
 //        root.requestFocus();
 //        game.setTheme("theme1"); //optional we
