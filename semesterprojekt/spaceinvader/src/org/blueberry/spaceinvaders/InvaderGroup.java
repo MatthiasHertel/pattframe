@@ -29,7 +29,6 @@ public class InvaderGroup {
     private MoveDirection moveDirection = MoveDirection.RIGHT;
     private MoveDirection lastLeftRightDirection;
 
-    private int stepDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.3"));
 
     private InvaderGroup() {
 //        createGroup();

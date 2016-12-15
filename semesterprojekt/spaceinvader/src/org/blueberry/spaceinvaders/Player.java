@@ -19,7 +19,6 @@ public class Player {
         score.set(value);
     }
 
-
     public int getScore(){
         return score.get();
     }
@@ -35,7 +34,6 @@ public class Player {
     public void setlives(int value){
         lives.set(value);
     }
-
 
     public int getlives(){
         return lives.get();

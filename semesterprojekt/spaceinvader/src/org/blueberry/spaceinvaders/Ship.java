@@ -56,13 +56,9 @@ public class Ship extends ImageView implements IGunSprite{
     }
 
     public void shoot() {
-
-
         Game.getInstance().getAudioAsset("shipShoot").play();
         bullet.move(InvaderGroup.MoveDirection.UP);
-
-        System.out.println("Schuss");
-
+        System.out.println("SchiffSchuss");
     }
 
 
