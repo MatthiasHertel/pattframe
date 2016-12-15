@@ -156,10 +156,8 @@ public class Game {
                     pauseActiveTimeLines(allActiveTimeLines);
                     break;
                 case GAMEOVER:
-                    Label finshLabel = new Label("GameOver");
-                    finshLabel.setLayoutX(100);
-                    finshLabel.setLayoutY(500);
-                    display.getChildren().add(finshLabel);
+                    stop();
+                    SpaceInvaders.setScreen("HighscoreView"); //TODO: Übergang so mit GAMEOVER und dann in den Screen
                     break;
                 case WON:
                     Label finshLabel2 = new Label("Du hast dieses Spiel gewonnen");

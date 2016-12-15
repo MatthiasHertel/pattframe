@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
-public class Screen_01_WelcomeController implements Initializable{
+public class WelcomeViewController implements Initializable{
 
     /**
      * Initializes the controller class.
@@ -21,11 +21,11 @@ public class Screen_01_WelcomeController implements Initializable{
 
     @FXML
     private void goToScreen2(ActionEvent event){
-       SpaceInvaders.setScreen("Screen_02_GameplayView");
+       SpaceInvaders.setScreen("GameplayView");
     }
     
     @FXML
     private void goToScreen3(ActionEvent event){
-       SpaceInvaders.setScreen("Screen_03_HighscoreView");
+       SpaceInvaders.setScreen("HighscoreView");
     }
 }

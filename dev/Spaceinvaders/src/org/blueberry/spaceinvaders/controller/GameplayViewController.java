@@ -50,7 +50,7 @@ import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 
-public class Screen_02_GameplayController implements Initializable{
+public class GameplayViewController implements Initializable{
 
     @FXML
     private AnchorPane display;
@@ -85,12 +85,12 @@ public class Screen_02_GameplayController implements Initializable{
     @FXML
     private void goToScreen1(ActionEvent event){
         Game.getInstance().stop();
-        SpaceInvaders.setScreen("Screen_01_WelcomeView");
+        SpaceInvaders.setScreen("WelcomeView");
     }
     
     @FXML
     private void goToScreen3(ActionEvent event){
         Game.getInstance().stop();
-        SpaceInvaders.setScreen("Screen_03_HighscoreView");
+        SpaceInvaders.setScreen("HighscoreView");
     }
 }

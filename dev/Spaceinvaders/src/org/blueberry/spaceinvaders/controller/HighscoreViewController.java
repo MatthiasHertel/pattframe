@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.gameengine.Game;
 
-public class Screen_03_HighscoreController implements Initializable{
+public class HighscoreViewController implements Initializable{
 
 
     @FXML
@@ -31,12 +31,12 @@ public class Screen_03_HighscoreController implements Initializable{
 
     @FXML
     private void goToScreen1(ActionEvent event){
-        SpaceInvaders.setScreen("Screen_01_WelcomeView");
+        SpaceInvaders.setScreen("WelcomeView");
     }
     
     @FXML
     private void goToScreen2(ActionEvent event){
-        SpaceInvaders.setScreen("Screen_02_GameplayView");
+        SpaceInvaders.setScreen("GameplayView");
     }
 
 }

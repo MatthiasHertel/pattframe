@@ -22,7 +22,7 @@ public class SpaceInvaders extends Application {
 
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
 
-        setScreen("Screen_01_WelcomeView");
+        setScreen("WelcomeView");
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
