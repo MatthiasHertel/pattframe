@@ -33,7 +33,7 @@ public class SpaceInvaders extends Application {
         mainContainer.loadScreen(SpaceInvaders.screen2ID, SpaceInvaders.screen2File);
         mainContainer.loadScreen(SpaceInvaders.screen3ID, SpaceInvaders.screen3File);
 
-        mainContainer.setScreen(SpaceInvaders.screen2ID);
+        mainContainer.setScreen(SpaceInvaders.screen1ID);
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
