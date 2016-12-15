@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="displayHighscore" minWidth="174.0" prefHeight="768.0" prefWidth="1024.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="org.blueberry.spaceinvaders.controller.Screen_03_HighscoreController" stylesheets="@../theme1/stylesheets/Style.css">
+  <children>
+    <VBox alignment="CENTER" prefHeight="153.0" prefWidth="174.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <Label text="Highscorescreen">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+          <Label fx:id="punkte" text="test">
+              <font>
+                  <Font size="18.0" />
+              </font>
+          </Label>
+      </children>
+    </VBox>
+    <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
+     <children>
+      <Button mnemonicParsing="false" onAction="#goToScreen1" text="Willkommensseite" />
+      <Button mnemonicParsing="false" onAction="#goToScreen2" text="Gameplayseite" />
+     </children>
+    </HBox>
+  </children>
+</AnchorPane>

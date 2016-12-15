@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="highscore.Controller">
+    <center>
+        <TableView fx:id="crudTable" maxWidth="-Infinity" onMouseClicked="#rowClicked" prefHeight="600.0" prefWidth="648.0" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
+                <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
+            </columns>
+        </TableView>
+    </center>
+    <right>
+        <VBox prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="label" text="Neuer Eintrag" />
+                <TextField fx:id="nameField" promptText="spieler name" />
+                <TextField fx:id="punkteField" promptText="spieler punkte" />
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Speichern" />
+                <Button fx:id="addButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Hinzufügen" />
+                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Löschen" />
+                <Button fx:id="reloadButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Neu Laden" />
+                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Reset DB" />
+            </children>
+        </VBox>
+    </right>
+</BorderPane>

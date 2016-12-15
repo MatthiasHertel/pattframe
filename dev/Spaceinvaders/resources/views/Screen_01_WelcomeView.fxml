@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="displayWelcome" prefHeight="768.0" prefWidth="1024" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="org.blueberry.spaceinvaders.controller.Screen_01_WelcomeController" stylesheets="@../theme1/stylesheets/Style.css">
+  <children>
+    <VBox alignment="CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <children>
+        <Label text="Willkommensscreen">
+          <font>
+            <Font size="18.0" />
+          </font>
+        </Label>
+      </children>
+      <padding>
+        <Insets />
+      </padding>
+    </VBox>
+    <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
+      <children>
+        <Button mnemonicParsing="false" onAction="#goToScreen2" text="Gameplayseite" />
+        <Button mnemonicParsing="false" onAction="#goToScreen3" text="Highscoreseite" />
+      </children>
+    </HBox>
+  </children>
+</AnchorPane>

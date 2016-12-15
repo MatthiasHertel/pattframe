@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="display" fx:id="display" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../theme1/stylesheets/Style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.Screen_02_GameplayController">
+  <children>
+      <Label fx:id="scoreLabel1" layoutX="19.0" layoutY="7.0" text="Score" />
+      <Label fx:id="livesLabel" layoutX="19.0" layoutY="24.0" text="Health" />
+
+      <Button fx:id="button2" layoutX="892.0" layoutY="19.0" mnemonicParsing="false" text="SPEED ++" />
+
+      <HBox alignment="CENTER" layoutX="418.0" layoutY="3.0" prefHeight="57.0">
+         <children>
+          <Label alignment="CENTER" text="Gameplayscreen" textAlignment="CENTER">
+            <font>
+              <Font size="18.0" />
+            </font>
+          </Label>
+         </children>
+      </HBox>
+
+    <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
+       <children>
+        <Button mnemonicParsing="false" onAction="#goToScreen1" text="Willkommensseite" />
+        <Button mnemonicParsing="false" onAction="#goToScreen3" text="Highscoreseite" />
+       </children>
+    </HBox>
+  </children>
+</AnchorPane>
+<!--<AnchorPane id="display" fx:id="display" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.Screen_02_GameplayController">-->
+    <!--<children>-->
+        <!--<Label fx:id="scoreLabel1" layoutX="54.0" layoutY="47.0" text="Score" />-->
+        <!--<Button fx:id="button2" layoutX="716.0" layoutY="11.0" mnemonicParsing="false" text="SPEED ++" />-->
+        <!--<Label fx:id="livesLabel" layoutX="652.0" layoutY="6.0" text="lives" />-->
+    <!--</children>-->
+<!--</AnchorPane>-->
