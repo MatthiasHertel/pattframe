@@ -6,14 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import org.blueberry.spaceinvaders.interfaces.ControlledScreen;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.gameengine.Game;
-import org.blueberry.spaceinvaders.highscore.Highscore;
 
-public class Screen_03_HighscoreController implements Initializable, ControlledScreen {
+public class Screen_03_HighscoreController implements Initializable{
 
-    ScreensController myController;
 
     @FXML
     private Label punkte;
@@ -30,19 +27,16 @@ public class Screen_03_HighscoreController implements Initializable, ControlledS
         punkte.textProperty().bind(Game.getInstance().getPlayer().scoreProperty().asString());
 
     }
-    
-    public void setScreenParent(ScreensController screenParent){
-        myController = screenParent;
-    }
+
 
     @FXML
     private void goToScreen1(ActionEvent event){
-       myController.setScreen(SpaceInvaders.screen1ID);
+        SpaceInvaders.setScreen("Screen_01_WelcomeView");
     }
     
     @FXML
     private void goToScreen2(ActionEvent event){
-       myController.setScreen(SpaceInvaders.screen2ID);
+        SpaceInvaders.setScreen("Screen_02_GameplayView");
     }
 
 }

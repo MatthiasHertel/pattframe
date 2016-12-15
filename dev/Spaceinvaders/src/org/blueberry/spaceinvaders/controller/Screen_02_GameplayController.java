@@ -47,11 +47,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import org.blueberry.spaceinvaders.gameengine.Game;
-import org.blueberry.spaceinvaders.interfaces.ControlledScreen;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 
-public class Screen_02_GameplayController implements Initializable , ControlledScreen {
+public class Screen_02_GameplayController implements Initializable{
 
     @FXML
     private AnchorPane display;
@@ -62,7 +61,6 @@ public class Screen_02_GameplayController implements Initializable , ControlledS
     @FXML
     private Label livesLabel;
 
-    ScreensController myController;
     /**
      * Initializes the controller class.
      */
@@ -81,18 +79,17 @@ public class Screen_02_GameplayController implements Initializable , ControlledS
 
         game.play();
     }
-    
-    public void setScreenParent(ScreensController screenParent){
-        myController = screenParent;
-    }
+
 
     @FXML
     private void goToScreen1(ActionEvent event){
-       myController.setScreen(SpaceInvaders.screen1ID);
+        Game.getInstance().stop();
+        SpaceInvaders.setScreen("Screen_01_WelcomeView");
     }
     
     @FXML
     private void goToScreen3(ActionEvent event){
-       myController.setScreen(SpaceInvaders.screen3ID);
+        Game.getInstance().stop();
+        SpaceInvaders.setScreen("Screen_03_HighscoreView");
     }
 }

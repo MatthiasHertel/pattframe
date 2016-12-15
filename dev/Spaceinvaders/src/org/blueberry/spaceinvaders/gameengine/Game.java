@@ -51,6 +51,8 @@ public class Game {
     private long invaderShootDelayMin = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.min"));
     private long invaderShootDelayMax = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.max"));
 
+    private GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
+
 
 
     private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
@@ -271,7 +273,7 @@ public class Game {
 
     public void play(){
 
-        GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
+//        GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
         gameAnimationTimer.start();
 
     }
@@ -363,6 +365,10 @@ public class Game {
     }
 
 
+    public void stop(){
+        this.gameAnimationTimer.stop();
+//        ourInstance = null;
+    }
 
 
     public final GameStatus getGameStatus() {

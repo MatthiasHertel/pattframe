@@ -5,12 +5,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import org.blueberry.spaceinvaders.interfaces.ControlledScreen;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
-public class Screen_01_WelcomeController implements Initializable, ControlledScreen {
+public class Screen_01_WelcomeController implements Initializable{
 
-    ScreensController myController;
     /**
      * Initializes the controller class.
      */
@@ -19,17 +17,15 @@ public class Screen_01_WelcomeController implements Initializable, ControlledScr
         // TODO
     }
     
-    public void setScreenParent(ScreensController screenParent){
-        myController = screenParent;
-    }
+
 
     @FXML
     private void goToScreen2(ActionEvent event){
-       myController.setScreen(SpaceInvaders.screen2ID);
+       SpaceInvaders.setScreen("Screen_02_GameplayView");
     }
     
     @FXML
     private void goToScreen3(ActionEvent event){
-       myController.setScreen(SpaceInvaders.screen3ID);
+       SpaceInvaders.setScreen("Screen_03_HighscoreView");
     }
 }

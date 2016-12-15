@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
-import org.blueberry.spaceinvaders.interfaces.ControlledScreen;
 
 /**
  * Created by matthias on 13.12.16.
@@ -38,8 +37,9 @@ public class ScreensController  extends StackPane {
         try {
             FXMLLoader myLoader = new FXMLLoader(getClass().getResource(resource));
             Parent loadScreen = (Parent) myLoader.load();
-            ControlledScreen myScreenController = ((ControlledScreen) myLoader.getController());
-            myScreenController.setScreenParent(this);
+//            ControlledScreen myScreenController = ((ControlledScreen) myLoader.getController());
+            Object myScreenController = ((Object) myLoader.getController());
+//            myScreenController.setScreenParent(this);
             addScreen(name, loadScreen);
             return true;
         } catch (Exception e) {

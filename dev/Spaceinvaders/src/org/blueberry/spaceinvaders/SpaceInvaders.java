@@ -15,25 +15,14 @@ import java.util.Properties;
 public class SpaceInvaders extends Application {
     private static final Properties settings = new Properties();
 
-    public static String screen1ID = "main";
-    public static String screen1File = "/views/Screen_01_WelcomeView.fxml";
-    public static String screen2ID = "screen2";
-    public static String screen2File = "/views/Screen_02_GameplayView.fxml";
-    public static String screen3ID = "screen3";
-    public static String screen3File = "/views/Screen_03_HighscoreView.fxml";
+    private static ScreensController mainContainer = new ScreensController();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
 
-        ScreensController mainContainer = new ScreensController();
-
-        mainContainer.loadScreen(SpaceInvaders.screen1ID, SpaceInvaders.screen1File);
-        mainContainer.loadScreen(SpaceInvaders.screen2ID, SpaceInvaders.screen2File);
-        mainContainer.loadScreen(SpaceInvaders.screen3ID, SpaceInvaders.screen3File);
-
-        mainContainer.setScreen(SpaceInvaders.screen1ID);
+        setScreen("Screen_01_WelcomeView");
 
         Group root = new Group();
         root.getChildren().addAll(mainContainer);
@@ -48,6 +37,12 @@ public class SpaceInvaders extends Application {
     }
     public static String getSettings(String property){
         return settings.getProperty(property);
+    }
+
+    public static void setScreen(String viewName){
+        mainContainer.unloadScreen("screen");
+        mainContainer.loadScreen("screen", "/views/" + viewName + ".fxml");
+        mainContainer.setScreen("screen");
     }
 }
 
