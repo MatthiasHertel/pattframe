@@ -14,6 +14,7 @@ public class DatabaseConnector {
     private Statement myStatement;
     private ObservableList<Highscore> highscoreList;
     public void launchConnection(){
+
         //        bind credentials ... TODO come from .env file by herzlchen
         String url = "jdbc:mysql://192.168.10.10:3306/spaceinvaders?autoReconnect=true&useSSL=false";
         String username = "homestead";
