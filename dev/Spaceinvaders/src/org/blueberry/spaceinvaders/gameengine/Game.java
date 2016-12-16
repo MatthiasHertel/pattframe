@@ -364,6 +364,7 @@ public class Game {
 
 
     public void stop(){
+        allActiveTimeLines.forEach(Timeline::stop);
         this.gameAnimationTimer.stop();
     }
 
