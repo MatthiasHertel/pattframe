@@ -24,7 +24,8 @@ public class HighscoreViewController implements Initializable{
         // TODO
 //        String game = String.valueOf(Game.getInstance().getGameStatus());
 //        System.out.println(game);
-        punkte.textProperty().bind(Game.getInstance().getPlayer().scoreProperty().asString());
+//        punkte.textProperty().bind(Game.getInstance().getPlayer().scoreProperty().asString());
+        punkte.setText(new Integer(Game.getInstance().getPlayer().getScore()).toString());
 
     }
 
