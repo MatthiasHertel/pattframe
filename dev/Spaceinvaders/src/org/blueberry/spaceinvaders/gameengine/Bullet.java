@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
-import org.blueberry.spaceinvaders.interfaces.ISprite;
 
 
 /**

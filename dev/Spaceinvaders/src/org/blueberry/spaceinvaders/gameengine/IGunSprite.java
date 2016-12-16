@@ -1,6 +1,4 @@
-package org.blueberry.spaceinvaders.interfaces;
-
-import org.blueberry.spaceinvaders.gameengine.Bullet;
+package org.blueberry.spaceinvaders.gameengine;
 
 /**
  * Created by KK on 13.12.2016.

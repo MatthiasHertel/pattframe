@@ -12,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
 import org.blueberry.spaceinvaders.SpaceInvaders;
-import org.blueberry.spaceinvaders.interfaces.IGunSprite;
 
 import java.util.*;
 

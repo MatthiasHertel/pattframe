@@ -3,7 +3,6 @@ package org.blueberry.spaceinvaders.gameengine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
-import org.blueberry.spaceinvaders.interfaces.IGunSprite;
 
 
 /**
