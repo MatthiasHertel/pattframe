@@ -9,7 +9,7 @@ import org.blueberry.spaceinvaders.controller.ScreenController;
 import java.util.Properties;
 
 /**
- * Created by matthias hertel on 13.12.16.
+ * Created by matthias hertel on 13.12.16.  blabla
  */
 
 public class SpaceInvaders extends Application {
