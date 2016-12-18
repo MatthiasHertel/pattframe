@@ -24,7 +24,6 @@ public class Bullet extends ImageView implements ISprite {
         this.setPreserveRatio(true);
 
         timeLine = new Timeline();
-
     }
 
     public Timeline getTimeLine(){
@@ -43,6 +42,5 @@ public class Bullet extends ImageView implements ISprite {
 
         Game.getInstance().getAllActiveTimeLines().add(timeLine);
         timeLine.play();
-
     }
 }

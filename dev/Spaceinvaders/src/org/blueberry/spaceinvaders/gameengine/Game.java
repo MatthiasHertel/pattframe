@@ -23,9 +23,12 @@ import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.*;
  */
 public class Game {
 
-    private static Game ourInstance = new Game();
+    private static Game ourInstance;
 
     public static Game getInstance() {
+        if(ourInstance == null){
+           ourInstance = new Game();
+        }
         return ourInstance;
     }
 
@@ -43,7 +46,6 @@ public class Game {
     private int currentInvaderBulletsCount = 0;
     private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
     private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
-//    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(GameStatus.PAUSE);
 
     private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.1"));
 
@@ -51,8 +53,6 @@ public class Game {
     private long invaderShootDelayMax = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.max"));
 
     private GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
-
-
 
     private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
 
@@ -289,7 +289,6 @@ public class Game {
 
         long invaderMoveLastTime = System.nanoTime();
         long invaderShootLastTime = System.nanoTime();
-        int count = 0;
         Random random = new Random();
 
 
@@ -304,7 +303,6 @@ public class Game {
                 //InvaderGroup bewegen (Zeitinterval application.properties: invader.move.speed.1)
                 if (now > invaderMoveLastTime + invaderMoveDuration * 1000000) {
                     invaderMoveLastTime = now;
-                    System.out.println(" Inwederbewegung Time: " + new Date().toString() );
                     invaderGroup.move();
                 }
 
@@ -312,7 +310,6 @@ public class Game {
                 //Invaderschuss absetzen
                 if (now > invaderShootLastTime + ((long) (random.nextDouble()*invaderShootDelayMax) + invaderShootDelayMin) * 1000000L) {
                     invaderShootLastTime = now;
-                    System.out.println("Invadershoot Time: " + new Date().toString()  + "InvaderShootLastTime: " + invaderShootLastTime + " now: " + now);
                     tryInvaderShoot();
                 }
 
@@ -347,7 +344,6 @@ public class Game {
                     }
                 }
 
-//                System.out.println("LastTime: " + invaderMoveLastTime);
 
 
 
