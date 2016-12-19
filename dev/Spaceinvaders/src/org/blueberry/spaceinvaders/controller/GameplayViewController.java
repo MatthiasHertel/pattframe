@@ -67,13 +67,11 @@ public class GameplayViewController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        Game.getInstance().reset();
+        Game.reset();
         Game game = Game.getInstance();
-//        root.requestFocus();
 //        game.setTheme("theme1"); //optional we
 
-        game.setPane(display);
-        game.constructGame();
+        game.constructGame(display);
 
         scoreLabel1.textProperty().bind(game.getPlayer().scoreProperty().asString());
         livesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());

@@ -105,7 +105,8 @@ public class Game {
 
     }
 
-    public void constructGame(){
+    public void constructGame(AnchorPane pane){
+        this.display = pane;
         createInvaderGroup();
         addInvadersToPane(display, invaderGroup.getInvaderList());
         ship = new Ship(getImageAsset("ship"));
@@ -126,6 +127,9 @@ public class Game {
                         ship.setMoveDirection(InvaderGroup.MoveDirection.RIGHT);
                         break;
                     case X:
+                        tryShipShoot();
+                        break;
+                    case SPACE:
                         tryShipShoot();
                         break;
                     case P:
@@ -249,10 +253,6 @@ public class Game {
     }
 
 
-    public void setPane(AnchorPane pane){
-        this.display = pane;
-    }
-
     public void createInvaderGroup(){
         invaderGroup = InvaderGroup.getInstance();
         invaderGroup.createGroup(Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x")), Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.y")));
@@ -363,8 +363,8 @@ public class Game {
         this.gameAnimationTimer.stop();
     }
 
-    public void reset(){
-        ourInstance = new Game();
+    public static void reset(){
+        ourInstance = null;
     }
 
 
