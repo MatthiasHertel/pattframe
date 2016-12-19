@@ -67,8 +67,12 @@ public class GameplayViewController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        System.out.println("Gamestatus vor reset:  " + Game.getInstance().getGameStatus());
         Game.reset();
+
         Game game = Game.getInstance();
+        System.out.println("Gamestatus nach reset:  " + Game.getInstance().getGameStatus());
+
 //        game.setTheme("theme1"); //optional we
 
         game.constructGame(display);

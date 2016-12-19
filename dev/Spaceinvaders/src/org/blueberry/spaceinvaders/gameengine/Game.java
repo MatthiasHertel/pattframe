@@ -16,6 +16,8 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.util.*;
 
 import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.*;
+import org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection;
+import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
 
 /**
@@ -40,6 +42,7 @@ public class Game {
     private InvaderGroup invaderGroup;
     private AnchorPane display;
     private Ship ship;
+    private MysteryShip mysteryShip;
     private boolean shipSelfMove = Boolean.parseBoolean(SpaceInvaders.getSettings("ship.move.self"));
 
     private Player player;
@@ -51,6 +54,9 @@ public class Game {
 
     private long invaderShootDelayMin = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.min"));
     private long invaderShootDelayMax = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.max"));
+
+    private long mysteryShipDelayMin = Long.parseLong(SpaceInvaders.getSettings("mysteryship.delay.random.min"));
+    private long mysteryShipDelayMax = Long.parseLong(SpaceInvaders.getSettings("mysteryship.delay.random.max"));
 
     private GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
 
@@ -81,6 +87,7 @@ public class Game {
         audioAssets.put("shipShoot", new AudioClip(getClass().getResource("/" + theme + "/sounds/ship_shoot.wav").toExternalForm()));
         audioAssets.put("shipExplosion", new AudioClip(getClass().getResource("/" + theme + "/sounds/ship_explosion.wav").toExternalForm()));
         audioAssets.put("invaderKilled", new AudioClip(getClass().getResource("/" + theme + "/sounds/invader_killed.wav").toExternalForm()));
+        audioAssets.put("mystery", new AudioClip(getClass().getResource("/" + theme + "/sounds/mystery.wav").toExternalForm()));
 
 
     }
@@ -113,9 +120,6 @@ public class Game {
         addInvadersToPane(display, invaderGroup.getInvaderList());
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
-
-        MysteryShip mysteryShip = new MysteryShip(getImageAsset("mysteryShip"), InvaderGroup.MoveDirection.RIGHT);
-        display.getChildren().add(mysteryShip);
 
 
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
@@ -294,6 +298,7 @@ public class Game {
 
         long invaderMoveLastTime = System.nanoTime();
         long invaderShootLastTime = System.nanoTime();
+        long mysteryShipLastTime = System.nanoTime();
         Random random = new Random();
 
 
@@ -318,7 +323,7 @@ public class Game {
                     tryInvaderShoot();
                 }
 
-                // hat die schiffskanone einen invader getroffen
+                // hat die schiffskanone einen invader getroffen, oder das MysteryShip?
                 if(ship.getBullet() != null){
                     Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
                     if(collisionedInvader != null){
@@ -331,6 +336,16 @@ public class Game {
                     }
                     if(invaderGroup.getInvaderList().size() == 0){
                         gameStatus.set(WON);
+                    }
+
+                    // MysteryShip collision testen
+                    if(mysteryShip != null){
+                        if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())){
+                            player.setScore(player.getScore() + mysteryShip.getValue());
+                        }
+                    }
+                    else{
+                        System.out.println("MysteryShip is null");
                     }
                 }
 
@@ -350,6 +365,22 @@ public class Game {
                 }
 
 
+                // MysteryShip losschicken
+                if (now > mysteryShipLastTime + ((long) (random.nextDouble()*mysteryShipDelayMax) + mysteryShipDelayMin) * 1000000L) {
+                    mysteryShipLastTime = now;
+
+                    MoveDirection randomDirection = random.nextInt(2) == 0 ? RIGHT : LEFT;
+                    mysteryShip = new MysteryShip(getImageAsset("mysteryShip"), randomDirection);
+                    mysteryShip.getTimeLine().setOnFinished(event -> {
+                        removeMysteryShip();
+                    });
+                    display.getChildren().add(mysteryShip);
+                    mysteryShip.move(randomDirection);
+
+
+
+                }
+
 
 
 
@@ -360,6 +391,12 @@ public class Game {
 
             }
         }
+    }
+
+    private void removeMysteryShip() {
+        display.getChildren().remove(mysteryShip);
+        mysteryShip = null;
+        System.out.println("MysteryShip vom Display entfernt");
     }
 
 
