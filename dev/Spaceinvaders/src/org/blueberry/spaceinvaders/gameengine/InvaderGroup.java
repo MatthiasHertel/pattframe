@@ -105,8 +105,13 @@ public class InvaderGroup {
             }
         }
         else{
-            Game.getInstance().setGameStatus(Game.GameStatus.GAMEOVER);
+            gameOver();
         }
+    }
+
+    private void gameOver() {
+        ourInstance = new InvaderGroup();
+        Game.getInstance().setGameStatus(Game.GameStatus.GAMEOVER);
     }
 
 
