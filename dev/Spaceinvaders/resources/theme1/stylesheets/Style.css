@@ -28,7 +28,7 @@
      -fx-graphic-text-gap: 8px;
      -fx-graphic: url('../graphics/layout/btnInvader3.png');
  }
-#gameplayBtn:hover {
+#gameplayBtn:hover, #gameplayBtn:focused {
     -fx-text-fill:  #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3Hover.png');
 }
@@ -36,7 +36,7 @@
     -fx-border-color: #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2.png');
 }
-#highscoreBtn:hover {
+#highscoreBtn:hover, #highscoreBtn:focused{
     -fx-text-fill:  #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
