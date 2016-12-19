@@ -1,32 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="displayWelcome" prefHeight="768.0" prefWidth="1024" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="org.blueberry.spaceinvaders.controller.WelcomeViewController" stylesheets="@../theme1/stylesheets/Style.css">
+<AnchorPane id="displayWelcome" prefHeight="768.0" prefWidth="1024" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.WelcomeViewController">
   <children>
     <VBox alignment="CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
       <children>
-        <Label text="Willkommensscreen">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
+            <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../theme1/graphics/layout/logo.png" />
+               </image>
+            </ImageView>
+            <Label id="displayWelcomeClaim" text="Beschütze die Erde vor den Aliens!">
+            </Label>
+        <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreen2" styleClass="btnIcon" text="Spiel starten" />
+        <Button id="highscoreBtn" mnemonicParsing="false" onAction="#goToScreen3" styleClass="btnIcon" text="Highscore" />
       </children>
-      <padding>
-        <Insets />
-      </padding>
     </VBox>
-    <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
-      <children>
-        <Button mnemonicParsing="false" onAction="#goToScreen2" text="Gameplayseite" />
-        <Button mnemonicParsing="false" onAction="#goToScreen3" text="Highscoreseite" />
-      </children>
-    </HBox>
   </children>
 </AnchorPane>
