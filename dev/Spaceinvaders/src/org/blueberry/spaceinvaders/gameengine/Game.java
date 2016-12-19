@@ -323,7 +323,7 @@ public class Game {
                     tryInvaderShoot();
                 }
 
-                // hat die schiffskanone einen invader getroffen, oder das MysteryShip?
+                // hat die schiffskanone einen invader getroffen
                 if(ship.getBullet() != null){
                     Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
                     if(collisionedInvader != null){
@@ -337,17 +337,17 @@ public class Game {
                     if(invaderGroup.getInvaderList().size() == 0){
                         gameStatus.set(WON);
                     }
+                }
 
-                    // MysteryShip collision testen
-                    if(mysteryShip != null){
-                        if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())){
-                            player.setScore(player.getScore() + mysteryShip.getValue());
-                        }
-                    }
-                    else{
-                        System.out.println("MysteryShip is null");
+                // hat die schiffskanone das MysteryShip getroffen
+                if(ship.getBullet() != null && mysteryShip != null){
+                    if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())){
+                        player.setScore(player.getScore() + mysteryShip.getValue());
+                        removeBullet(ship);
+                        removeMysteryShip();
                     }
                 }
+
 
 
                 // hat ein Invader das ship getroffen
@@ -367,6 +367,10 @@ public class Game {
 
                 // MysteryShip losschicken
                 if (now > mysteryShipLastTime + ((long) (random.nextDouble()*mysteryShipDelayMax) + mysteryShipDelayMin) * 1000000L) {
+                    if( mysteryShip != null)
+                    {
+                        return;
+                    }
                     mysteryShipLastTime = now;
 
                     MoveDirection randomDirection = random.nextInt(2) == 0 ? RIGHT : LEFT;
@@ -376,8 +380,6 @@ public class Game {
                     });
                     display.getChildren().add(mysteryShip);
                     mysteryShip.move(randomDirection);
-
-
 
                 }
 
@@ -394,9 +396,11 @@ public class Game {
     }
 
     private void removeMysteryShip() {
+        mysteryShip.getTimeLine().stop();
+        allActiveTimeLines.remove(mysteryShip.getTimeLine());
         display.getChildren().remove(mysteryShip);
         mysteryShip = null;
-        System.out.println("MysteryShip vom Display entfernt");
+        System.out.println("MysteryShip entfernt");
     }
 
 
