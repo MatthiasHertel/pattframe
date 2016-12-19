@@ -72,6 +72,8 @@ public class Game {
         imageAssets.put("shipBullet", new Image(theme + "/graphics/ship_bullet.png"));
         imageAssets.put("ship", new Image(theme + "/graphics/ship.png"));
 
+        imageAssets.put("mysteryShip", new Image(theme + "/graphics/mystery_ship.png"));
+
         imageAssets.put("bunker1a", new Image(theme + "/graphics/bunker/8x8/1a.png"));
         imageAssets.put("bunker2a", new Image(theme + "/graphics/bunker/8x8/2a.png"));
 
@@ -111,6 +113,9 @@ public class Game {
         addInvadersToPane(display, invaderGroup.getInvaderList());
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
+
+        MysteryShip mysteryShip = new MysteryShip(getImageAsset("mysteryShip"), InvaderGroup.MoveDirection.RIGHT);
+        display.getChildren().add(mysteryShip);
 
 
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
