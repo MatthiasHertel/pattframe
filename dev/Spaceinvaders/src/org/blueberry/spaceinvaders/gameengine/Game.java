@@ -63,6 +63,9 @@ public class Game {
     private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
 
 
+    private ShelterPart shelterPart;
+    private ShelterPart shelterCorner;
+
 
     public void loadAssets(String theme){
 
@@ -72,6 +75,16 @@ public class Game {
         imageAssets.put("invader2b", new Image(theme + "/graphics/invader2b.png"));
         imageAssets.put("invader3a", new Image(theme + "/graphics/invader3a.png"));
         imageAssets.put("invader3b", new Image(theme + "/graphics/invader3b.png"));
+
+        imageAssets.put("shelter1a", new Image(theme + "/graphics/shelter1a.png"));
+        imageAssets.put("shelter1b", new Image(theme + "/graphics/shelter1b.png"));
+        imageAssets.put("shelter1c", new Image(theme + "/graphics/shelter1c.png"));
+        imageAssets.put("shelter1d", new Image(theme + "/graphics/shelter1d.png"));
+        imageAssets.put("shelter1e", new Image(theme + "/graphics/shelter1e.png"));
+        imageAssets.put("shelter1f", new Image(theme + "/graphics/shelter1f.png"));
+        imageAssets.put("shelter2a", new Image(theme + "/graphics/shelter2a.png"));
+        imageAssets.put("shelter2b", new Image(theme + "/graphics/shelter2b.png"));
+        imageAssets.put("shelter2c", new Image(theme + "/graphics/shelter2c.png"));
 
         imageAssets.put("invaderBullet", new Image(theme + "/graphics/invader_bullet.png"));
 
@@ -114,12 +127,40 @@ public class Game {
 
     }
 
+    public ShelterPart getShelterCorner(){
+        return shelterCorner;
+    }
+
+    public ShelterPart getShelterPart(){
+        return shelterPart;
+    }
+
     public void constructGame(AnchorPane pane){
         this.display = pane;
         createInvaderGroup();
         addInvadersToPane(display, invaderGroup.getInvaderList());
+
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
+
+        List<Image> shelterPartsImageList = new ArrayList<>();
+        shelterPartsImageList.add(getImageAsset("shelter1a"));
+        shelterPartsImageList.add(getImageAsset("shelter1b"));
+        shelterPartsImageList.add(getImageAsset("shelter1c"));
+        shelterPartsImageList.add(getImageAsset("shelter1d"));
+        shelterPartsImageList.add(getImageAsset("shelter1e"));
+        shelterPartsImageList.add(getImageAsset("shelter1f"));
+
+        shelterPart = new ShelterPart(shelterPartsImageList, 400, 400, 1);
+        display.getChildren().add(shelterPart);
+
+        List<Image> shelterCornerImageList = new ArrayList<>();
+        shelterCornerImageList.add(getImageAsset("shelter2a"));
+        shelterCornerImageList.add(getImageAsset("shelter2b"));
+        shelterCornerImageList.add(getImageAsset("shelter2c"));
+
+        shelterCorner = new ShelterPart(shelterCornerImageList, 300, 400, 2);
+        display.getChildren().add(shelterCorner);
 
 
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit

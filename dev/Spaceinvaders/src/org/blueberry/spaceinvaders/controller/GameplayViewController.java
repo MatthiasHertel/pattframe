@@ -42,8 +42,10 @@ package org.blueberry.spaceinvaders.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import org.blueberry.spaceinvaders.gameengine.Game;
@@ -60,6 +62,12 @@ public class GameplayViewController implements Initializable{
 
     @FXML
     private Label livesLabel;
+
+    @FXML
+    private Button button2;
+
+    @FXML
+    private Button button3;
 
     /**
      * Initializes the controller class.
@@ -80,8 +88,31 @@ public class GameplayViewController implements Initializable{
         scoreLabel1.textProperty().bind(game.getPlayer().scoreProperty().asString());
         livesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
 
-        game.play();
+//        game.play();
+
+
+
+
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                System.out.println("Button2 gedrückt");
+                game.getShelterPart().damagedFromTop();
+                game.getShelterCorner().damagedFromTop();
+            }
+        });
+
+        button3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                System.out.println("Button2 gedrückt");
+                game.getShelterPart().damagedFromBottom();
+                game.getShelterCorner().damagedFromBottom();
+            }
+        });
     }
+
+
+
+
 
 
     @FXML

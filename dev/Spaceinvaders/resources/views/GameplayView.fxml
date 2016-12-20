@@ -20,7 +20,8 @@
       <Label fx:id="scoreLabel1" layoutX="19.0" layoutY="7.0" text="Score" />
       <Label fx:id="livesLabel" layoutX="19.0" layoutY="24.0" text="Health" />
 
-      <Button fx:id="button2" layoutX="892.0" layoutY="19.0" mnemonicParsing="false" text="SPEED ++" />
+      <Button fx:id="button2" layoutX="832.0" layoutY="19.0" mnemonicParsing="false" text="shelter destroy from top" />
+      <Button fx:id="button3" layoutX="832.0" layoutY="49.0" mnemonicParsing="false" text="shelter destroy from bottom" />
 
       <HBox alignment="CENTER" layoutX="418.0" layoutY="3.0" prefHeight="57.0">
          <children>
