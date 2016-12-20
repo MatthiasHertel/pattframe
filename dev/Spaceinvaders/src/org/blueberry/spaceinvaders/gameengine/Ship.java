@@ -74,7 +74,8 @@ public class Ship extends ImageView implements IGunSprite {
     @Override
     public void newBullet(){
         int bulletPositionX = (int) (getX() + Integer.parseInt(SpaceInvaders.getSettings("ship.width")) / 2);
-        int bulletPositionY = (int)getY()-30;
+//        int bulletPositionY = (int)getY()-30;
+        int bulletPositionY = (int)getY();
         bullet = new Bullet(Game.getInstance().getImageAsset("shipBullet"), bulletPositionX, bulletPositionY);
     }
 

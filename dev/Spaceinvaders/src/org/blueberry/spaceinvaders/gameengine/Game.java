@@ -43,6 +43,8 @@ public class Game {
     private AnchorPane display;
     private Ship ship;
     private MysteryShip mysteryShip;
+//    private Shelter shelter;
+    private List<Shelter> shelterList = new ArrayList<>();
     private boolean shipSelfMove = Boolean.parseBoolean(SpaceInvaders.getSettings("ship.move.self"));
 
     private Player player;
@@ -99,6 +101,7 @@ public class Game {
         audioAssets.put("shipExplosion", new AudioClip(getClass().getResource("/" + theme + "/sounds/ship_explosion.wav").toExternalForm()));
         audioAssets.put("invaderKilled", new AudioClip(getClass().getResource("/" + theme + "/sounds/invader_killed.wav").toExternalForm()));
         audioAssets.put("mystery", new AudioClip(getClass().getResource("/" + theme + "/sounds/mystery.wav").toExternalForm()));
+        audioAssets.put("mysteryKilled", new AudioClip(getClass().getResource("/" + theme + "/sounds/mystery_killed.wav").toExternalForm()));
 
 
     }
@@ -141,8 +144,10 @@ public class Game {
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
 
-        Shelter shelter = new Shelter(300, 300);
-        addShelterToPane(display, shelter);
+        for (int i = 0; i < 4; i++){
+            shelterList.add(new Shelter(100 + i*170,  Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
+            addShelterToPane(display, shelterList.get(i));
+        }
 
 
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
@@ -225,6 +230,9 @@ public class Game {
     }
 
     private void removeBullet(IGunSprite sprite){
+        if (sprite instanceof Invader){
+            currentInvaderBulletsCount--;
+        }
         System.out.println("RemoveBulletAnfang Anzahl aktiver TimeLines: " + allActiveTimeLines.size());
         sprite.getBullet().getTimeLine().stop();
         allActiveTimeLines.remove(sprite.getBullet().getTimeLine());
@@ -236,6 +244,16 @@ public class Game {
     private void removeInvader(Invader invader){
         display.getChildren().remove(invader);
         invaderGroup.removeInvader(invader);
+    }
+
+    private void removeSprite(ISprite sprite){
+        if(sprite instanceof ShelterPart){
+            System.out.println("instance of = shelterpart");
+            display.getChildren().remove(sprite);
+            for (Shelter shelter : shelterList){
+                shelter.getShelterParts().remove(sprite);
+            }
+        }
     }
 
     private void tryShipShoot(){
@@ -365,9 +383,48 @@ public class Game {
                 // hat die schiffskanone das MysteryShip getroffen
                 if(ship.getBullet() != null && mysteryShip != null){
                     if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())){
+                        getAudioAsset("mysteryKilled").play();
                         player.setScore(player.getScore() + mysteryShip.getValue());
                         removeBullet(ship);
                         removeMysteryShip();
+                    }
+                }
+
+                // hat die schiffskanone den Bunker getroffen
+                bunkerWurdeGetroffen:
+                if(ship.getBullet() != null){
+                    for (Shelter shelter : shelterList) {
+                        for (ShelterPart shelterPart : shelter.getShelterParts()) {
+                            if (ship.getBullet().intersects(shelterPart.getLayoutBounds())) {
+                                removeBullet(ship);
+                                shelterPart.damagedFromBottom();
+                                if (shelterPart.getState() == 0) {
+                                    removeSprite(shelterPart);
+                                }
+                                break bunkerWurdeGetroffen;
+                            }
+                        }
+                    }
+                }
+
+                // hat ein invader den Bunker getroffen
+
+                bunkerWurdeGetroffen2:
+                for (Invader invader: invaderGroup.getInvaderList()){
+                    if (invader.getBullet() != null) {
+                        for (Shelter shelter : shelterList) {
+                            for (ShelterPart shelterPart : shelter.getShelterParts()) {
+                                if (invader.getBullet().intersects(shelterPart.getLayoutBounds())) {
+                                    removeBullet(invader);
+                                    shelterPart.damagedFromTop();
+                                    if (shelterPart.getState() == 0) {
+                                        removeSprite(shelterPart);
+                                    }
+                                    break bunkerWurdeGetroffen2;
+                                }
+
+                            }
+                        }
                     }
                 }
 
@@ -381,7 +438,6 @@ public class Game {
                             getAudioAsset("shipExplosion").play();
                             player.setlives(player.getlives() - 1);
                             removeBullet(invader);
-                            currentInvaderBulletsCount--;
                             break;
                         }
                     }

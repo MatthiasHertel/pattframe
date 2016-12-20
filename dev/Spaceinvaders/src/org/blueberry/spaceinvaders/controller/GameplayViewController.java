@@ -63,11 +63,6 @@ public class GameplayViewController implements Initializable{
     @FXML
     private Label livesLabel;
 
-    @FXML
-    private Button button2;
-
-    @FXML
-    private Button button3;
 
     /**
      * Initializes the controller class.

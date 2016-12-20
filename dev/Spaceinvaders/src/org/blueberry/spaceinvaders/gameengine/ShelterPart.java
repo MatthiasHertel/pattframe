@@ -39,6 +39,9 @@ public class ShelterPart extends ImageView implements ISprite {
         }
     }
 
+    public int getState(){
+        return this.state;
+    }
 
     @Override
     public void move(InvaderGroup.MoveDirection direction) {
@@ -46,7 +49,6 @@ public class ShelterPart extends ImageView implements ISprite {
     }
 
     public void damagedFromTop(){
-
         if (shelterType == 1) {
             switch (state) {
                 case 3:
