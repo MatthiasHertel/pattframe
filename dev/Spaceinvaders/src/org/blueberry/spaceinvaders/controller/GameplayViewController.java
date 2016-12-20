@@ -88,26 +88,11 @@ public class GameplayViewController implements Initializable{
         scoreLabel1.textProperty().bind(game.getPlayer().scoreProperty().asString());
         livesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
 
-//        game.play();
+        game.play();
 
 
 
 
-        button2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                System.out.println("Button2 gedrückt");
-                game.getShelterPart().damagedFromTop();
-                game.getShelterCorner().damagedFromTop();
-            }
-        });
-
-        button3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                System.out.println("Button2 gedrückt");
-                game.getShelterPart().damagedFromBottom();
-                game.getShelterCorner().damagedFromBottom();
-            }
-        });
     }
 
 

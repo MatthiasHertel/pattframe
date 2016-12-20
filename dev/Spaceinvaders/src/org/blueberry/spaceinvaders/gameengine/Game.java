@@ -63,8 +63,6 @@ public class Game {
     private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
 
 
-    private ShelterPart shelterPart;
-    private ShelterPart shelterCorner;
 
 
     public void loadAssets(String theme){
@@ -112,6 +110,13 @@ public class Game {
         }
     }
 
+    public void addShelterToPane(AnchorPane anchorPane, Shelter shelter){
+
+        for (ShelterPart shelterPart: shelter.getShelterParts()){
+            anchorPane.getChildren().add(shelterPart);
+        }
+    }
+
     public Image getImageAsset(String key){
         return imageAssets.get(key);
     }
@@ -127,13 +132,6 @@ public class Game {
 
     }
 
-    public ShelterPart getShelterCorner(){
-        return shelterCorner;
-    }
-
-    public ShelterPart getShelterPart(){
-        return shelterPart;
-    }
 
     public void constructGame(AnchorPane pane){
         this.display = pane;
@@ -143,24 +141,8 @@ public class Game {
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
 
-        List<Image> shelterPartsImageList = new ArrayList<>();
-        shelterPartsImageList.add(getImageAsset("shelter1a"));
-        shelterPartsImageList.add(getImageAsset("shelter1b"));
-        shelterPartsImageList.add(getImageAsset("shelter1c"));
-        shelterPartsImageList.add(getImageAsset("shelter1d"));
-        shelterPartsImageList.add(getImageAsset("shelter1e"));
-        shelterPartsImageList.add(getImageAsset("shelter1f"));
-
-        shelterPart = new ShelterPart(shelterPartsImageList, 400, 400, 1);
-        display.getChildren().add(shelterPart);
-
-        List<Image> shelterCornerImageList = new ArrayList<>();
-        shelterCornerImageList.add(getImageAsset("shelter2a"));
-        shelterCornerImageList.add(getImageAsset("shelter2b"));
-        shelterCornerImageList.add(getImageAsset("shelter2c"));
-
-        shelterCorner = new ShelterPart(shelterCornerImageList, 300, 400, 2);
-        display.getChildren().add(shelterCorner);
+        Shelter shelter = new Shelter(300, 300);
+        addShelterToPane(display, shelter);
 
 
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit

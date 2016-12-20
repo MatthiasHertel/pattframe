@@ -17,7 +17,7 @@ public class ShelterPart extends ImageView implements ISprite {
     private int height;
     private List<Image> imageList;
 
-    ShelterPart(List<Image> imageList, int positionX, int positionY, int type){
+    ShelterPart(List<Image> imageList, int positionX, int positionY, int type, int rotation){
 
         this.shelterType = type;
         this.state = type == 1 ? 3 : 2;
@@ -34,7 +34,9 @@ public class ShelterPart extends ImageView implements ISprite {
         this.width = (int) getFitWidth();
         this.height = (int) this.getLayoutBounds().getHeight();
 
-//        setRotate(45);
+        if (rotation != 0){
+            this.setRotate(rotation);
+        }
     }
 
 
