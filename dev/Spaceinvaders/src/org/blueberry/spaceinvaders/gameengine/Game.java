@@ -93,10 +93,6 @@ public class Game {
 
         imageAssets.put("mysteryShip", new Image(theme + "/graphics/mystery_ship.png"));
 
-        imageAssets.put("bunker1a", new Image(theme + "/graphics/bunker/8x8/1a.png"));
-        imageAssets.put("bunker2a", new Image(theme + "/graphics/bunker/8x8/2a.png"));
-
-
         audioAssets.put("shipShoot", new AudioClip(getClass().getResource("/" + theme + "/sounds/ship_shoot.wav").toExternalForm()));
         audioAssets.put("shipExplosion", new AudioClip(getClass().getResource("/" + theme + "/sounds/ship_explosion.wav").toExternalForm()));
         audioAssets.put("invaderKilled", new AudioClip(getClass().getResource("/" + theme + "/sounds/invader_killed.wav").toExternalForm()));
