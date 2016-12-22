@@ -103,3 +103,11 @@
 .table-view > .virtual-flow > .scroll-bar > .decrement-button {
     -fx-opacity: 0;
 }
+
+.table-row-cell:empty {
+    -fx-background-color: black;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
