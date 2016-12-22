@@ -42,7 +42,7 @@ public class DatabaseConnector {
         }
     }
     public ObservableList<Highscore> getHighscoreList(){
-        String query = "SELECT * FROM highscore";
+        String query = "SELECT * FROM highscore ORDER BY punkte DESC";
 
         highscoreList = FXCollections.observableArrayList();
 
