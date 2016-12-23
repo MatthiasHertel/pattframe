@@ -66,6 +66,8 @@ public class HighscoreViewController implements Initializable{
         mysqlConnector = new DatabaseConnector();
         mysqlConnector.launchConnection();
 
+        crudTable.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+
         idColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("name"));
         punkteColumn.setCellValueFactory(new PropertyValueFactory<Highscore, Integer>("punkte"));
