@@ -49,8 +49,8 @@
 
     <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
      <children>
-      <Button mnemonicParsing="false" onAction="#goToScreen1" text="Willkommensseite" />
-      <Button mnemonicParsing="false" onAction="#goToScreen2" text="Gameplayseite" />
+      <Button id="mainmenuBtn" mnemonicParsing="false" onAction="#goToScreen1" styleClass="btnIcon" text="Hauptmenü" />
+      <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreen2" styleClass="btnIcon" text="Spiel starten" />
      </children>
     </HBox>
   </children>

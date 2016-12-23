@@ -8,6 +8,11 @@
     -fx-background-size: stretch;
 }
 
+ /*{*/
+    /*-fx-background-image: url('../graphics/backgrounds/backgroundhighscore_rs.png');*/
+    /*-fx-background-size: stretch;*/
+/*}*/
+
 #displayWelcomeClaim {
     -fx-font-size: 16;
     -fx-text-fill: #fff;
@@ -43,51 +48,60 @@
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
 
+#mainmenuBtn {
+    -fx-border-color: #ffb66f;
+    -fx-graphic: url('../graphics/layout/btnInvader2.png');
+}
+#mainmenuBtn:hover, #mainmenuBtn:focused{
+    -fx-text-fill:  #ffb66f;
+    -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
+}
 
 .table-view{
     -fx-background-color: transparent;
+    /*-fx-border-color: #ffb66f;*/
+    /*-fx-border-radius: 0%;*/
 }
 
-.table-view:focused{
-    -fx-background-color: transparent;
-}
 
-/* Spaltenköpfe
-    Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+    /*-fx-background-color: linear-gradient(#131313 0%, #424141 100%);*/
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+    /*-fx-background-color: darkgray;*/
 }
 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: #997aff;
 }
 
 .table-view .column-header {
     -fx-background-color: transparent;
+    -fx-font-size: 24;
+    -fx-text-fill: #fff;
 }
 
 .table-view .table-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: #ffb66f;
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+
 }
 
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, #616161;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em; /* 0 */
+
+    -fx-background-color: transparent;
+
 }
 
 .table-row-cell:odd{
-    -fx-background-color: -fx-table-cell-border-color, #424242;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em; /* 0 */
+
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #005797;
-    -fx-background-insets: 0;
-    -fx-background-radius: 1;
+
 }
 
 .table-view > .virtual-flow > .scroll-bar:vertical,
@@ -96,7 +110,7 @@
 .table-view > .virtual-flow > .scroll-bar:horizontal,
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
-    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
 }
 
 
@@ -107,7 +121,7 @@
 }
 
 .table-row-cell:empty {
-    -fx-background-color: black;
+    -fx-background-color: transparent;
 }
 
 .table-row-cell:empty .table-cell {
