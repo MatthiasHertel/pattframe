@@ -3,7 +3,9 @@
 #displayHighscore,
 #displayWelcome,
 #display{
-    -fx-background-color: black;
+    /*-fx-background-color: black;*/
+    -fx-background-image: url('../graphics/backgrounds/background.png');
+    -fx-background-size: stretch;
 }
 
 #displayWelcomeClaim {
