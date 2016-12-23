@@ -1,6 +1,7 @@
 package org.blueberry.spaceinvaders.controller;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,6 +31,7 @@ public class HighscoreViewController implements Initializable{
     @FXML private TableColumn nameColumn;
     @FXML private TableColumn idColumn;
     @FXML private TableColumn punkteColumn;
+    @FXML private TableColumn dateColumn;
 
     private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
 
@@ -71,7 +73,11 @@ public class HighscoreViewController implements Initializable{
         idColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("name"));
         punkteColumn.setCellValueFactory(new PropertyValueFactory<Highscore, Integer>("punkte"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("created_at"));
+
         label.setText(addHighscore);
+
+        //Fetch data from gameplay
         punkteField.setText(new Integer(Game.getInstance().getPlayer().getScore()).toString());
 
         refreshList();
@@ -160,7 +166,8 @@ public class HighscoreViewController implements Initializable{
         String id = "1";
         String name = nameField.getText();
         Integer punkte = Integer.parseInt(punkteField.getText());
-        Highscore newHighscore = new Highscore(id, name, punkte);
+        String date = " ";
+        Highscore newHighscore = new Highscore(id, name, punkte, date);
         mysqlConnector.insertHighscore(newHighscore);
         refreshList();
     }
