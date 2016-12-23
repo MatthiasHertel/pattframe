@@ -36,12 +36,12 @@ public class HighscoreViewController implements Initializable{
     private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
 
     @FXML private TextField nameField;
-    @FXML private TextField punkteField;
+    @FXML private Label punkteField;
 
 
     @FXML private Label label;
 
-    private String addHighscore = "Neuer Eintrag";
+    private String addHighscore = "Punkteanzahl: ";
     private String modifyHighscore = "Bearbeite Eintrag";
 
     private String addingButtonID = "addButton";
