@@ -49,15 +49,16 @@ public class DatabaseConnector {
         String query = "SELECT * FROM highscore ORDER BY punkte DESC";
 
         highscoreList = FXCollections.observableArrayList();
-
+        Integer ranking = 0;
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet selectionResult = ps.executeQuery();
 
 
             while (selectionResult.next()){
-                Integer dbId = selectionResult.getInt("ID");
-                String id = dbId.toString();
+                ranking++;
+//                Integer dbId = selectionResult.getInt("ID");
+                String id = ranking.toString();
                 String name = selectionResult.getString("name");
                 Integer punkte = selectionResult.getInt("punkte");
                 DateFormat df = new SimpleDateFormat("dd.MM.YY  HH:mm");
