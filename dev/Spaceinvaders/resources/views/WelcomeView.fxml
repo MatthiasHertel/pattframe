@@ -9,19 +9,20 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="displayWelcome" prefHeight="768.0" prefWidth="1024" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.WelcomeViewController">
-  <children>
-    <VBox alignment="CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-      <children>
-            <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../theme1/graphics/layout/logo.png" />
-               </image>
-            </ImageView>
-            <Label id="displayWelcomeClaim" text="Beschütze die Erde vor den Aliens!">
-            </Label>
-        <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreen2" styleClass="btnIcon" text="Spiel starten" />
-        <Button id="highscoreBtn" mnemonicParsing="false" onAction="#goToScreen3" styleClass="btnIcon" text="Highscore" />
-      </children>
-    </VBox>
-  </children>
+    <children>
+        <VBox alignment="CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../theme1/graphics/layout/logo.png" />
+                    </image>
+                </ImageView>
+                <Label id="displayWelcomeClaim" text="Beschütze die Erde vor den Aliens!"></Label>
+                <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreen2" styleClass="btnIcon" text="Spiel starten" />
+                <Button id="highscoreBtn" mnemonicParsing="false" onAction="#goToScreen3" styleClass="btnIcon" text="Highscore" />
+                <Button id="manualBtn" mnemonicParsing="false" onAction="#goToScreenManualView" styleClass="btnIcon" text="Spielanleitung" />
+                <Button id="closeBtn" mnemonicParsing="false" onAction="#closeGame" styleClass="btnIcon" text="Spiel beenden" />
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>
