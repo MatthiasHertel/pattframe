@@ -20,7 +20,7 @@ public class ManualViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         WebEngine engine = manualView.getEngine();
-       engine.load(getClass().getResource("/manual/manual.html").toExternalForm());
+        engine.load(getClass().getResource("/manual/manual.html").toExternalForm());
     }
 
     @FXML
