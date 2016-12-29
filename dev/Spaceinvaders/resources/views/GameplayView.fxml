@@ -32,8 +32,8 @@
 
     <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
        <children>
-        <Button mnemonicParsing="false" onAction="#goToScreen1" text="Willkommensseite" />
-        <Button mnemonicParsing="false" onAction="#goToScreen3" text="Highscoreseite" />
+        <Button mnemonicParsing="false" onAction="#goToScreenWelcomeView" text="Willkommensseite" />
+        <Button mnemonicParsing="false" onAction="#goToScreenHighscoreView" text="Highscoreseite" />
        </children>
     </HBox>
   </children>

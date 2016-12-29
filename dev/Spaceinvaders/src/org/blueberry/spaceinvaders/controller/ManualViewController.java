@@ -24,7 +24,7 @@ public class ManualViewController implements Initializable {
     }
 
     @FXML
-    private void goToScreen1(ActionEvent event){
+    private void goToScreenWelcomeView(ActionEvent event){
         SpaceInvaders.setScreen("WelcomeView");
     }
 }

@@ -96,13 +96,13 @@ public class GameplayViewController implements Initializable{
 
 
     @FXML
-    private void goToScreen1(ActionEvent event){
+    private void goToScreenWelcomeView(ActionEvent event){
         Game.getInstance().stop();
         SpaceInvaders.setScreen("WelcomeView");
     }
     
     @FXML
-    private void goToScreen3(ActionEvent event){
+    private void goToScreenHighscoreView(ActionEvent event){
         Game.getInstance().stop();
         SpaceInvaders.setScreen("HighscoreView");
     }

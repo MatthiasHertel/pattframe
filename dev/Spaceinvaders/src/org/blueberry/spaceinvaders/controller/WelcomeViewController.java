@@ -20,12 +20,12 @@ public class WelcomeViewController implements Initializable{
     }
 
     @FXML
-    private void goToScreen2(ActionEvent event){
+    private void goToScreenGameplayView(ActionEvent event){
        SpaceInvaders.setScreen("GameplayView");
     }
     
     @FXML
-    private void goToScreen3(ActionEvent event){
+    private void goToScreenHighscoreView(ActionEvent event){
        SpaceInvaders.setScreen("HighscoreView");
     }
 

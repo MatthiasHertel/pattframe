@@ -87,12 +87,12 @@ public class HighscoreViewController implements Initializable{
     private Label punkte;
 
     @FXML
-    private void goToScreen1(ActionEvent event){
+    private void goToScreenWelcomeView(ActionEvent event){
         SpaceInvaders.setScreen("WelcomeView");
     }
     
     @FXML
-    private void goToScreen2(ActionEvent event){
+    private void goToScreenGameplayView(ActionEvent event){
         SpaceInvaders.setScreen("GameplayView");
     }
 
