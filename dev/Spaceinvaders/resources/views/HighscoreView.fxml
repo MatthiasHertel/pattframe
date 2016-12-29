@@ -46,7 +46,7 @@
 
     </TableView>
       <HBox layoutY="500.0" alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
-          <Pagination fx:id="pagination" styleClass="dia-pagination"/>
+          <Pagination fx:id="pagination" styleClass="circle-pagination" />
       </HBox>
 
       <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="607.0" prefHeight="77.0" prefWidth="1024.0">
