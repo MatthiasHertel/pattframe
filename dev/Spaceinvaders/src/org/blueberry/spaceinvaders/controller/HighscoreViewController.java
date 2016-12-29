@@ -3,6 +3,9 @@ package org.blueberry.spaceinvaders.controller;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,6 +45,25 @@ public class HighscoreViewController implements Initializable{
 
     @FXML private Label label;
 
+    @FXML
+    private Label punkte;
+
+    @FXML
+    private Pagination pagination;
+
+    @FXML
+    private HBox hbox_input;
+
+    @FXML
+    private void goToScreenWelcomeView(ActionEvent event){
+        SpaceInvaders.setScreen("WelcomeView");
+    }
+
+    @FXML
+    private void goToScreenGameplayView(ActionEvent event){
+        SpaceInvaders.setScreen("GameplayView");
+    }
+
     private String addHighscore = "Punkteanzahl: ";
     private String modifyHighscore = "Bearbeite Eintrag";
 
@@ -49,6 +71,10 @@ public class HighscoreViewController implements Initializable{
     private String savingButtonID = "saveButton";
     private String deletingButtonID = "deleteButton";
     private String reloadButtonID = "reloadButton";
+
+    private int pageCount = 5;
+    private int itemsPerPage = 15;
+    private int currentPageIndex = 0;
 
     private DatabaseConnector mysqlConnector;
 
@@ -89,27 +115,25 @@ public class HighscoreViewController implements Initializable{
             //method call show inputs
             show_inputs(punkt);
         }
+        highscore = mysqlConnector.getHighscoreList();
+        pageCount = getPageCount(highscore.size(), itemsPerPage);
 
+        // hide pagination if highscore.size items perpage (only one site)
+        if (highscore.size() < itemsPerPage) {
+            pagination.setVisible(false);
+        }
+        pagination.setPageCount(pageCount);
+
+        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("Pagination Changed from " + oldValue + " , to " + newValue);
+                currentPageIndex = newValue.intValue();
+                refreshList();
+            }
+        });
         refreshList();
     }
-
-    @FXML
-    private Label punkte;
-
-    @FXML
-    private HBox hbox_input;
-
-    @FXML
-    private void goToScreenWelcomeView(ActionEvent event){
-        SpaceInvaders.setScreen("WelcomeView");
-    }
-    
-    @FXML
-    private void goToScreenGameplayView(ActionEvent event){
-        SpaceInvaders.setScreen("GameplayView");
-    }
-
-
 
     public void onEventOccured(ActionEvent event) {
         Button button = (Button) event.getSource();
@@ -167,7 +191,7 @@ public class HighscoreViewController implements Initializable{
 
     private void refreshList(){
         highscore = mysqlConnector.getHighscoreList();
-        crudTable.getItems().setAll(this.highscore);
+        crudTable.getItems().setAll(highscore.subList(currentPageIndex * itemsPerPage, ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size()) ? currentPageIndex * itemsPerPage + itemsPerPage : highscore.size())));
     }
 
     private void getHighscoreDetails(Highscore highscore) {
@@ -216,5 +240,13 @@ public class HighscoreViewController implements Initializable{
         // bind punkt to label
         punkteField.setText(punkt);
         // TODO show message (position in highscore)
+    }
+
+    // determine pagecount for pagination
+    private int getPageCount(int totalCount, int itemsPerPage) {
+        float floatCount = Float.valueOf(totalCount) / Float.valueOf(itemsPerPage);
+        int intCount = totalCount / itemsPerPage;
+//        System.out.println("floatCount=" + floatCount + ", intCount=" + intCount);
+        return ((floatCount > intCount) ? ++intCount : intCount);
     }
 }

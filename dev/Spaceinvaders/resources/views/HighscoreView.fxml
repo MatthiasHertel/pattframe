@@ -36,14 +36,19 @@
             <!--<Font size="18.0" />-->
         <!--</font>-->
     <!--</Label>-->
-    <TableView fx:id="crudTable" layoutX="-2.0" layoutY="83.0" maxWidth="-Infinity" onMouseClicked="#rowClicked" prefHeight="515.0" prefWidth="1024.0">
+    <TableView fx:id="crudTable" layoutX="-45.0" layoutY="83.0" maxWidth="-Infinity" onMouseClicked="#rowClicked" prefHeight="415.0" prefWidth="1024.0">
         <columns>
             <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
             <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
             <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
             <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
         </columns>
+
     </TableView>
+      <HBox layoutY="500.0" alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
+          <Pagination fx:id="pagination" styleClass="dia-pagination"/>
+      </HBox>
+
       <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="607.0" prefHeight="77.0" prefWidth="1024.0">
          <children>
             <Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">
