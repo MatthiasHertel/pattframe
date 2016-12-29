@@ -44,7 +44,7 @@
             <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
         </columns>
     </TableView>
-      <HBox alignment="CENTER" layoutX="17.0" layoutY="607.0" prefHeight="77.0" prefWidth="1024.0">
+      <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="607.0" prefHeight="77.0" prefWidth="1024.0">
          <children>
             <Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">
                <HBox.margin>

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.gameengine.Game;
 
@@ -77,14 +78,26 @@ public class HighscoreViewController implements Initializable{
 
         label.setText(addHighscore);
 
+        hbox_input.setVisible(false);
+
         //Fetch data from gameplay
-        punkteField.setText(new Integer(Game.getInstance().getPlayer().getScore()).toString());
+        String punkt = new Integer(Game.getInstance().getPlayer().getScore()).toString();
+
+        // if clause to determine game state
+        // TODO there should be a flag from game instance
+        if (!"0".equals(punkt)) {
+            //method call show inputs
+            show_inputs(punkt);
+        }
 
         refreshList();
     }
 
     @FXML
     private Label punkte;
+
+    @FXML
+    private HBox hbox_input;
 
     @FXML
     private void goToScreenWelcomeView(ActionEvent event){
@@ -170,6 +183,11 @@ public class HighscoreViewController implements Initializable{
         Highscore newHighscore = new Highscore(id, name, punkte, date);
         mysqlConnector.insertHighscore(newHighscore);
         refreshList();
+        hbox_input.setVisible(false);
+        // after save data set score to 0
+        Game.getInstance().getPlayer().setScore(0);
+
+        // TODO show message crud successfully
     }
 
     public void saveHighscore() {
@@ -189,5 +207,14 @@ public class HighscoreViewController implements Initializable{
 
     public void resetHighscore() {
         mysqlConnector.resetHighscore();
+    }
+
+    public void show_inputs(String punkt) {
+
+        // simple hack only here show inputs hbox
+        hbox_input.setVisible(true);
+        // bind punkt to label
+        punkteField.setText(punkt);
+        // TODO show message (position in highscore)
     }
 }
