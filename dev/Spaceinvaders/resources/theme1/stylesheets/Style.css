@@ -39,7 +39,7 @@
     -fx-border-color: #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3.png');
  }
-#gameplayBtn:hover, #gameplayBtn:focused {
+#gameplayBtn:hover {
     -fx-text-fill:  #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3Hover.png');
 }
@@ -47,7 +47,7 @@
     -fx-border-color: #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2.png');
 }
-#highscoreBtn:hover, #highscoreBtn:focused{
+#highscoreBtn:hover{
     -fx-text-fill:  #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
@@ -55,7 +55,7 @@
     -fx-border-color: #6f917c;
     -fx-graphic: url('../graphics/layout/btnInvader1.png');
 }
-#manualBtn:hover, #manualBtn:focused{
+#manualBtn:hover{
     -fx-text-fill:  #6f917c;
     -fx-graphic: url('../graphics/layout/btnInvader1Hover.png');
 }
@@ -63,7 +63,7 @@
     -fx-border-color: #d35f5f;
     -fx-graphic: url('../graphics/layout/btnInvader4.png');
 }
-#closeBtn:hover, #closeBtn:focused {
+#closeBtn:hover {
     -fx-text-fill: #d35f5f;
     -fx-graphic: url('../graphics/layout/btnInvader4Hover.png');
 }
@@ -72,9 +72,15 @@
     -fx-border-color: #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2.png');
 }
-#mainmenuBtn:hover, #mainmenuBtn:focused{
+#mainmenuBtn:hover{
     -fx-text-fill:  #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
+}
+
+#scoreLabel, #lifesLabel{
+    -fx-text-fill: #00ff00;
+    -fx-font-weight: bold;
+    -fx-padding: 0 30px 0 10px;
 }
 
 .table-view{
@@ -82,8 +88,6 @@
     /*-fx-border-color: #ffb66f;*/
     /*-fx-border-radius: 0%;*/
 }
-
-
 
 .table-view .column-header-background{
     /*-fx-background-color: linear-gradient(#131313 0%, #424141 100%);*/
