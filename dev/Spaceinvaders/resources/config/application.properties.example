@@ -69,6 +69,6 @@ player.lives = 3
 
 # db credentials
 
-db.url =
-db.username =
-db.password =
+db.url = 
+db.username = 
+db.password = 

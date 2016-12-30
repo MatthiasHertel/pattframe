@@ -1,11 +1,17 @@
 package org.blueberry.spaceinvaders.controller;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
+
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.gameengine.Game;
 
@@ -30,22 +36,47 @@ public class HighscoreViewController implements Initializable{
     @FXML private TableColumn nameColumn;
     @FXML private TableColumn idColumn;
     @FXML private TableColumn punkteColumn;
+    @FXML private TableColumn dateColumn;
 
     private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
 
     @FXML private TextField nameField;
-    @FXML private TextField punkteField;
+    @FXML private Label punkteField;
+    @FXML private Button addButton;
 
 
     @FXML private Label label;
 
-    private String addHighscore = "Neuer Eintrag";
+    @FXML
+    private Label punkte;
+
+    @FXML
+    private Pagination pagination;
+
+    @FXML
+    private HBox hbox_input;
+
+    @FXML
+    private void goToScreenWelcomeView(ActionEvent event){
+        SpaceInvaders.setScreen("WelcomeView");
+    }
+
+    @FXML
+    private void goToScreenGameplayView(ActionEvent event){
+        SpaceInvaders.setScreen("GameplayView");
+    }
+
+    private String addHighscore = "Punkteanzahl: ";
     private String modifyHighscore = "Bearbeite Eintrag";
 
     private String addingButtonID = "addButton";
     private String savingButtonID = "saveButton";
     private String deletingButtonID = "deleteButton";
     private String reloadButtonID = "reloadButton";
+
+    private int pageCount = 5;
+    private int itemsPerPage = 15;
+    private int currentPageIndex = 0;
 
     private DatabaseConnector mysqlConnector;
 
@@ -66,29 +97,51 @@ public class HighscoreViewController implements Initializable{
         mysqlConnector = new DatabaseConnector();
         mysqlConnector.launchConnection();
 
+        crudTable.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+
         idColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("name"));
         punkteColumn.setCellValueFactory(new PropertyValueFactory<Highscore, Integer>("punkte"));
-        label.setText(addHighscore);
-        punkteField.setText(new Integer(Game.getInstance().getPlayer().getScore()).toString());
+        dateColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("created_at"));
 
+        label.setText(addHighscore);
+
+        hbox_input.setVisible(false);
+
+        //Fetch data from gameplay
+        String punkt = new Integer(Game.getInstance().getPlayer().getScore()).toString();
+
+        // if clause to determine game state
+        // TODO there should be a flag from game instance
+        if (!"0".equals(punkt)) {
+            //method call show inputs
+            show_inputs(punkt);
+        }
+
+        // disable Button until Namefield has 6 chars
+        addButton.disableProperty().bind(
+                Bindings.greaterThan(6, nameField.textProperty().length())
+        );
+
+        highscore = mysqlConnector.getHighscoreList();
+        pageCount = getPageCount(highscore.size(), itemsPerPage);
+
+        // hide pagination if highscore.size items perpage (only one site)
+        if (highscore.size() < itemsPerPage) {
+            pagination.setVisible(false);
+        }
+        pagination.setPageCount(pageCount);
+
+        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                System.out.println("Pagination Changed from " + oldValue + " , to " + newValue);
+                currentPageIndex = newValue.intValue();
+                refreshList();
+            }
+        });
         refreshList();
     }
-
-    @FXML
-    private Label punkte;
-
-    @FXML
-    private void goToScreen1(ActionEvent event){
-        SpaceInvaders.setScreen("WelcomeView");
-    }
-    
-    @FXML
-    private void goToScreen2(ActionEvent event){
-        SpaceInvaders.setScreen("GameplayView");
-    }
-
-
 
     public void onEventOccured(ActionEvent event) {
         Button button = (Button) event.getSource();
@@ -146,7 +199,7 @@ public class HighscoreViewController implements Initializable{
 
     private void refreshList(){
         highscore = mysqlConnector.getHighscoreList();
-        crudTable.getItems().setAll(this.highscore);
+        crudTable.getItems().setAll(highscore.subList(currentPageIndex * itemsPerPage, ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size()) ? currentPageIndex * itemsPerPage + itemsPerPage : highscore.size())));
     }
 
     private void getHighscoreDetails(Highscore highscore) {
@@ -158,9 +211,15 @@ public class HighscoreViewController implements Initializable{
         String id = "1";
         String name = nameField.getText();
         Integer punkte = Integer.parseInt(punkteField.getText());
-        Highscore newHighscore = new Highscore(id, name, punkte);
+        String date = " ";
+        Highscore newHighscore = new Highscore(id, name, punkte, date);
         mysqlConnector.insertHighscore(newHighscore);
         refreshList();
+        hbox_input.setVisible(false);
+        // after save data set score to 0
+        Game.getInstance().getPlayer().setScore(0);
+
+        // TODO show message crud successfully
     }
 
     public void saveHighscore() {
@@ -180,5 +239,22 @@ public class HighscoreViewController implements Initializable{
 
     public void resetHighscore() {
         mysqlConnector.resetHighscore();
+    }
+
+    public void show_inputs(String punkt) {
+
+        // simple hack only here show inputs hbox
+        hbox_input.setVisible(true);
+        // bind punkt to label
+        punkteField.setText(punkt);
+        // TODO show message (position in highscore)
+    }
+
+    // determine pagecount for pagination
+    private int getPageCount(int totalCount, int itemsPerPage) {
+        float floatCount = Float.valueOf(totalCount) / Float.valueOf(itemsPerPage);
+        int intCount = totalCount / itemsPerPage;
+//        System.out.println("floatCount=" + floatCount + ", intCount=" + intCount);
+        return ((floatCount > intCount) ? ++intCount : intCount);
     }
 }

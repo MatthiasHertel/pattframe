@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -16,6 +17,15 @@
 
 <AnchorPane id="displayHighscore" minWidth="174.0" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
   <children>
+      <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
+         <children>
+            <Label text="Highscore" textFill="#797474">
+               <font>
+                  <Font name="Impact" size="50" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
   <!--<Label text="Highscorescreen">-->
     <!--<font>-->
       <!--<Font size="18.0" />-->
@@ -26,31 +36,45 @@
             <!--<Font size="18.0" />-->
         <!--</font>-->
     <!--</Label>-->
-    <TableView fx:id="crudTable" layoutX="109.0" layoutY="83.0" maxWidth="-Infinity" onMouseClicked="#rowClicked" prefHeight="600.0" prefWidth="648.0">
+    <TableView fx:id="crudTable" layoutX="-45.0" layoutY="83.0" maxWidth="-Infinity" onMouseClicked="#rowClicked" prefHeight="415.0" prefWidth="1024.0">
         <columns>
-            <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
             <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
             <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
+            <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
         </columns>
-    </TableView>
-    <VBox alignment="TOP_RIGHT" layoutX="774.0" layoutY="100.0" prefHeight="521.0" prefWidth="137.0">
-        <children>
-            <Label fx:id="label" text="Neuer Eintrag" />
-            <TextField fx:id="nameField" promptText="spieler name" />
-            <TextField fx:id="punkteField" promptText="spieler punkte" />
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="In der Highscore speichern." />
-            <!--<Button fx:id="saveButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Speichern" />-->
 
-            <!--<Button fx:id="deleteButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Löschen" />-->
-            <!--<Button fx:id="reloadButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Neu Laden" />-->
-            <!--<Button fx:id="resetButton" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="25.0" prefWidth="100.0" text="Reset DB" />-->
-        </children>
-    </VBox>
+    </TableView>
+      <HBox layoutY="500.0" alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
+          <Pagination fx:id="pagination" styleClass="circle-pagination" />
+      </HBox>
+
+      <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="607.0" prefHeight="77.0" prefWidth="1024.0">
+         <children>
+            <Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin></Label>
+            <Label fx:id="punkteField" alignment="CENTER" text="spieler punkte" textFill="#f103ff">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></Label>
+            <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 6)">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin></TextField>
+            <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="27.0" prefWidth="232.0" text="In der Highscore speichern.">
+               <font>
+                  <Font name="Impact" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
 
     <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
      <children>
-      <Button mnemonicParsing="false" onAction="#goToScreen1" text="Willkommensseite" />
-      <Button mnemonicParsing="false" onAction="#goToScreen2" text="Gameplayseite" />
+      <Button id="mainmenuBtn" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenü" />
+      <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreenGameplayView" styleClass="btnIcon" text="Spiel starten" />
      </children>
     </HBox>
   </children>

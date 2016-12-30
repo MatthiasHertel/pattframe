@@ -5,6 +5,10 @@ import javafx.collections.ObservableList;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Created by matthias on 22.12.16.
  */
@@ -45,18 +49,24 @@ public class DatabaseConnector {
         String query = "SELECT * FROM highscore ORDER BY punkte DESC";
 
         highscoreList = FXCollections.observableArrayList();
-
+        Integer ranking = 0;
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet selectionResult = ps.executeQuery();
 
 
             while (selectionResult.next()){
-                Integer dbId = selectionResult.getInt("ID");
-                String id = dbId.toString();
+                ranking++;
+//                Integer dbId = selectionResult.getInt("ID");
+                String id = ranking.toString();
                 String name = selectionResult.getString("name");
                 Integer punkte = selectionResult.getInt("punkte");
-                Highscore selectedHighscore = new Highscore(id,name, punkte);
+                DateFormat df = new SimpleDateFormat("dd.MM.YY  HH:mm");
+
+                String created_at = df.format(selectionResult.getTimestamp("created_at")).concat(" Uhr");
+//                String created_at = selectionResult.getTimestamp("created_at").toString();
+
+                Highscore selectedHighscore = new Highscore(id,name, punkte, created_at);
                 highscoreList.add(selectedHighscore);
             }
 

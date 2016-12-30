@@ -42,10 +42,8 @@ package org.blueberry.spaceinvaders.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import org.blueberry.spaceinvaders.gameengine.Game;
@@ -58,10 +56,10 @@ public class GameplayViewController implements Initializable{
     private AnchorPane display;
 
     @FXML
-    private Label scoreLabel1;
+    private Label scoreLabel;
 
     @FXML
-    private Label livesLabel;
+    private Label lifesLabel;
 
 
     /**
@@ -80,8 +78,8 @@ public class GameplayViewController implements Initializable{
 
         game.constructGame(display);
 
-        scoreLabel1.textProperty().bind(game.getPlayer().scoreProperty().asString());
-        livesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
+        scoreLabel.textProperty().bind(game.getPlayer().scoreProperty().asString());
+        lifesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
 
         game.play();
 
@@ -96,13 +94,13 @@ public class GameplayViewController implements Initializable{
 
 
     @FXML
-    private void goToScreen1(ActionEvent event){
+    private void goToScreenWelcomeView(ActionEvent event){
         Game.getInstance().stop();
         SpaceInvaders.setScreen("WelcomeView");
     }
     
     @FXML
-    private void goToScreen3(ActionEvent event){
+    private void goToScreenHighscoreView(ActionEvent event){
         Game.getInstance().stop();
         SpaceInvaders.setScreen("HighscoreView");
     }

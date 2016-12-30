@@ -1,34 +1,45 @@
-
+#displayWelcome,
 #displayGameplay,
 #displayHighscore,
-#displayWelcome,
+#displayManual,
 #display{
-    -fx-background-color: black;
+    -fx-background-color: #1b1e25;
+    -fx-background-image: url('../graphics/backgrounds/background.png');
+    -fx-background-size: stretch;
 }
+
+ /*{*/
+    /*-fx-background-image: url('../graphics/backgrounds/backgroundhighscore_rs.png');*/
+    /*-fx-background-size: stretch;*/
+/*}*/
 
 #displayWelcomeClaim {
     -fx-font-size: 16;
     -fx-text-fill: #fff;
 }
 
-.btnIcon {
+.btnIcon,.btnIcon:default {
     -fx-font-size: 16;
     -fx-text-fill: #fff;
     -fx-graphic-text-gap: 20px;
-    -fx-background-color: #000;
+    -fx-background-color: #1b1e25;
     -fx-background-radius: 5;
     -fx-background-insets: 0;
     -fx-border-radius: 5;
     -fx-border-width: 2;
     -fx-pref-width: 200px;
-    -fx-padding: 5px 20px;
+    -fx-padding: 5px 15px;
+    -fx-alignment: bottom-left;
 }
+.btnIcon:pressed {
+    -fx-translate-y: 1;
+}
+
 #gameplayBtn {
-     -fx-border-color: #997aff;
-     -fx-graphic-text-gap: 8px;
-     -fx-graphic: url('../graphics/layout/btnInvader3.png');
+    -fx-border-color: #997aff;
+    -fx-graphic: url('../graphics/layout/btnInvader3.png');
  }
-#gameplayBtn:hover, #gameplayBtn:focused {
+#gameplayBtn:hover {
     -fx-text-fill:  #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3Hover.png');
 }
@@ -36,56 +47,85 @@
     -fx-border-color: #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2.png');
 }
-#highscoreBtn:hover, #highscoreBtn:focused{
+#highscoreBtn:hover{
+    -fx-text-fill:  #ffb66f;
+    -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
+}
+#manualBtn {
+    -fx-border-color: #6f917c;
+    -fx-graphic: url('../graphics/layout/btnInvader1.png');
+}
+#manualBtn:hover{
+    -fx-text-fill:  #6f917c;
+    -fx-graphic: url('../graphics/layout/btnInvader1Hover.png');
+}
+#closeBtn {
+    -fx-border-color: #d35f5f;
+    -fx-graphic: url('../graphics/layout/btnInvader4.png');
+}
+#closeBtn:hover {
+    -fx-text-fill: #d35f5f;
+    -fx-graphic: url('../graphics/layout/btnInvader4Hover.png');
+}
+
+#mainmenuBtn {
+    -fx-border-color: #ffb66f;
+    -fx-graphic: url('../graphics/layout/btnInvader2.png');
+}
+#mainmenuBtn:hover{
     -fx-text-fill:  #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
 
+#scoreLabel, #lifesLabel{
+    -fx-text-fill: #00ff00;
+    -fx-font-weight: bold;
+    -fx-padding: 0 30px 0 10px;
+}
 
 .table-view{
     -fx-background-color: transparent;
+    /*-fx-border-color: #ffb66f;*/
+    /*-fx-border-radius: 0%;*/
 }
-
-.table-view:focused{
-    -fx-background-color: transparent;
-}
-
-/* Spaltenköpfe
-    Struktur column-header-background -> column-header */
 
 .table-view .column-header-background{
-    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+    /*-fx-background-color: linear-gradient(#131313 0%, #424141 100%);*/
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+    /*-fx-background-color: darkgray;*/
 }
 
 .table-view .column-header-background .label{
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-text-fill: #997aff;
 }
 
 .table-view .column-header {
     -fx-background-color: transparent;
+    -fx-font-size: 24;
+    -fx-text-fill: #fff;
 }
 
 .table-view .table-cell{
-    -fx-text-fill: white;
+    -fx-text-fill: #ffb66f;
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+
 }
 
 .table-row-cell{
-    -fx-background-color: -fx-table-cell-border-color, #616161;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em; /* 0 */
+
+    -fx-background-color: transparent;
+
 }
 
 .table-row-cell:odd{
-    -fx-background-color: -fx-table-cell-border-color, #424242;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em; /* 0 */
+
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #005797;
-    -fx-background-insets: 0;
-    -fx-background-radius: 1;
+
 }
 
 .table-view > .virtual-flow > .scroll-bar:vertical,
@@ -94,7 +134,7 @@
 .table-view > .virtual-flow > .scroll-bar:horizontal,
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track,
 .table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
-    -fx-background-color: transparent;
+    /*-fx-background-color: transparent;*/
 }
 
 
@@ -105,9 +145,19 @@
 }
 
 .table-row-cell:empty {
-    -fx-background-color: black;
+    -fx-background-color: transparent;
 }
 
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
+}
+
+.circle-pagination{
+    -fx-base:black;
+    -fx-page-information-visible:false;
+    -fx-tooltip-visible: false;
+}
+.circle-pagination .toggle-button , .circle-pagination.button{
+    -fx-background-radius: 15px;
+    -fx-padding: 0px;
 }

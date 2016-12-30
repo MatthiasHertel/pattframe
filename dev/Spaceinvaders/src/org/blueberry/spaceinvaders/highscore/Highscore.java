@@ -10,15 +10,17 @@ public class Highscore {
     private SimpleStringProperty id;
     private SimpleStringProperty name;
     private SimpleIntegerProperty punkte;
+    private SimpleStringProperty created_at;
 
-    public Highscore(String xid, String xname, Integer xpunkte) {
+    public Highscore(String xid, String xname, Integer xpunkte, String xcreated_at) {
         this.id = new SimpleStringProperty(xid);
         this.name = new SimpleStringProperty(xname);
         this.punkte= new SimpleIntegerProperty(xpunkte);
+        this.created_at = new SimpleStringProperty(xcreated_at);
 
     }
     public String toString(){
-        return "ID: " + id + ", name: " + name + ", punkte " + punkte;
+        return "ID: " + id + ", name: " + name + ", punkte " + punkte + ", created_at " + created_at;
     }
 
     public int getId() {
@@ -57,5 +59,17 @@ public class Highscore {
 
     public void setPunkte(Integer punkte) {
         this.punkte.set(punkte);
+    }
+
+    public String getDate() {
+        return created_at.get();
+    }
+
+    public SimpleStringProperty created_atProperty() {
+        return created_at;
+    }
+
+    public void setDate(String created_at) {
+        this.created_at.set(created_at);
     }
 }

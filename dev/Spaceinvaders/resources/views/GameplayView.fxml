@@ -1,40 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane id="display" fx:id="display" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../theme1/stylesheets/Style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.GameplayViewController">
-  <children>
-      <Label fx:id="scoreLabel1" layoutX="19.0" layoutY="7.0" text="Score" />
-      <Label fx:id="livesLabel" layoutX="19.0" layoutY="24.0" text="Health" />
-
-      <HBox alignment="CENTER" layoutX="418.0" layoutY="3.0" prefHeight="57.0">
-         <children>
-          <Label alignment="CENTER" text="Gameplayscreen" textAlignment="CENTER">
-            <font>
-              <Font size="18.0" />
-            </font>
-          </Label>
-         </children>
-      </HBox>
-
-    <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
-       <children>
-        <Button mnemonicParsing="false" onAction="#goToScreen1" text="Willkommensseite" />
-        <Button mnemonicParsing="false" onAction="#goToScreen3" text="Highscoreseite" />
-       </children>
-    </HBox>
-  </children>
+<AnchorPane id="display" fx:id="display" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.GameplayViewController">
+    <children>
+        <HBox alignment="BASELINE_LEFT" layoutY="0.0" prefHeight="45.0" prefWidth="1024.0">
+            <children>
+                <Label id="lifesLabel" fx:id="lifesLabel" layoutX="137.0" layoutY="5.0" text="Leben" />
+                <Label id="scoreLabel" fx:id="scoreLabel" layoutX="30.0" layoutY="5.0" text="Score" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
+            <children>
+                <Button id="mainmenuBtn" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenü" />
+                <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreenHighscoreView" styleClass="btnIcon" text="Highscore" />
+          </children>
+        </HBox>
+    </children>
 </AnchorPane>
