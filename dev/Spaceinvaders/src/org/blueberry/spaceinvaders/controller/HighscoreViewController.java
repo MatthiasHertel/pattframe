@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -41,6 +42,7 @@ public class HighscoreViewController implements Initializable{
 
     @FXML private TextField nameField;
     @FXML private Label punkteField;
+    @FXML private Button addButton;
 
 
     @FXML private Label label;
@@ -115,6 +117,12 @@ public class HighscoreViewController implements Initializable{
             //method call show inputs
             show_inputs(punkt);
         }
+
+        // disable Button until Namefield has 6 chars
+        addButton.disableProperty().bind(
+                Bindings.greaterThan(6, nameField.textProperty().length())
+        );
+
         highscore = mysqlConnector.getHighscoreList();
         pageCount = getPageCount(highscore.size(), itemsPerPage);
 

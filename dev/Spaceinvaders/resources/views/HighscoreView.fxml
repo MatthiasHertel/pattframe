@@ -59,7 +59,7 @@
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin></Label>
-            <TextField fx:id="nameField" alignment="CENTER" promptText="Name eingeben">
+            <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 6)">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin></TextField>
