@@ -7,7 +7,6 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Created by matthias on 22.12.16.
@@ -135,5 +134,21 @@ public class DatabaseConnector {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public String determinePosition(String punkte) {
+        Integer punkt = Integer.parseInt(punkte);
+        try {
+            PreparedStatement ps = connection.prepareStatement("select COUNT(*)+1 AS position from highscore WHERE punkte >= ?");
+            ps.setInt(1, punkt);
+            ResultSet pos = ps.executeQuery();
+            while (pos.next()) {
+                String position = pos.getString("position");
+                return(position);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ("Konnte keinen Wert ermitteln.");
     }
 }

@@ -48,7 +48,10 @@
       <HBox layoutY="500.0" alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
           <Pagination fx:id="pagination" styleClass="circle-pagination" />
       </HBox>
-
+      <HBox fx:id="message_banner" layoutY="560.0" alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
+          <children>
+          </children>
+      </HBox>
       <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="607.0" prefHeight="77.0" prefWidth="1024.0">
          <children>
             <Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">

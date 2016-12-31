@@ -1,7 +1,6 @@
 package org.blueberry.spaceinvaders.controller;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -12,21 +11,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import org.blueberry.spaceinvaders.SpaceInvaders;
-import org.blueberry.spaceinvaders.gameengine.Game;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.highscore.DatabaseConnector;
 import org.blueberry.spaceinvaders.highscore.Highscore;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class HighscoreViewController implements Initializable{
 
@@ -55,6 +51,8 @@ public class HighscoreViewController implements Initializable{
 
     @FXML
     private HBox hbox_input;
+    @FXML
+    private HBox message_banner;
 
     @FXML
     private void goToScreenWelcomeView(ActionEvent event){
@@ -82,7 +80,7 @@ public class HighscoreViewController implements Initializable{
 
     private Highscore temporaryHighscore;
 
-
+    private Label messageLabel = new Label();
 
     /**
      * Initializes the controller class.
@@ -114,6 +112,11 @@ public class HighscoreViewController implements Initializable{
         // if clause to determine game state
         // TODO there should be a flag from game instance
         if (!"0".equals(punkt)) {
+            String position = mysqlConnector.determinePosition(punkt);
+            messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz "+ position +" in der Highscore belegt!!!");
+            messageLabel.setTextFill(Color.GREEN);
+            messageLabel.setFont(Font.font ("Impact", 30));
+            message_banner.getChildren().add(messageLabel);
             //method call show inputs
             show_inputs(punkt);
         }
@@ -218,8 +221,10 @@ public class HighscoreViewController implements Initializable{
         hbox_input.setVisible(false);
         // after save data set score to 0
         Game.getInstance().getPlayer().setScore(0);
-
-        // TODO show message crud successfully
+        message_banner.setVisible(false);
+        // TODO show toast message crud successfully
+        // controlfx notification toast message
+        // http://controlsfx.bitbucket.org/org/controlsfx/control/Notifications.html
     }
 
     public void saveHighscore() {
