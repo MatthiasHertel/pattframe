@@ -8,13 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection;
+
 import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
-
 /**
- * Created by KK on 19.12.2016.
+ * MysteryShip-Klasse
  */
-public class MysteryShip extends ImageView implements ISprite{
+public class MysteryShip extends ImageView implements ISprite {
 
     private int borderXSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xstart"));
     private int borderXEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xend"));
@@ -24,7 +24,12 @@ public class MysteryShip extends ImageView implements ISprite{
     private int value = Integer.parseInt(SpaceInvaders.getSettings("mysteryship.value"));
     private MoveDirection moveDirection;
 
-    public MysteryShip(Image image, MoveDirection direction){
+    /**
+     * MysteryShip
+     * @param image
+     * @param direction
+     */
+    public MysteryShip(Image image, MoveDirection direction) {
 
         this.moveDirection = direction;
 
@@ -41,15 +46,19 @@ public class MysteryShip extends ImageView implements ISprite{
         this.setY(positionY);
     }
 
+    /**
+     * move
+     * @param direction
+     */
     @Override
     public void move(MoveDirection direction) {
-        if (! (direction == RIGHT || direction == LEFT)) {
+        if (!(direction == RIGHT || direction == LEFT)) {
             System.out.println("Das MysteryShip kann sich nur nach links oder rechts bewegen. Bewegung (" + direction + ") abgebrochen");
             return;
         }
 
         int duration = Integer.parseInt(SpaceInvaders.getSettings("mysteryship.duration"));
-        int xEndPosition = direction == RIGHT ? borderXEend + (int)this.getFitWidth() : borderXSstart - (int)this.getFitWidth();
+        int xEndPosition = direction == RIGHT ? borderXEend + (int) this.getFitWidth() : borderXSstart - (int) this.getFitWidth();
 
         KeyValue keyValue = new KeyValue(this.xProperty(), xEndPosition);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(duration), keyValue);
@@ -62,12 +71,19 @@ public class MysteryShip extends ImageView implements ISprite{
 
     }
 
-    public Timeline getTimeLine(){
+    /**
+     * getTimeLine
+     * @return
+     */
+    public Timeline getTimeLine() {
         return timeLine;
     }
 
-    public int getValue(){
+    /**
+     * getValue
+     * @return
+     */
+    public int getValue() {
         return value;
     }
-
 }

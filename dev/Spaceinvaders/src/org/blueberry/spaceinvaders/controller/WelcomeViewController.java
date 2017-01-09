@@ -9,33 +9,53 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
-public class WelcomeViewController implements Initializable{
+/**
+ * WelcomeViewController-Klasse
+ */
+public class WelcomeViewController implements Initializable {
 
     /**
-     * Initializes the controller class.
+     * Inizialisiert die Controller-Klasse.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
+    /**
+     * Wechselt zur Game-View.
+     * @param event
+     */
     @FXML
-    private void goToScreenGameplayView(ActionEvent event){
-       SpaceInvaders.setScreen("GameplayView");
-    }
-    
-    @FXML
-    private void goToScreenHighscoreView(ActionEvent event){
-       SpaceInvaders.setScreen("HighscoreView");
+    private void goToScreenGameplayView(ActionEvent event) {
+        SpaceInvaders.setScreen("GameplayView");
     }
 
+    /**
+     * Wechselt zur Highscore-View.
+     * @param event
+     */
     @FXML
-    private void goToScreenManualView(ActionEvent event){
+    private void goToScreenHighscoreView(ActionEvent event) {
+        SpaceInvaders.setScreen("HighscoreView");
+    }
+
+    /**
+     * Wechselt zur Manual-View.
+     * @param event
+     */
+    @FXML
+    private void goToScreenManualView(ActionEvent event) {
         SpaceInvaders.setScreen("ManualView");
     }
 
+    /**
+     * Schließt das Spiel.
+     */
     @FXML
-    private void closeGame(){
+    private void closeGame() {
         Platform.exit();
         System.exit(0);
     }

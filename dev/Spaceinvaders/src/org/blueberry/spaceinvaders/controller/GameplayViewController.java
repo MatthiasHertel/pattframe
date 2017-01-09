@@ -36,11 +36,12 @@
  * and therefore, elected the GPL Version 2 license, then the option applies
  * only if the new code is made subject to such option by the copyright
  * holder.
- */ 
+ */
 package org.blueberry.spaceinvaders.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,8 +50,10 @@ import javafx.scene.layout.AnchorPane;
 import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
-
-public class GameplayViewController implements Initializable{
+/**
+ * GameplayViewController-Klasse
+ */
+public class GameplayViewController implements Initializable {
 
     @FXML
     private AnchorPane display;
@@ -61,9 +64,10 @@ public class GameplayViewController implements Initializable{
     @FXML
     private Label lifesLabel;
 
-
     /**
-     * Initializes the controller class.
+     * Inizialisiert die Controller-Klasse.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,7 +78,7 @@ public class GameplayViewController implements Initializable{
         Game game = Game.getInstance();
         System.out.println("Gamestatus nach reset:  " + Game.getInstance().getGameStatus());
 
-//        game.setTheme("theme1"); //optional we
+        // game.setTheme("theme1"); //optional we
 
         game.constructGame(display);
 
@@ -82,25 +86,24 @@ public class GameplayViewController implements Initializable{
         lifesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
 
         game.play();
-
-
-
-
     }
 
-
-
-
-
-
+    /**
+     * Wechselt zur Welcome-View.
+     * @param event
+     */
     @FXML
-    private void goToScreenWelcomeView(ActionEvent event){
+    private void goToScreenWelcomeView(ActionEvent event) {
         Game.getInstance().stop();
         SpaceInvaders.setScreen("WelcomeView");
     }
-    
+
+    /**
+     * Wechselt zur Highscore-View.
+     * @param event
+     */
     @FXML
-    private void goToScreenHighscoreView(ActionEvent event){
+    private void goToScreenHighscoreView(ActionEvent event) {
         Game.getInstance().stop();
         SpaceInvaders.setScreen("HighscoreView");
     }

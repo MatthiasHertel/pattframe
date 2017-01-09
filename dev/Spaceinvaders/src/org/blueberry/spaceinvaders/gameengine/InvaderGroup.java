@@ -1,6 +1,5 @@
 package org.blueberry.spaceinvaders.gameengine;
 
-
 import javafx.scene.image.Image;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
@@ -10,16 +9,19 @@ import java.util.List;
 import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
 /**
- * Created by KK on 09.12.2016.
+ * InvaderGroup-Klasse
  */
 public class InvaderGroup {
 
     private static InvaderGroup ourInstance = new InvaderGroup();
 
+    /**
+     * getInstance
+     * @return
+     */
     public static InvaderGroup getInstance() {
         return ourInstance;
     }
-
 
     private List<List<Invader>> invaders;
     private List<Invader> invaderList;
@@ -31,12 +33,19 @@ public class InvaderGroup {
     private MoveDirection moveDirection = MoveDirection.RIGHT;
     private MoveDirection lastLeftRightDirection;
 
+    /**
+     * InvaderGroup
+     */
     private InvaderGroup() {
-//        createGroup();
-
+        //createGroup();
     }
 
-    public void createGroup(int positionX, int positionY){
+    /**
+     * createGroup
+     * @param positionX
+     * @param positionY
+     */
+    public void createGroup(int positionX, int positionY) {
         positionX += borderXSstart;
         positionY += borderYSstart;
 
@@ -49,15 +58,27 @@ public class InvaderGroup {
         int invaderYGap = Integer.parseInt(SpaceInvaders.getSettings("invader.gap.y"));
         int invaderPerLine = Integer.parseInt(SpaceInvaders.getSettings("invader.line.count"));
 
-        for (int invaderTyp = 3; invaderTyp > 0; invaderTyp--){
+        for (int invaderTyp = 3; invaderTyp > 0; invaderTyp--) {
             addNewInvadersToGroup(invaders, invaderTyp, positionX, positionY, invaderXGap, invaderYGap, invaderWidth, invaderHeight, invaderPerLine);
         }
 
         invaderList = invadersToList();
     }
 
+    /**
+     * addNewInvadersToGroup
+     * @param invaderGroup
+     * @param invaderType
+     * @param positionX
+     * @param positionY
+     * @param invaderXGap
+     * @param invaderYGap
+     * @param invaderWidth
+     * @param invaderHeight
+     * @param invaderPerLine
+     */
     //adds Invader, depends from typ(1,2,3) and values from application.properties - called from createGroup
-    private void addNewInvadersToGroup(List<List<Invader>> invaderGroup, int invaderType, int positionX, int positionY, int invaderXGap, int invaderYGap, int invaderWidth, int invaderHeight, int invaderPerLine){
+    private void addNewInvadersToGroup(List<List<Invader>> invaderGroup, int invaderType, int positionX, int positionY, int invaderXGap, int invaderYGap, int invaderWidth, int invaderHeight, int invaderPerLine) {
         int invaderValue;
         Image image1;
         Image image2;
@@ -65,57 +86,76 @@ public class InvaderGroup {
         invaderValue = Integer.parseInt(SpaceInvaders.getSettings("invader." + Integer.toString(invaderType) + ".value"));
         image1 = Game.getInstance().getImageAsset("invader" + Integer.toString(invaderType) + "a");
         image2 = Game.getInstance().getImageAsset("invader" + Integer.toString(invaderType) + "b");
-        for (int j = 0; j < Integer.parseInt(SpaceInvaders.getSettings("invader." + Integer.toString(invaderType) + ".lines")); j++){
+        for (int j = 0; j < Integer.parseInt(SpaceInvaders.getSettings("invader." + Integer.toString(invaderType) + ".lines")); j++) {
             List<Invader> invaderList = new ArrayList<>();
             int posY = positionY + (invaderHeight + invaderYGap) * invaderGroup.size();
-            for (int i = 0; i < invaderPerLine; i++){
+            for (int i = 0; i < invaderPerLine; i++) {
                 invaderList.add(new Invader(image1, image2, positionX + (invaderWidth + invaderXGap) * i, posY, invaderValue));
             }
             invaderGroup.add(invaderList);
         }
     }
 
-    private List<Invader> invadersToList(){
+    /**
+     * invadersToList
+     * @return
+     */
+    private List<Invader> invadersToList() {
         List<Invader> invaderReturnList = new ArrayList<>();
-        for (List<Invader> invaderList: invaders){
-            for (Invader invader: invaderList){
+        for (List<Invader> invaderList : invaders) {
+            for (Invader invader : invaderList) {
                 invaderReturnList.add(invader);
             }
         }
         return invaderReturnList;
     }
 
-    public List<Invader> getInvaderList(){
+    /**
+     * getInvaderList
+     * @return
+     */
+    public List<Invader> getInvaderList() {
         return invaderList;
     }
 
-    public List<List<Invader>> getInvaders(){
+    /**
+     * getInvaders
+     * @return
+     */
+    public List<List<Invader>> getInvaders() {
         return invaders;
     }
 
-
-
-    public void move(){
+    /**
+     * move
+     */
+    public void move() {
 
         setNextGroupMoveDirection();
 
-        if (moveDirection != NONE){
-            for(Invader invader: invaderList){
+        if (moveDirection != NONE) {
+            for (Invader invader : invaderList) {
                 invader.move(moveDirection);
             }
-        }
-        else{
+        } else {
             gameOver();
         }
     }
 
+    /**
+     * gameOver
+     */
     private void gameOver() {
         ourInstance = new InvaderGroup();
         Game.getInstance().setGameStatus(Game.GameStatus.GAMEOVER);
     }
 
-
-    private boolean testNextGroupMove(MoveDirection direction){
+    /**
+     * testNextGroupMove
+     * @param direction
+     * @return
+     */
+    private boolean testNextGroupMove(MoveDirection direction) {
 
         switch (direction) {
             case RIGHT: {
@@ -151,41 +191,45 @@ public class InvaderGroup {
         return false;
     }
 
+    /**
+     * setNextGroupMoveDirection
+     */
+    private void setNextGroupMoveDirection() {
 
-    private void setNextGroupMoveDirection(){
-
-        if (moveDirection == RIGHT || moveDirection == LEFT){
-            if (testNextGroupMove(moveDirection)){
+        if (moveDirection == RIGHT || moveDirection == LEFT) {
+            if (testNextGroupMove(moveDirection)) {
                 lastLeftRightDirection = moveDirection;
-            }
-            else {
-                if(testNextGroupMove(DOWN))
+            } else {
+                if (testNextGroupMove(DOWN))
                     moveDirection = DOWN;
                 else
                     moveDirection = NONE;
             }
-        }
-        else if (moveDirection == DOWN){
+        } else if (moveDirection == DOWN) {
             moveDirection = lastLeftRightDirection == LEFT ? RIGHT : LEFT;
             setNextGroupMoveDirection();
         }
     }
 
-    public void removeInvader(Invader invader){
+    /**
+     * removeInvader
+     * @param invader
+     */
+    public void removeInvader(Invader invader) {
         invaderList.remove(invader);
-        for (List<Invader> iList : invaders){
+        for (List<Invader> iList : invaders) {
             iList.remove(invader);
         }
     }
 
-
-
-    public enum MoveDirection{
+    /**
+     * MoveDirection
+     */
+    public enum MoveDirection {
         RIGHT,
         LEFT,
         DOWN,
         UP,
         NONE;
     }
-
 }

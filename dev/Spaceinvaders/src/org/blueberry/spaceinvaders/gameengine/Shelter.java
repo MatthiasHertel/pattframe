@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by KK on 20.12.2016.
+ * Shelter-Klasse
  */
 public class Shelter {
 
@@ -16,67 +16,76 @@ public class Shelter {
     private int shelterPartWidth = Integer.parseInt(SpaceInvaders.getSettings("shelter.part.width"));
     private List<ShelterPart> shelterParts = new ArrayList<>();
 
-    Shelter(int x, int y){
+    Shelter(int x, int y) {
         this.positionX = x;
         this.positionY = y;
 
         constructShelter();
     }
 
-    public void constructShelter(){
+    /**
+     * constructShelter
+     */
+    public void constructShelter() {
 
         // first line
-        addNewShelterPart(positionX + 0*shelterPartWidth, positionY, 2, 0);
-        addNewShelterPart(positionX + 1*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 2*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 3*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 4*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 5*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 6*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 7*shelterPartWidth, positionY, 2, 90);
+        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 2, 0);
+        addNewShelterPart(positionX + 1 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 2 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 3 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 4 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 5 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 6 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 2, 90);
 
         // second line
         positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1*shelterPartWidth, positionY, 2, 0);
-        addNewShelterPart(positionX + 0*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 1*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 2*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 3*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 4*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 5*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 6*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 7*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8*shelterPartWidth, positionY, 2, 90);
+        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 2, 0);
+        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 1 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 2 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 3 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 4 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 5 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 6 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 2, 90);
 
         // third line
         positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 0*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 1*shelterPartWidth, positionY, 2, 180);
+        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 1 * shelterPartWidth, positionY, 2, 180);
 
-        addNewShelterPart(positionX + 6*shelterPartWidth, positionY, 2, 270);
-        addNewShelterPart(positionX + 7*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8*shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 6 * shelterPartWidth, positionY, 2, 270);
+        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 1, 0);
 
         // fourth line
         positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 0*shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
 
-        addNewShelterPart(positionX + 7*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8*shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 1, 0);
 
         // fifth line
         positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 0*shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
 
-        addNewShelterPart(positionX + 7*shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8*shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 1, 0);
     }
 
-
-    public void addNewShelterPart(int x, int y, int typ, int rotation){
+    /**
+     * addNewShelterPart
+     * @param x
+     * @param y
+     * @param typ
+     * @param rotation
+     */
+    public void addNewShelterPart(int x, int y, int typ, int rotation) {
 
         Game game = Game.getInstance();
         List<Image> shelterPartsImageList = new ArrayList<>();
@@ -88,8 +97,7 @@ public class Shelter {
             shelterPartsImageList.add(game.getImageAsset("shelter1d"));
             shelterPartsImageList.add(game.getImageAsset("shelter1e"));
             shelterPartsImageList.add(game.getImageAsset("shelter1f"));
-        }
-        else if (typ == 2) {
+        } else if (typ == 2) {
             shelterPartsImageList.add(game.getImageAsset("shelter2a"));
             shelterPartsImageList.add(game.getImageAsset("shelter2b"));
             shelterPartsImageList.add(game.getImageAsset("shelter2c"));
@@ -97,9 +105,11 @@ public class Shelter {
         shelterParts.add(new ShelterPart(shelterPartsImageList, x, y, typ, rotation));
     }
 
-
-
-    public List<ShelterPart> getShelterParts(){
+    /**
+     * getShelterParts
+     * @return
+     */
+    public List<ShelterPart> getShelterParts() {
         return shelterParts;
     }
 }
