@@ -2,6 +2,7 @@ package org.blueberry.spaceinvaders.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,18 +22,31 @@ import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.highscore.DatabaseConnector;
 import org.blueberry.spaceinvaders.highscore.Highscore;
 
-public class HighscoreViewController implements Initializable{
+/**
+ * HighscoreViewController-Klasse
+ */
+public class HighscoreViewController implements Initializable {
 
-    @FXML private TableView<Highscore> crudTable;
-    @FXML private TableColumn nameColumn;
-    @FXML private TableColumn idColumn;
-    @FXML private TableColumn punkteColumn;
-    @FXML private TableColumn dateColumn;
-    @FXML private TextField nameField;
-    @FXML private Button addButton;
-    @FXML private Pagination pagination;
-    @FXML private HBox hbox_input;
-    @FXML private HBox message_banner;
+    @FXML
+    private TableView<Highscore> crudTable;
+    @FXML
+    private TableColumn nameColumn;
+    @FXML
+    private TableColumn idColumn;
+    @FXML
+    private TableColumn punkteColumn;
+    @FXML
+    private TableColumn dateColumn;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Pagination pagination;
+    @FXML
+    private HBox hbox_input;
+    @FXML
+    private HBox message_banner;
 
     // TODO should be in application.properties
     private int pageCount = 5;
@@ -54,7 +68,7 @@ public class HighscoreViewController implements Initializable{
         mysqlConnector.launchConnection();
 
         // set resize policy
-        crudTable.setColumnResizePolicy( TableView.CONSTRAINED_RESIZE_POLICY );
+        crudTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         //populate the table
         idColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("id"));
@@ -72,9 +86,9 @@ public class HighscoreViewController implements Initializable{
         // TODO there should be a flag from game instance
         if (!"0".equals(punkt)) {
             String position = mysqlConnector.determinePosition(punkt);
-            messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz "+ position +" in der Highscore belegt!!!");
+            messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + position + " in der Highscore belegt!!!");
             messageLabel.setTextFill(Color.GREEN);
-            messageLabel.setFont(Font.font ("Impact", 30));
+            messageLabel.setFont(Font.font("Impact", 30));
             message_banner.getChildren().add(messageLabel);
             hbox_input.setVisible(true);
         }
@@ -108,13 +122,17 @@ public class HighscoreViewController implements Initializable{
         refreshList();
     }
 
+    /**
+     * onEventOccured
+     * @param event
+     */
     // if there multiple action buttons (for settingsview)
     public void onEventOccured(ActionEvent event) {
         Button button = (Button) event.getSource();
 
         // case switch
-        switch(button.getId()) {
-            case "addButton":               {
+        switch (button.getId()) {
+            case "addButton": {
                 System.out.println("addButton");
                 addNewHighscore();
                 refreshList();
@@ -123,12 +141,18 @@ public class HighscoreViewController implements Initializable{
         }
     }
 
-    private void refreshList(){
+    /**
+     * refreshList
+     */
+    private void refreshList() {
         highscore = mysqlConnector.getHighscoreList();
         crudTable.getItems().setAll(highscore.subList(currentPageIndex * itemsPerPage, ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size()) ? currentPageIndex * itemsPerPage + itemsPerPage : highscore.size())));
     }
 
-    public void addNewHighscore(){
+    /**
+     * addNewHighscore
+     */
+    public void addNewHighscore() {
         String id = "1";
         String name = nameField.getText();
         Integer punkte = Integer.parseInt(punkt);
@@ -147,6 +171,12 @@ public class HighscoreViewController implements Initializable{
         // pagination.currentPageIndexProperty().setValue(2);
     }
 
+    /**
+     * getPageCount
+     * @param totalCount
+     * @param itemsPerPage
+     * @return
+     */
     // determine pagecount for pagination
     private int getPageCount(int totalCount, int itemsPerPage) {
         float floatCount = Float.valueOf(totalCount) / Float.valueOf(itemsPerPage);
@@ -154,14 +184,21 @@ public class HighscoreViewController implements Initializable{
         return ((floatCount > intCount) ? ++intCount : intCount);
     }
 
-    // game menu buttons
+    /**
+     * Wechselt zur Welcome-View.
+     * @param event
+     */
     @FXML
-    private void goToScreenWelcomeView(ActionEvent event){
+    private void goToScreenWelcomeView(ActionEvent event) {
         SpaceInvaders.setScreen("WelcomeView");
     }
 
+    /**
+     * Wechselt zur Game-View.
+     * @param event
+     */
     @FXML
-    private void goToScreenGameplayView(ActionEvent event){
+    private void goToScreenGameplayView(ActionEvent event) {
         SpaceInvaders.setScreen("GameplayView");
     }
 

@@ -8,14 +8,19 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
-
 /**
- * Created by KK on 12.12.2016.
+ * Bullet
  */
 public class Bullet extends ImageView implements ISprite {
 
     private Timeline timeLine;
 
+    /**
+     * Bullet
+     * @param image
+     * @param positionX
+     * @param positionY
+     */
     public Bullet(Image image, int positionX, int positionY){
         this.setX(positionX);
         this.setY(positionY);
@@ -26,10 +31,18 @@ public class Bullet extends ImageView implements ISprite {
         timeLine = new Timeline();
     }
 
+    /**
+     * getTimeLine
+     * @return
+     */
     public Timeline getTimeLine(){
         return timeLine;
     }
 
+    /**
+     * move
+     * @param direction
+     */
     @Override
     public void move(InvaderGroup.MoveDirection direction){
         int duration = Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.duration"));

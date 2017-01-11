@@ -9,21 +9,25 @@ import org.blueberry.spaceinvaders.controller.ScreenController;
 import java.util.Properties;
 
 /**
- * Created by matthias hertel on 13.12.16.  blabla
+ * SpaceInvaders ist verantwortlich für den Start der Spiele-Applikation
  */
 
 public class SpaceInvaders extends Application {
     private static final Properties settings = new Properties();
-
     private static ScreenController screenController = new ScreenController();
 
+    /**
+     * Start-Methode
+     * @param primaryStage Hauptbühne
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
 
         setScreen("WelcomeView");
-//        setScreen("GameplayView");
+        //setScreen("GameplayView");
 
         Group root = new Group();
         root.getChildren().addAll(screenController);
@@ -33,14 +37,28 @@ public class SpaceInvaders extends Application {
 
     }
 
+    /**
+     * main
+     * @param args
+     */
     public static void main(String args[]) {
         SpaceInvaders.launch(args);
     }
-    public static String getSettings(String property){
+
+    /**
+     * Ruft die Settings ab.
+     * @param property Name der Property-Datei
+     * @return
+     */
+    public static String getSettings(String property) {
         return settings.getProperty(property);
     }
 
-    public static void setScreen(String viewName){
+    /**
+     * Legt den Screen-Namen fest.
+     * @param viewName Name der View
+     */
+    public static void setScreen(String viewName) {
         screenController.setScreen("/views/" + viewName + ".fxml");
     }
 }

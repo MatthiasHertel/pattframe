@@ -7,10 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 /**
- * Created by matthias on 13.12.16.
+ * ScreenController
  */
-
-
 public class ScreenController extends StackPane {
 
     private Node screen;
@@ -40,7 +38,7 @@ public class ScreenController extends StackPane {
     //one screen the new screen is been added second, and then the current screen is removed.
     // If there isn't any screen being displayed, the new screen is just added to the root.
     public boolean setScreen(final String resource) {
-        if (!loadScreen(resource)){
+        if (!loadScreen(resource)) {
             System.out.println("ScreenController: view konnte nicht geladen werden - " + resource);
         }
         if (!getChildren().isEmpty()) {

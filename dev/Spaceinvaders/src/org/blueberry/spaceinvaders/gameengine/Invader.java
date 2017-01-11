@@ -4,9 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
-
 /**
- * Created by KK on 09.12.2016.
+ * Invader-Klasse
  */
 public class Invader extends ImageView implements IGunSprite {
 
@@ -21,7 +20,15 @@ public class Invader extends ImageView implements IGunSprite {
     private int moveXPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.xpixel"));
     private int moveYPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"));
 
-    public Invader(Image image1, Image image2, int positionX, int positionY, int value){
+    /**
+     * Invader
+     * @param image1
+     * @param image2
+     * @param positionX
+     * @param positionY
+     * @param value
+     */
+    public Invader(Image image1, Image image2, int positionX, int positionY, int value) {
 
         this.value = value;
 
@@ -36,76 +43,102 @@ public class Invader extends ImageView implements IGunSprite {
 
         int invaderHeigthSuggestion = Integer.parseInt(SpaceInvaders.getSettings("invader.height"));
         int invaderWidthSuggestion = Integer.parseInt(SpaceInvaders.getSettings("invader.widht"));
-        if (invaderHeigthSuggestion > 0){
+        if (invaderHeigthSuggestion > 0) {
             this.setFitHeight(invaderHeigthSuggestion);
             this.height = invaderHeigthSuggestion;
             this.width = (int) this.getLayoutBounds().getWidth();
-        }
-        else if (invaderWidthSuggestion > 0){
+        } else if (invaderWidthSuggestion > 0) {
             this.setFitWidth(invaderWidthSuggestion);
             this.width = invaderWidthSuggestion;
             this.height = (int) this.getLayoutBounds().getHeight();
         }
     }
 
-
-
-    private void changeView(){
+    /**
+     * changeView
+     */
+    private void changeView() {
         this.setImage(this.getImage() == image1 ? image2 : image1);
     }
 
+    /**
+     * move
+     * @param direction
+     */
     @Override
     public void move(InvaderGroup.MoveDirection direction) {
 
-        switch (direction){
-            case DOWN: this.setY(this.getY() + moveYPixels);
+        switch (direction) {
+            case DOWN:
+                this.setY(this.getY() + moveYPixels);
                 break;
-            case RIGHT: this.setX(this.getX() + moveXPixels);
+            case RIGHT:
+                this.setX(this.getX() + moveXPixels);
                 break;
-            case LEFT: this.setX(this.getX() + moveXPixels * -1);
+            case LEFT:
+                this.setX(this.getX() + moveXPixels * -1);
         }
 
         changeView();
     }
 
+    /**
+     * shoot
+     */
     public void shoot() {
-
-
-//        Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound
+        //Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound
         bullet.move(InvaderGroup.MoveDirection.DOWN);
-
         System.out.println("InvaderSchuss");
     }
 
+    /**
+     * newBullet
+     */
     @Override
-    public void newBullet(){
+    public void newBullet() {
         int bulletPositionX = (int) (getX() + width / 2);
-        int bulletPositionY = (int)getY();
+        int bulletPositionY = (int) getY();
         bullet = new Bullet(Game.getInstance().getImageAsset("invaderBullet"), bulletPositionX, bulletPositionY);
     }
 
+    /**
+     * getBullet
+     * @return
+     */
     @Override
-    public Bullet getBullet(){
+    public Bullet getBullet() {
         return bullet;
     }
 
+    /**
+     * removeBullet
+     */
     @Override
-    public void removeBullet(){
+    public void removeBullet() {
         bullet = null;
     }
 
-
-    public int getValue(){
+    /**
+     * getValue
+     * @return
+     */
+    public int getValue() {
         return value;
     }
 
-
-    public int getWidth(){
+    /**
+     * getWidth
+     * @return
+     */
+    public int getWidth() {
         return width;
     }
 
-
-    public int getHeight(){
+    /**
+     * getHeight
+     * @return
+     */
+    public int getHeight() {
         return height;
     }
 }

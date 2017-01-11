@@ -7,7 +7,7 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.util.List;
 
 /**
- * Created by KK on 20.12.2016.
+ * ShelterPart-Klasse
  */
 public class ShelterPart extends ImageView implements ISprite {
 
@@ -17,7 +17,15 @@ public class ShelterPart extends ImageView implements ISprite {
     private int height;
     private List<Image> imageList;
 
-    ShelterPart(List<Image> imageList, int positionX, int positionY, int type, int rotation){
+    /**
+     * ShelterPart
+     * @param imageList
+     * @param positionX
+     * @param positionY
+     * @param type
+     * @param rotation
+     */
+    ShelterPart(List<Image> imageList, int positionX, int positionY, int type, int rotation) {
 
         this.shelterType = type;
         this.state = type == 1 ? 3 : 2;
@@ -34,21 +42,32 @@ public class ShelterPart extends ImageView implements ISprite {
         this.width = (int) getFitWidth();
         this.height = (int) this.getLayoutBounds().getHeight();
 
-        if (rotation != 0){
+        if (rotation != 0) {
             this.setRotate(rotation);
         }
     }
 
-    public int getState(){
+    /**
+     * getState
+     * @return
+     */
+    public int getState() {
         return this.state;
     }
 
+    /**
+     * move
+     * @param direction
+     */
     @Override
     public void move(InvaderGroup.MoveDirection direction) {
 
     }
 
-    public void damagedFromTop(){
+    /**
+     * damagedFromTop
+     */
+    public void damagedFromTop() {
         if (shelterType == 1) {
             switch (state) {
                 case 3:
@@ -58,14 +77,16 @@ public class ShelterPart extends ImageView implements ISprite {
                     this.setImage(getImage() == imageList.get(3) ? imageList.get(4) : imageList.get(5));
                     break;
             }
-        }
-        else if (shelterType == 2 && state == 2){
+        } else if (shelterType == 2 && state == 2) {
             this.setImage(imageList.get(1));
         }
         state--;
     }
 
-    public void damagedFromBottom(){
+    /**
+     * damagedFromBottom
+     */
+    public void damagedFromBottom() {
         if (shelterType == 1) {
             switch (state) {
                 case 3:
@@ -75,8 +96,7 @@ public class ShelterPart extends ImageView implements ISprite {
                     this.setImage(getImage() == imageList.get(1) ? imageList.get(2) : imageList.get(5));
                     break;
             }
-        }
-        else if (shelterType == 2 && state == 2){
+        } else if (shelterType == 2 && state == 2) {
             this.setImage(imageList.get(2));
         }
         state--;

@@ -16,25 +16,31 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.util.*;
 
 import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.*;
+
 import org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection;
+
 import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
-
 /**
- * Created by KK on 09.12.2016.
+ * Game-Klasse
  */
 public class Game {
 
+    /**
+     * ourInstance
+     */
     private static Game ourInstance;
 
+    /**
+     * Game
+     * @return
+     */
     public static Game getInstance() {
-        if(ourInstance == null){
-           ourInstance = new Game();
+        if (ourInstance == null) {
+            ourInstance = new Game();
         }
         return ourInstance;
     }
-
-
 
     private Map<String, Image> imageAssets = new HashMap<String, Image>();
     private Map<String, AudioClip> audioAssets = new HashMap<String, AudioClip>();
@@ -43,7 +49,7 @@ public class Game {
     private AnchorPane display;
     private Ship ship;
     private MysteryShip mysteryShip;
-//    private Shelter shelter;
+    //    private Shelter shelter;
     private List<Shelter> shelterList = new ArrayList<>();
     private boolean shipSelfMove = Boolean.parseBoolean(SpaceInvaders.getSettings("ship.move.self"));
 
@@ -64,10 +70,11 @@ public class Game {
 
     private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
 
-
-
-
-    public void loadAssets(String theme){
+    /**
+     * loadAssets
+     * @param theme
+     */
+    public void loadAssets(String theme) {
 
         imageAssets.put("invader1a", new Image(theme + "/graphics/invader1a.png"));
         imageAssets.put("invader1b", new Image(theme + "/graphics/invader1b.png"));
@@ -102,37 +109,61 @@ public class Game {
 
     }
 
-    public void addInvadersToPane(AnchorPane anchorPane, List<Invader> invaderList){
+    /**
+     * addInvadersToPane
+     * @param anchorPane
+     * @param invaderList
+     */
+    public void addInvadersToPane(AnchorPane anchorPane, List<Invader> invaderList) {
 
-        for (Invader invader: invaderList){
+        for (Invader invader : invaderList) {
             anchorPane.getChildren().add(invader);
         }
     }
 
-    public void addShelterToPane(AnchorPane anchorPane, Shelter shelter){
+    /**
+     * addShelterToPane
+     * @param anchorPane
+     * @param shelter
+     */
+    public void addShelterToPane(AnchorPane anchorPane, Shelter shelter) {
 
-        for (ShelterPart shelterPart: shelter.getShelterParts()){
+        for (ShelterPart shelterPart : shelter.getShelterParts()) {
             anchorPane.getChildren().add(shelterPart);
         }
     }
 
-    public Image getImageAsset(String key){
+    /**
+     * getImageAsset
+     * @param key
+     * @return
+     */
+    public Image getImageAsset(String key) {
         return imageAssets.get(key);
     }
 
-    public AudioClip getAudioAsset(String key){
+    /**
+     * getAudioAsset
+     * @param key
+     * @return
+     */
+    public AudioClip getAudioAsset(String key) {
         return audioAssets.get(key);
     }
 
-    private Game(){
+    /**
+     * Game
+     */
+    private Game() {
         loadAssets(SpaceInvaders.getSettings("game.standardtheme"));
         player = new Player();
-
-
     }
 
-
-    public void constructGame(AnchorPane pane){
+    /**
+     * constructGame
+     * @param pane
+     */
+    public void constructGame(AnchorPane pane) {
         this.display = pane;
         createInvaderGroup();
         addInvadersToPane(display, invaderGroup.getInvaderList());
@@ -140,11 +171,10 @@ public class Game {
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
 
-        for (int i = 0; i < 4; i++){
-            shelterList.add(new Shelter(100 + i*170,  Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
+        for (int i = 0; i < 4; i++) {
+            shelterList.add(new Shelter(100 + i * 170, Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
             addShelterToPane(display, shelterList.get(i));
         }
-
 
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
         display.getChildren().add(gameStatusLabel); //TODO: raus damit
@@ -176,15 +206,17 @@ public class Game {
         display.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (shipSelfMove){return;}
-                if(event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT){
+                if (shipSelfMove) {
+                    return;
+                }
+                if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
                     ship.setMoveDirection(InvaderGroup.MoveDirection.NONE);
                 }
             }
         });
 
         gameStatus.addListener((observable, oldValue, newValue) -> {
-            switch (newValue){
+            switch (newValue) {
                 case PLAY:
                     playActiveTimeLines(allActiveTimeLines);
                     break;
@@ -206,27 +238,43 @@ public class Game {
 
         player.livesProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("Player Lives Changed: " + newValue);
-            if (newValue.intValue() == 0){
+            if (newValue.intValue() == 0) {
                 gameStatus.set(GAMEOVER);
             }
         });
     }
 
-    private void pauseActiveTimeLines(List<Timeline> timeLines){
+    /**
+     * pauseActiveTimeLines
+     * @param timeLines
+     */
+    private void pauseActiveTimeLines(List<Timeline> timeLines) {
         timeLines.forEach(Timeline::pause);
         System.out.println("Anzahl aktiver TimeLines: " + timeLines.size());
     }
 
-    private void playActiveTimeLines(List<Timeline> timeLines){
+    /**
+     * playActiveTimeLines
+     * @param timeLines
+     */
+    private void playActiveTimeLines(List<Timeline> timeLines) {
         timeLines.forEach(Timeline::play);
     }
 
-    public List<Timeline> getAllActiveTimeLines(){
+    /**
+     * getAllActiveTimeLines
+     * @return
+     */
+    public List<Timeline> getAllActiveTimeLines() {
         return this.allActiveTimeLines;
     }
 
-    private void removeBullet(IGunSprite sprite){
-        if (sprite instanceof Invader){
+    /**
+     * removeBullet
+     * @param sprite
+     */
+    private void removeBullet(IGunSprite sprite) {
+        if (sprite instanceof Invader) {
             currentInvaderBulletsCount--;
         }
         System.out.println("RemoveBulletAnfang Anzahl aktiver TimeLines: " + allActiveTimeLines.size());
@@ -237,24 +285,35 @@ public class Game {
         System.out.println("RemoveBulletEndeAnzahl aktiver TimeLines: " + allActiveTimeLines.size());
     }
 
-    private void removeInvader(Invader invader){
+    /**
+     * removeInvader
+     * @param invader
+     */
+    private void removeInvader(Invader invader) {
         display.getChildren().remove(invader);
         invaderGroup.removeInvader(invader);
     }
 
-    private void removeSprite(ISprite sprite){
-        if(sprite instanceof ShelterPart){
+    /**
+     * removeSprite
+     * @param sprite
+     */
+    private void removeSprite(ISprite sprite) {
+        if (sprite instanceof ShelterPart) {
             System.out.println("instance of = shelterpart");
             display.getChildren().remove(sprite);
-            for (Shelter shelter : shelterList){
+            for (Shelter shelter : shelterList) {
                 shelter.getShelterParts().remove(sprite);
             }
         }
     }
 
-    private void tryShipShoot(){
+    /**
+     * tryShipShoot
+     */
+    private void tryShipShoot() {
 
-        if (ship.getBullet() == null && gameStatus.get() == PLAY){
+        if (ship.getBullet() == null && gameStatus.get() == PLAY) {
             ship.newBullet();
             ship.getBullet().getTimeLine().setOnFinished(event -> {
                 removeBullet(ship);
@@ -266,9 +325,12 @@ public class Game {
         }
     }
 
-    private void tryInvaderShoot(){
+    /**
+     * tryInvaderShoot
+     */
+    private void tryInvaderShoot() {
 
-        if (currentInvaderBulletsCount < maxInvaderBulletsCount && currentInvaderBulletsCount < invaderGroup.getInvaderList().size()){
+        if (currentInvaderBulletsCount < maxInvaderBulletsCount && currentInvaderBulletsCount < invaderGroup.getInvaderList().size()) {
 
             Random random = new Random();
             int randomInt = random.nextInt(invaderGroup.getInvaderList().size());
@@ -277,7 +339,7 @@ public class Game {
 
             // einen Invader bekommen, der momentan nicht schießt
             Invader tempInvader = invaderGroup.getInvaderList().get(randomInt);
-            while (tempInvader.getBullet() != null){
+            while (tempInvader.getBullet() != null) {
                 randomInt = random.nextInt(invaderGroup.getInvaderList().size());
                 tempInvader = invaderGroup.getInvaderList().get(randomInt);
             }
@@ -298,39 +360,59 @@ public class Game {
 
     }
 
-
-    public void createInvaderGroup(){
+    /**
+     * createInvaderGroup
+     */
+    public void createInvaderGroup() {
         invaderGroup = InvaderGroup.getInstance();
         invaderGroup.createGroup(Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x")), Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.y")));
     }
 
 
-    public InvaderGroup getInvaderGroup(){
+    /**
+     * getInvaderGroup
+     * @return
+     */
+    public InvaderGroup getInvaderGroup() {
         return invaderGroup;
     }
 
-    public void setTheme(String theme){
+    /**
+     * setTheme
+     * @param theme
+     */
+    public void setTheme(String theme) {
         loadAssets(theme);
         invaderGroup.createGroup(Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x")), Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.y")));
     }
 
-    public void play(){
-
-//        GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
+    /**
+     * play
+     */
+    public void play() {
+        //GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
         gameAnimationTimer.start();
 
     }
 
-    private Invader detectCollisionedInvader(Bullet bullet, List<Invader> invaders){
-        for(Invader invader : invaders){
-            if(bullet.intersects(invader.getLayoutBounds())){
+    /**
+     * detectCollisionedInvader
+     * @param bullet
+     * @param invaders
+     * @return
+     */
+    private Invader detectCollisionedInvader(Bullet bullet, List<Invader> invaders) {
+        for (Invader invader : invaders) {
+            if (bullet.intersects(invader.getLayoutBounds())) {
                 return invader;
             }
         }
         return null;
     }
 
-
+    /**
+     * GameAnimationTimer
+     */
     public class GameAnimationTimer extends AnimationTimer {
 
         long invaderMoveLastTime = System.nanoTime();
@@ -338,7 +420,10 @@ public class Game {
         long mysteryShipLastTime = System.nanoTime();
         Random random = new Random();
 
-
+        /**
+         * handle
+         * @param now
+         */
         @Override
         public void handle(long now) {
 
@@ -355,15 +440,15 @@ public class Game {
 
 
                 //Invaderschuss absetzen
-                if (now > invaderShootLastTime + ((long) (random.nextDouble()*invaderShootDelayMax) + invaderShootDelayMin) * 1000000L) {
+                if (now > invaderShootLastTime + ((long) (random.nextDouble() * invaderShootDelayMax) + invaderShootDelayMin) * 1000000L) {
                     invaderShootLastTime = now;
                     tryInvaderShoot();
                 }
 
                 // hat die schiffskanone einen invader getroffen
-                if(ship.getBullet() != null){
+                if (ship.getBullet() != null) {
                     Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
-                    if(collisionedInvader != null){
+                    if (collisionedInvader != null) {
                         System.out.println("Invader getroffen");
                         getAudioAsset("invaderKilled").play();
                         removeBullet(ship);
@@ -371,14 +456,14 @@ public class Game {
                         player.setScore(player.getScore() + collisionedInvader.getValue());
                         removeInvader(collisionedInvader);
                     }
-                    if(invaderGroup.getInvaderList().size() == 0){
+                    if (invaderGroup.getInvaderList().size() == 0) {
                         gameStatus.set(WON);
                     }
                 }
 
                 // hat die schiffskanone das MysteryShip getroffen
-                if(ship.getBullet() != null && mysteryShip != null){
-                    if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())){
+                if (ship.getBullet() != null && mysteryShip != null) {
+                    if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())) {
                         getAudioAsset("mysteryKilled").play();
                         player.setScore(player.getScore() + mysteryShip.getValue());
                         removeBullet(ship);
@@ -388,7 +473,7 @@ public class Game {
 
                 // hat die schiffskanone den Bunker getroffen
                 bunkerWurdeGetroffen:
-                if(ship.getBullet() != null){
+                if (ship.getBullet() != null) {
                     for (Shelter shelter : shelterList) {
                         for (ShelterPart shelterPart : shelter.getShelterParts()) {
                             if (ship.getBullet().intersects(shelterPart.getLayoutBounds())) {
@@ -406,7 +491,7 @@ public class Game {
                 // hat ein invader den Bunker getroffen
 
                 bunkerWurdeGetroffen2:
-                for (Invader invader: invaderGroup.getInvaderList()){
+                for (Invader invader : invaderGroup.getInvaderList()) {
                     if (invader.getBullet() != null) {
                         for (Shelter shelter : shelterList) {
                             for (ShelterPart shelterPart : shelter.getShelterParts()) {
@@ -425,11 +510,10 @@ public class Game {
                 }
 
 
-
                 // hat ein Invader das ship getroffen
-                for (Invader invader: invaderGroup.getInvaderList()){
-                    if (invader.getBullet() != null){
-                        if (ship.intersects(invader.getBullet().getLayoutBounds())){
+                for (Invader invader : invaderGroup.getInvaderList()) {
+                    if (invader.getBullet() != null) {
+                        if (ship.intersects(invader.getBullet().getLayoutBounds())) {
                             System.out.println("Ship getroffen");
                             getAudioAsset("shipExplosion").play();
                             player.setlives(player.getlives() - 1);
@@ -441,9 +525,8 @@ public class Game {
 
 
                 // MysteryShip losschicken
-                if (now > mysteryShipLastTime + ((long) (random.nextDouble()*mysteryShipDelayMax) + mysteryShipDelayMin) * 1000000L) {
-                    if( mysteryShip != null)
-                    {
+                if (now > mysteryShipLastTime + ((long) (random.nextDouble() * mysteryShipDelayMax) + mysteryShipDelayMin) * 1000000L) {
+                    if (mysteryShip != null) {
                         return;
                     }
                     mysteryShipLastTime = now;
@@ -455,21 +538,14 @@ public class Game {
                     });
                     display.getChildren().add(mysteryShip);
                     mysteryShip.move(randomDirection);
-
                 }
-
-
-
-
-
-
-
-
-
             }
         }
     }
 
+    /**
+     * removeMysteryShip
+     */
     private void removeMysteryShip() {
         mysteryShip.getTimeLine().stop();
         allActiveTimeLines.remove(mysteryShip.getTimeLine());
@@ -478,40 +554,60 @@ public class Game {
         System.out.println("MysteryShip entfernt");
     }
 
-
-    public void stop(){
+    /**
+     * stop
+     */
+    public void stop() {
         allActiveTimeLines.forEach(Timeline::stop);
         this.gameAnimationTimer.stop();
     }
 
-    public static void reset(){
+    /**
+     * reset
+     */
+    public static void reset() {
         ourInstance = null;
     }
 
-
+    /**
+     * getGameStatus
+     * @return
+     */
     public final GameStatus getGameStatus() {
         return gameStatus.get();
     }
 
+    /**
+     * setGameStatus
+     * @param status
+     */
     public final void setGameStatus(GameStatus status) {
         gameStatusProperty().set(status);
     }
 
+    /**
+     * gameStatusProperty
+     * @return
+     */
     public final ObjectProperty<GameStatus> gameStatusProperty() {
         return gameStatus;
     }
 
-    public Player getPlayer(){
+    /**
+     * getPlayer
+     * @return
+     */
+    public Player getPlayer() {
         return player;
     }
 
-
-    public enum GameStatus{
+    /**
+     * GameStatus
+     */
+    public enum GameStatus {
         PLAY,
         PAUSE,
         WON,
         GAMEOVER;
     }
-
-
 }
