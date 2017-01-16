@@ -21,6 +21,7 @@
                 <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreenGameplayView" styleClass="btnIcon" text="Spiel starten" />
                 <Button id="highscoreBtn" mnemonicParsing="false" onAction="#goToScreenHighscoreView" styleClass="btnIcon" text="Highscore" />
                 <Button id="manualBtn" mnemonicParsing="false" onAction="#goToScreenManualView" styleClass="btnIcon" text="Spielanleitung" />
+                <Button id="chatBtn" mnemonicParsing="false" onAction="#goToScreenChatView" styleClass="btnIcon" text="Chat" />
                 <Button id="closeBtn" mnemonicParsing="false" onAction="#closeGame" styleClass="btnIcon" text="Spiel beenden" />
             </children>
         </VBox>

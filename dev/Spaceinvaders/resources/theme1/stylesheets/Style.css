@@ -59,6 +59,14 @@
     -fx-text-fill:  #6f917c;
     -fx-graphic: url('../graphics/layout/btnInvader1Hover.png');
 }
+#chatBtn {
+    -fx-border-color: #00ffff;
+    -fx-graphic: url('../graphics/layout/btnInvader1.png');
+}
+#chatBtn:hover{
+    -fx-text-fill:  #00ffff;
+    -fx-graphic: url('../graphics/layout/btnInvader1Hover.png');
+}
 #closeBtn {
     -fx-border-color: #d35f5f;
     -fx-graphic: url('../graphics/layout/btnInvader4.png');

@@ -52,6 +52,13 @@ public class WelcomeViewController implements Initializable {
     }
 
     /**
+     * Wechselt zur Chat-View.
+     * @param event
+     */
+    @FXML
+    private void goToScreenChatView(ActionEvent event) { SpaceInvaders.setScreen("ChatView"); }
+
+    /**
      * Schließt das Spiel.
      */
     @FXML
