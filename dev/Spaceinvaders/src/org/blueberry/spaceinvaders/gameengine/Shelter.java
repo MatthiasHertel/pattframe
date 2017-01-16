@@ -85,7 +85,7 @@ public class Shelter {
      * @param typ
      * @param rotation
      */
-    public void addNewShelterPart(int x, int y, int typ, int rotation) {
+    private void addNewShelterPart(int x, int y, int typ, int rotation) {
 
         Game game = Game.getInstance();
         List<Image> shelterPartsImageList = new ArrayList<>();

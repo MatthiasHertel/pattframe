@@ -27,7 +27,7 @@ public class ChatClientEndpoint {
 
             // for production connection
             final ClientManager client = ClientManager.createClient();
-			System.getProperties().put("javax.net.debug", "all"); //usefull to understand ssl problems
+//			System.getProperties().put("javax.net.debug", "all"); //usefull to understand ssl problems
             SslEngineConfigurator sslEngineConfigurator = new SslEngineConfigurator(new SslContextConfigurator());
             sslEngineConfigurator.setHostVerificationEnabled(false); //skip host verification
             client.getProperties().put(ClientProperties.SSL_ENGINE_CONFIGURATOR, sslEngineConfigurator);

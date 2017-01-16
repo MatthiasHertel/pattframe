@@ -18,7 +18,6 @@ public class MysteryShip extends ImageView implements ISprite {
 
     private int borderXSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xstart"));
     private int borderXEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xend"));
-    private int borderYSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.ystart"));
 
     private Timeline timeLine = new Timeline();
     private int value = Integer.parseInt(SpaceInvaders.getSettings("mysteryship.value"));
@@ -40,7 +39,7 @@ public class MysteryShip extends ImageView implements ISprite {
         this.setFitWidth(Integer.parseInt(SpaceInvaders.getSettings("mysteryship.width")));
 
         int positionX = direction == LEFT ? borderXEend : borderXSstart;
-        int positionY = borderYSstart + 50;
+        int positionY = Integer.parseInt(SpaceInvaders.getSettings("mysteryship.position.y"));
 
         this.setX(positionX);
         this.setY(positionY);

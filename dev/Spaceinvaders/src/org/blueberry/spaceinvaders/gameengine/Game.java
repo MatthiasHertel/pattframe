@@ -2,7 +2,9 @@ package org.blueberry.spaceinvaders.gameengine;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -11,6 +13,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 import java.util.*;
@@ -49,14 +53,14 @@ public class Game {
     private AnchorPane display;
     private Ship ship;
     private MysteryShip mysteryShip;
-    //    private Shelter shelter;
-    private List<Shelter> shelterList = new ArrayList<>();
+    private List<Shelter> shelterList;
     private boolean shipSelfMove = Boolean.parseBoolean(SpaceInvaders.getSettings("ship.move.self"));
 
     private Player player;
     private int currentInvaderBulletsCount = 0;
     private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
     private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
+    private IntegerProperty level = new SimpleIntegerProperty(1);
 
     private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.1"));
 
@@ -133,6 +137,13 @@ public class Game {
         }
     }
 
+    public void removeShelterFromPane(AnchorPane anchorPane, Shelter shelter) {
+
+        for (ShelterPart shelterPart : shelter.getShelterParts()) {
+            anchorPane.getChildren().remove(shelterPart);
+        }
+    }
+
     /**
      * getImageAsset
      * @param key
@@ -166,15 +177,11 @@ public class Game {
     public void constructGame(AnchorPane pane) {
         this.display = pane;
         createInvaderGroup();
-        addInvadersToPane(display, invaderGroup.getInvaderList());
 
         ship = new Ship(getImageAsset("ship"));
         display.getChildren().add(ship);
 
-        for (int i = 0; i < 4; i++) {
-            shelterList.add(new Shelter(100 + i * 170, Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
-            addShelterToPane(display, shelterList.get(i));
-        }
+        createShelter();
 
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
         display.getChildren().add(gameStatusLabel); //TODO: raus damit
@@ -228,10 +235,7 @@ public class Game {
                     SpaceInvaders.setScreen("HighscoreView"); //TODO: Übergang so mit GAMEOVER und dann in den Screen
                     break;
                 case WON:
-                    Label finshLabel2 = new Label("Du hast dieses Spiel gewonnen");
-                    finshLabel2.setLayoutX(100);
-                    finshLabel2.setLayoutY(500);
-                    display.getChildren().add(finshLabel2);
+                    nextLevel();
                     break;
             }
         });
@@ -242,6 +246,21 @@ public class Game {
                 gameStatus.set(GAMEOVER);
             }
         });
+    }
+
+    private void createShelter() {
+
+        if(shelterList != null){
+            for (Shelter shelter : shelterList){
+                removeShelterFromPane(display, shelter);
+            }
+        }
+
+        shelterList = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            shelterList.add(new Shelter(100 + i * 170, Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
+            addShelterToPane(display, shelterList.get(i));
+        }
     }
 
     /**
@@ -335,8 +354,6 @@ public class Game {
             Random random = new Random();
             int randomInt = random.nextInt(invaderGroup.getInvaderList().size());
 
-            System.out.println("RandomInt: " + randomInt);
-
             // einen Invader bekommen, der momentan nicht schießt
             Invader tempInvader = invaderGroup.getInvaderList().get(randomInt);
             while (tempInvader.getBullet() != null) {
@@ -350,8 +367,7 @@ public class Game {
             shootInvader.newBullet();
             shootInvader.getBullet().getTimeLine().setOnFinished(event -> {
                 removeBullet(shootInvader);
-                currentInvaderBulletsCount--;
-                System.out.println("Invader Schussanimation fertig");
+//                currentInvaderBulletsCount--;
             });
 
             display.getChildren().add(shootInvader.getBullet());
@@ -365,7 +381,12 @@ public class Game {
      */
     public void createInvaderGroup() {
         invaderGroup = InvaderGroup.getInstance();
-        invaderGroup.createGroup(Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x")), Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.y")));
+
+        int posX = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x"));
+        int posY = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"));
+
+        invaderGroup.createGroup(posX, posY);
+        addInvadersToPane(display, invaderGroup.getInvaderList());
     }
 
 
@@ -533,9 +554,7 @@ public class Game {
 
                     MoveDirection randomDirection = random.nextInt(2) == 0 ? RIGHT : LEFT;
                     mysteryShip = new MysteryShip(getImageAsset("mysteryShip"), randomDirection);
-                    mysteryShip.getTimeLine().setOnFinished(event -> {
-                        removeMysteryShip();
-                    });
+                    mysteryShip.getTimeLine().setOnFinished(event -> removeMysteryShip());
                     display.getChildren().add(mysteryShip);
                     mysteryShip.move(randomDirection);
                 }
@@ -547,6 +566,8 @@ public class Game {
      * removeMysteryShip
      */
     private void removeMysteryShip() {
+        if(mysteryShip == null) return;
+
         mysteryShip.getTimeLine().stop();
         allActiveTimeLines.remove(mysteryShip.getTimeLine());
         display.getChildren().remove(mysteryShip);
@@ -567,6 +588,26 @@ public class Game {
      */
     public static void reset() {
         ourInstance = null;
+    }
+
+    public void nextLevel(){
+        if (level.get() >= 10){
+            level.set(0);
+        }
+        level.set(level.get() + 1);
+
+
+        removeMysteryShip();
+
+        createInvaderGroup();
+        createShelter();
+
+        this.setGameStatus(PLAY);
+
+    }
+
+    public IntegerProperty levelProperty() {
+        return level;
     }
 
     /**

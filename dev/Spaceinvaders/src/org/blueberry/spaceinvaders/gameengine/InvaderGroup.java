@@ -27,17 +27,17 @@ public class InvaderGroup {
     private List<Invader> invaderList;
     private int borderXSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xstart"));
     private int borderXEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xend"));
-    private int borderYSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.ystart"));
+//    private int borderYSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.ystart"));
     private int borderYEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"));
+    private int yGap = Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"));
 
     private MoveDirection moveDirection = MoveDirection.RIGHT;
-    private MoveDirection lastLeftRightDirection;
+    private MoveDirection lastLeftRightDirection = moveDirection;
 
     /**
      * InvaderGroup
      */
     private InvaderGroup() {
-        //createGroup();
     }
 
     /**
@@ -46,10 +46,7 @@ public class InvaderGroup {
      * @param positionY
      */
     public void createGroup(int positionX, int positionY) {
-        positionX += borderXSstart;
-        positionY += borderYSstart;
-
-        invaders = new ArrayList<>();
+        ourInstance = new InvaderGroup();
 
         Invader invaderDummy = new Invader(Game.getInstance().getImageAsset("invader1a"), Game.getInstance().getImageAsset("invader1b"), 0, 0, 0); //to get height and width
         int invaderWidth = invaderDummy.getWidth();
@@ -58,6 +55,17 @@ public class InvaderGroup {
         int invaderYGap = Integer.parseInt(SpaceInvaders.getSettings("invader.gap.y"));
         int invaderPerLine = Integer.parseInt(SpaceInvaders.getSettings("invader.line.count"));
 
+
+        int invaderLines = Integer.parseInt(SpaceInvaders.getSettings("invader.1.lines"));
+        invaderLines += Integer.parseInt(SpaceInvaders.getSettings("invader.2.lines"));
+        invaderLines += Integer.parseInt(SpaceInvaders.getSettings("invader.3.lines"));
+
+        int borderHigh = (11 - Game.getInstance().levelProperty().get()) * Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"))  +  (invaderLines - 1) *  Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel")) + invaderLines * invaderHeight  ;
+        positionX += borderXSstart;
+        positionY -= borderHigh;
+
+
+        invaders = new ArrayList<>();
         for (int invaderTyp = 3; invaderTyp > 0; invaderTyp--) {
             addNewInvadersToGroup(invaders, invaderTyp, positionX, positionY, invaderXGap, invaderYGap, invaderWidth, invaderHeight, invaderPerLine);
         }
@@ -181,7 +189,9 @@ public class InvaderGroup {
                 return true;
             }
             case DOWN: {
-                if (invaderList.get(invaderList.size() - 1).getY() > borderYEend) {
+                Invader invader = invaderList.get(invaderList.size() - 1);
+                int invaderBottomY = (int) invader.getY() + 1*invader.getHeight() ;
+                if (invaderBottomY + yGap > borderYEend) {
                     return false;
                 }
                 return true;
@@ -207,7 +217,7 @@ public class InvaderGroup {
             }
         } else if (moveDirection == DOWN) {
             moveDirection = lastLeftRightDirection == LEFT ? RIGHT : LEFT;
-            setNextGroupMoveDirection();
+//            setNextGroupMoveDirection();
         }
     }
 

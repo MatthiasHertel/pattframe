@@ -64,6 +64,9 @@ public class GameplayViewController implements Initializable {
     @FXML
     private Label lifesLabel;
 
+    @FXML
+    private Label levelLabel;
+
     /**
      * Inizialisiert die Controller-Klasse.
      * @param url
@@ -84,6 +87,7 @@ public class GameplayViewController implements Initializable {
 
         scoreLabel.textProperty().bind(game.getPlayer().scoreProperty().asString());
         lifesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
+        levelLabel.textProperty().bind(game.levelProperty().asString());
 
         game.play();
     }

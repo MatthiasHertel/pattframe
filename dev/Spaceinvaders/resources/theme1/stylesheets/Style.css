@@ -85,7 +85,7 @@
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
 
-#scoreLabel, #lifesLabel{
+#scoreLabel, #lifesLabel, #levelLabel{
     -fx-text-fill: #00ff00;
     -fx-font-weight: bold;
     -fx-padding: 0 30px 0 10px;
