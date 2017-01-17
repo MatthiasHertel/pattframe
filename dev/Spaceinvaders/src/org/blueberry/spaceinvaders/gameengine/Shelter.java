@@ -1,5 +1,6 @@
 package org.blueberry.spaceinvaders.gameengine;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
@@ -27,6 +28,9 @@ public class Shelter {
      * constructShelter
      */
     public void constructShelter() {
+
+        int positionX = this.positionX;
+        int positionY = this.positionY;
 
         // first line
         addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 2, 0);
@@ -103,6 +107,13 @@ public class Shelter {
             shelterPartsImageList.add(game.getImageAsset("shelter2c"));
         }
         shelterParts.add(new ShelterPart(shelterPartsImageList, x, y, typ, rotation));
+    }
+
+
+    public Rectangle2D getLayoutBounds(){
+        int width = 10 * shelterPartWidth;
+        int height = 5 * shelterPartWidth;
+        return new Rectangle2D(positionX - shelterPartWidth, positionY, width, height);
     }
 
     /**

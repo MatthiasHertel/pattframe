@@ -509,14 +509,16 @@ public class Game {
                 bunkerWurdeGetroffen:
                 if (ship.getBullet() != null) {
                     for (Shelter shelter : shelterList) {
-                        for (ShelterPart shelterPart : shelter.getShelterParts()) {
-                            if (ship.getBullet().intersects(shelterPart.getLayoutBounds())) {
-                                removeBullet(ship);
-                                shelterPart.damagedFromBottom();
-                                if (shelterPart.getState() == 0) {
-                                    removeSprite(shelterPart);
+                        if(ship.getBullet().intersects(shelter.getLayoutBounds().getMinX(), shelter.getLayoutBounds().getMinY(), shelter.getLayoutBounds().getWidth(), shelter.getLayoutBounds().getHeight())) {
+                            for (ShelterPart shelterPart : shelter.getShelterParts()) {
+                                if (ship.getBullet().intersects(shelterPart.getLayoutBounds())) {
+                                    removeBullet(ship);
+                                    shelterPart.damagedFromBottom();
+                                    if (shelterPart.getState() == 0) {
+                                        removeSprite(shelterPart);
+                                    }
+                                    break bunkerWurdeGetroffen;
                                 }
-                                break bunkerWurdeGetroffen;
                             }
                         }
                     }
@@ -528,16 +530,19 @@ public class Game {
                 for (Invader invader : invaderGroup.getInvaderList()) {
                     if (invader.getBullet() != null) {
                         for (Shelter shelter : shelterList) {
-                            for (ShelterPart shelterPart : shelter.getShelterParts()) {
-                                if (invader.getBullet().intersects(shelterPart.getLayoutBounds())) {
-                                    removeBullet(invader);
-                                    shelterPart.damagedFromTop();
-                                    if (shelterPart.getState() == 0) {
-                                        removeSprite(shelterPart);
-                                    }
-                                    break bunkerWurdeGetroffen2;
-                                }
+                            if(invader.getBullet().intersects(shelter.getLayoutBounds().getMinX(), shelter.getLayoutBounds().getMinY(), shelter.getLayoutBounds().getWidth(), shelter.getLayoutBounds().getHeight())) {
 
+                                for (ShelterPart shelterPart : shelter.getShelterParts()) {
+                                    if (invader.getBullet().intersects(shelterPart.getLayoutBounds())) {
+                                        removeBullet(invader);
+                                        shelterPart.damagedFromTop();
+                                        if (shelterPart.getState() == 0) {
+                                            removeSprite(shelterPart);
+                                        }
+                                        break bunkerWurdeGetroffen2;
+                                    }
+
+                                }
                             }
                         }
                     }
