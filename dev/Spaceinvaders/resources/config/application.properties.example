@@ -14,7 +14,8 @@ invader.move.ypixel = 20
 invader.move.speed.1 = 500
 #invader.move.speed.1 = 50
 invader.move.speed.2 = 300
-invader.move.speed.3 = 100
+#invader.move.speed.3 = 150
+invader.move.speed.3 = 200
 
 invader.1.value = 10
 invader.2.value = 20
@@ -31,10 +32,10 @@ invader.gap.x = 20
 invader.gap.y = 20
 
 invader.shoots.parallel = 3
-#invader.shoots.delay.random.min = 250
-#invader.shoots.delay.random.max = 1000
-invader.shoots.delay.random.min = 5550
-invader.shoots.delay.random.max = 15000
+invader.shoots.delay.random.min = 2500
+invader.shoots.delay.random.max = 6000
+#invader.shoots.delay.random.min = 5550
+#invader.shoots.delay.random.max = 15000
 
 invadergroup.border.xstart = 0
 invadergroup.border.xend = 790

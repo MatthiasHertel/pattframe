@@ -58,11 +58,15 @@ public class Game {
 
     private Player player;
     private int currentInvaderBulletsCount = 0;
+    private int invaderMaxCount;
     private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
     private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
     private IntegerProperty level = new SimpleIntegerProperty(1);
 
-    private int invaderMoveDuration = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.1"));
+    private int invaderSpeed1 = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.1"));
+    private int invaderSpeed2 = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.2"));
+    private int invaderSpeed3 = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.3"));
+    private int invaderMoveDuration = invaderSpeed1;
 
     private long invaderShootDelayMin = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.min"));
     private long invaderShootDelayMax = Long.parseLong(SpaceInvaders.getSettings("invader.shoots.delay.random.max"));
@@ -386,6 +390,7 @@ public class Game {
         int posY = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"));
 
         invaderGroup.createGroup(posX, posY);
+        invaderMaxCount = invaderGroup.getInvaderList().size();
         addInvadersToPane(display, invaderGroup.getInvaderList());
     }
 
@@ -476,6 +481,14 @@ public class Game {
 
                         player.setScore(player.getScore() + collisionedInvader.getValue());
                         removeInvader(collisionedInvader);
+
+                        //Geschwindigkeit in Abhängigkeit von der Invaderanzahl setzen
+                        if(invaderGroup.getInvaderList().size() < invaderMaxCount / 3 ){
+                            invaderMoveDuration = invaderSpeed3;
+                        }
+                        else if(invaderGroup.getInvaderList().size() < invaderMaxCount * 2/3 ){
+                            invaderMoveDuration = invaderSpeed2;
+                        }
                     }
                     if (invaderGroup.getInvaderList().size() == 0) {
                         gameStatus.set(WON);
@@ -596,12 +609,11 @@ public class Game {
         }
         level.set(level.get() + 1);
 
-
         removeMysteryShip();
 
         createInvaderGroup();
         createShelter();
-
+        invaderMoveDuration = invaderSpeed1;
         this.setGameStatus(PLAY);
 
     }
