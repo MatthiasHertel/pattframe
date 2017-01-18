@@ -172,6 +172,7 @@ public class HighscoreViewController implements Initializable {
         // http://controlsfx.bitbucket.org/org/controlsfx/control/Notifications.html
         // TODO adding new highscore value jump to page and highlight this row
         // pagination.currentPageIndexProperty().setValue(2);
+        hbox_mainmenuBtn.setVisible(true);
     }
 
     /**
@@ -185,6 +186,7 @@ public class HighscoreViewController implements Initializable {
         float floatCount = Float.valueOf(totalCount) / Float.valueOf(itemsPerPage);
         int intCount = totalCount / itemsPerPage;
         return ((floatCount > intCount) ? ++intCount : intCount);
+
     }
 
     /**
