@@ -42,11 +42,15 @@ package org.blueberry.spaceinvaders.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
@@ -67,6 +71,14 @@ public class GameplayViewController implements Initializable {
     @FXML
     private Label levelLabel;
 
+    @FXML
+    private Pane pane;
+
+//    @FXML
+//    private HBox hbox;
+
+
+
     /**
      * Inizialisiert die Controller-Klasse.
      * @param url
@@ -74,6 +86,14 @@ public class GameplayViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+//        pane.setMinWidth(20);
+//        pane.setMinWidth(1000);
+//        pane.setPrefWidth(1000);
+
+//        Platform.runLater(() -> {
+//            pane.setMinWidth(1600);
+//                });
 
         System.out.println("Gamestatus vor reset:  " + Game.getInstance().getGameStatus());
         Game.reset();
@@ -92,23 +112,4 @@ public class GameplayViewController implements Initializable {
         game.play();
     }
 
-    /**
-     * Wechselt zur Welcome-View.
-     * @param event
-     */
-    @FXML
-    private void goToScreenWelcomeView(ActionEvent event) {
-        Game.getInstance().stop();
-        SpaceInvaders.setScreen("WelcomeView");
-    }
-
-    /**
-     * Wechselt zur Highscore-View.
-     * @param event
-     */
-    @FXML
-    private void goToScreenHighscoreView(ActionEvent event) {
-        Game.getInstance().stop();
-        SpaceInvaders.setScreen("HighscoreView");
-    }
 }

@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.web.WebView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="displayManual" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../theme1/stylesheets/Style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="org.blueberry.spaceinvaders.controller.ManualViewController">
-    <children>
-        <WebView  fx:id="manualView" layoutX="112.0" layoutY="43.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" />
-        <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
-            <children>
-                <Button id="mainmenuBtn" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenü" />
-            </children>
-        </HBox>
-    </children>
-
-</AnchorPane>
+<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.ManualViewController">
+   <children>
+      <AnchorPane id="displayManual" prefHeight="600.0" prefWidth="1024.0">
+          <children>
+              <WebView fx:id="manualView" layoutX="112.0" layoutY="20.0" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" />
+              <HBox alignment="CENTER" layoutY="540.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
+                  <children>
+                      <Button id="mainmenuBtn" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenü" />
+                  </children>
+              </HBox>
+          </children>
+      
+      </AnchorPane>
+   </children>
+</StackPane>

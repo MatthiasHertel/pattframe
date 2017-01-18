@@ -46,6 +46,8 @@ public class HighscoreViewController implements Initializable {
     @FXML
     private HBox hbox_input;
     @FXML
+    private HBox hbox_mainmenuBtn;
+    @FXML
     private HBox message_banner;
 
     // TODO should be in application.properties
@@ -85,6 +87,7 @@ public class HighscoreViewController implements Initializable {
         // if clause to determine game score
         // TODO there should be a flag from game instance
         if (!"0".equals(punkt)) {
+            hbox_mainmenuBtn.setVisible(false);
             String position = mysqlConnector.determinePosition(punkt);
             messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + position + " in der Highscore belegt!!!");
             messageLabel.setTextFill(Color.GREEN);
@@ -193,13 +196,5 @@ public class HighscoreViewController implements Initializable {
         SpaceInvaders.setScreen("WelcomeView");
     }
 
-    /**
-     * Wechselt zur Game-View.
-     * @param event
-     */
-    @FXML
-    private void goToScreenGameplayView(ActionEvent event) {
-        SpaceInvaders.setScreen("GameplayView");
-    }
 
 }

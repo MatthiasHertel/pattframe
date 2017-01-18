@@ -15,65 +15,80 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="displayHighscore" minWidth="174.0" prefHeight="768.0" prefWidth="1024.0" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
-  <children>
-    <!--header screen description  -->
-    <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
-     <children>
-        <Label text="Highscore" textFill="#797474">
-           <font>
-              <Font name="Impact" size="50" />
-           </font>
-        </Label>
-     </children>
-    </HBox>
-    <!--highscore tableview  -->
-    <TableView fx:id="crudTable" layoutX="-45.0" layoutY="83.0" maxWidth="-Infinity" prefHeight="415.0" prefWidth="1024.0">
-    <columns>
-        <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
-        <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
-        <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
-        <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
-    </columns>
-    </TableView>
-    <!--pagination for highscore tableview  -->
-    <HBox layoutY="500.0" alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
-      <Pagination fx:id="pagination" styleClass="circle-pagination" />
-    </HBox>
-    <!--message banner   -->
-    <HBox fx:id="message_banner" layoutY="560.0" alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
-      <children>
-      </children>
-    </HBox>
-    <!--inputs to save in highscore  -->
-    <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="607.0" prefHeight="77.0" prefWidth="1024.0">
-     <children>
-        <!--<Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">-->
-           <!--<HBox.margin>-->
-              <!--<Insets right="10.0" />-->
-           <!--</HBox.margin></Label>-->
-        <!--<Label fx:id="punkteField" alignment="CENTER" text="spieler punkte" textFill="#f103ff">-->
-           <!--<HBox.margin>-->
-              <!--<Insets right="50.0" />-->
-           <!--</HBox.margin></Label>-->
-        <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 6)">
-           <HBox.margin>
-              <Insets right="50.0" />
-           </HBox.margin>
-        </TextField>
-        <Button fx:id="addButton" alignment="CENTER" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="27.0" prefWidth="232.0" text="In der Highscore speichern.">
-           <font>
-              <Font name="Impact" size="13.0" />
-           </font>
-        </Button>
-     </children>
-    </HBox>
-    <!--game menu control  -->
-    <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
+<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
+   <children>
+      <AnchorPane id="displayHighscore" maxHeight="600.0" maxWidth="1024.0" prefHeight="600.0" prefWidth="1024.0">
         <children>
-            <Button id="mainmenuBtn" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenü" />
-            <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreenGameplayView" styleClass="btnIcon" text="Spiel starten" />
+          <!--header screen description  -->
+          <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
+           <children>
+              <Label text="Highscore" textFill="#797474">
+                 <font>
+                    <Font name="Impact" size="50" />
+                 </font>
+              </Label>
+           </children>
+          </HBox>
+          <!--highscore tableview  -->
+          <TableView fx:id="crudTable" layoutY="83.0" maxWidth="-Infinity" prefHeight="415.0" prefWidth="1024.0">
+          <columns>
+              <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
+              <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
+              <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
+              <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
+          </columns>
+          </TableView>
+          <!--pagination for highscore tableview  -->
+          <HBox alignment="CENTER" layoutY="500.0" prefHeight="40.0" prefWidth="1024.0">
+             <children>
+               <Pagination fx:id="pagination" prefHeight="38.0" prefWidth="262.0" styleClass="circle-pagination" />
+             </children>
+          </HBox>
+          <!--message banner   -->
+          <HBox fx:id="message_banner" alignment="CENTER" layoutY="620.0" prefHeight="77.0" prefWidth="1024.0">
+            <children>
+      </children>
+          </HBox>
+          <!--inputs to save in highscore  -->
+          <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
+           <children>
+              <!--<Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">-->
+                 <!--<HBox.margin>-->
+                    <!--<Insets right="10.0" />-->
+                 <!--</HBox.margin></Label>-->
+              <!--<Label fx:id="punkteField" alignxxxxxxxment="CENTER" text="spieler punkte" textFill="#f103ff">-->
+                 <!--<HBox.margin>-->
+                    <!--<Insets right="50.0" />-->
+                 <!--</HBox.margin></Label>-->
+              <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 6)" styleClass="btnIcon">
+                 <HBox.margin>
+                    <Insets right="50.0" />
+                 </HBox.margin>
+              </TextField>
+              <Button id="addButton" fx:id="addButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="27.0" prefWidth="232.0" styleClass="btnIcon" text="save">
+                 <font>
+                    <Font name="Impact" size="13.0" />
+                 </font>
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+              </Button>
+                  <Button id="cancelBtn" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="cancel">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin></Button>
+           </children>
+          </HBox>
+            <HBox fx:id="hbox_mainmenuBtn" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
+               <children>
+                  <Button id="mainmenuBtn" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenu">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
         </children>
-    </HBox>
-  </children>
-</AnchorPane>
+      </AnchorPane>
+   </children>
+</StackPane>

@@ -1,17 +1,19 @@
-#displayWelcome,
-#displayGameplay,
-#displayHighscore,
-#displayManual,
-#display{
+/*#displayWelcome,*/
+/*#displayGameplay,*/
+/*#displayHighscore,*/
+/*#displayManual,*/
+/*#display{*/
+    /*-fx-background-color: #1b1e25;*/
+    /*-fx-background-image: url('../graphics/backgrounds/background.png');*/
+    /*-fx-background-size: stretch;*/
+/*}*/
+
+#stackPane{
     -fx-background-color: #1b1e25;
     -fx-background-image: url('../graphics/backgrounds/background.png');
     -fx-background-size: stretch;
-}
+  }
 
- /*{*/
-    /*-fx-background-image: url('../graphics/backgrounds/backgroundhighscore_rs.png');*/
-    /*-fx-background-size: stretch;*/
-/*}*/
 
 #displayWelcomeClaim {
     -fx-font-size: 16;
@@ -36,10 +38,17 @@
 }
 
 #gameplayBtn {
+       -fx-border-color: #997aff;
+       -fx-graphic: url('../graphics/layout/btnInvader3.png');
+   }
+
+#addButton {
+    -fx-pref-width: 150px;
     -fx-border-color: #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3.png');
- }
-#gameplayBtn:hover {
+}
+/*#gameplayBtn:hover {*/
+#gameplayBtn:hover, #addButton:hover {
     -fx-text-fill:  #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3Hover.png');
 }
@@ -80,7 +89,13 @@
     -fx-border-color: #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2.png');
 }
-#mainmenuBtn:hover{
+#cancelBtn {
+    -fx-border-color: #ffb66f;
+    -fx-graphic: url('../graphics/layout/btnInvader2.png');
+    -fx-pref-width: 150px;
+}
+/*#mainmenuBtn:hover{*/
+#mainmenuBtn:hover, #cancelBtn:hover{
     -fx-text-fill:  #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }

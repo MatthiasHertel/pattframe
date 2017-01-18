@@ -46,7 +46,7 @@ public class Bullet extends ImageView implements ISprite {
     @Override
     public void move(InvaderGroup.MoveDirection direction){
         int duration = Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.duration"));
-        int yEndPosition = direction == InvaderGroup.MoveDirection.DOWN ? Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend")) + 150 : Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.end.y"));
+        int yEndPosition = direction == InvaderGroup.MoveDirection.DOWN ? Integer.parseInt(SpaceInvaders.getSettings("invader.shoot.end.y"))  : Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.end.y"));
 
         KeyValue keyValue = new KeyValue(this.yProperty(), yEndPosition);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(duration), keyValue);

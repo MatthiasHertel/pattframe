@@ -2,6 +2,8 @@ package org.blueberry.spaceinvaders;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import org.blueberry.spaceinvaders.controller.ScreenController;
@@ -26,13 +28,21 @@ public class SpaceInvaders extends Application {
 
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
 
-        setScreen("WelcomeView");
-        //setScreen("GameplayView");
+//        setScreen("WelcomeView");
+        setScreen("GameplayView");
 
         Group root = new Group();
         root.getChildren().addAll(screenController);
-        Scene scene = new Scene(root, 1024, 768);
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+
+        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreenExitHint("");
+//        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        primaryStage.setFullScreenExitKeyCombination(new KeyCodeCombination(KeyCode.F11));
+
         primaryStage.show();
 
     }

@@ -31,14 +31,15 @@ invader.line.count = 11
 invader.gap.x = 20
 invader.gap.y = 20
 
+invader.shoot.end.y = 574
 invader.shoots.parallel = 3
-invader.shoots.delay.random.min = 2500
-invader.shoots.delay.random.max = 6000
+invader.shoots.delay.random.min = 500
+invader.shoots.delay.random.max = 4000
 #invader.shoots.delay.random.min = 5550
 #invader.shoots.delay.random.max = 15000
 
-invadergroup.border.xstart = 0
-invadergroup.border.xend = 790
+invadergroup.border.xstart = 112
+invadergroup.border.xend = 912
 #invadergroup.border.ystart = 0
 invadergroup.border.yend = 500
 
@@ -48,9 +49,9 @@ invadergroup.position.x = 50
 invadergroup.position.y = 50
 
 ship.width = 50
-ship.position.y = 450
+ship.position.y = 550
 ship.shoot.duration = 1000
-ship.shoot.end.y = 50
+ship.shoot.end.y = 30
 ship.move.step = 5
 ship.move.self = false
 

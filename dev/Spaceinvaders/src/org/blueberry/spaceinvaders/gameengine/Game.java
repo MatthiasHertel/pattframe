@@ -190,6 +190,8 @@ public class Game {
         gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
         display.getChildren().add(gameStatusLabel); //TODO: raus damit
 
+        display.setFocusTraversable(true);
+
         display.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -205,6 +207,10 @@ public class Game {
                         break;
                     case SPACE:
                         tryShipShoot();
+                        break;
+                    case ESCAPE:
+                        stop();
+                        SpaceInvaders.setScreen("WelcomeView");
                         break;
                     case P:
                         gameStatus.set(gameStatus.get() == PLAY ? PAUSE : PLAY);
@@ -262,7 +268,7 @@ public class Game {
 
         shelterList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            shelterList.add(new Shelter(100 + i * 170, Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
+            shelterList.add(new Shelter(208 + i * 176, Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
             addShelterToPane(display, shelterList.get(i));
         }
     }
