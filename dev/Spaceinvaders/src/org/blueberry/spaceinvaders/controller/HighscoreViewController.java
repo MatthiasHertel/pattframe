@@ -96,7 +96,7 @@ public class HighscoreViewController implements Initializable {
             hbox_input.setVisible(true);
         }
 
-        // disable Button until Namefield has 6 chars
+        // disable Button until Namefield has 4 chars
         addButton.disableProperty().bind(
                 Bindings.greaterThan(4, nameField.textProperty().length())
         );
