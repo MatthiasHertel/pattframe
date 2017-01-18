@@ -98,7 +98,7 @@ public class HighscoreViewController implements Initializable {
 
         // disable Button until Namefield has 6 chars
         addButton.disableProperty().bind(
-                Bindings.greaterThan(6, nameField.textProperty().length())
+                Bindings.greaterThan(4, nameField.textProperty().length())
         );
 
 
