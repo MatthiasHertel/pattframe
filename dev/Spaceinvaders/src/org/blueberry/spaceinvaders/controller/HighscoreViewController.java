@@ -98,7 +98,7 @@ public class HighscoreViewController implements Initializable {
 
         // disable Button until Namefield has 6 chars
         addButton.disableProperty().bind(
-                Bindings.greaterThan(6, nameField.textProperty().length())
+                Bindings.greaterThan(4, nameField.textProperty().length())
         );
 
 
@@ -172,6 +172,7 @@ public class HighscoreViewController implements Initializable {
         // http://controlsfx.bitbucket.org/org/controlsfx/control/Notifications.html
         // TODO adding new highscore value jump to page and highlight this row
         // pagination.currentPageIndexProperty().setValue(2);
+        hbox_mainmenuBtn.setVisible(true);
     }
 
     /**
