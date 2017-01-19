@@ -7,8 +7,7 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Created by KK on 19.01.2017.
@@ -65,6 +64,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
 
             ps.close();
         } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
             e.printStackTrace();
         }
         return highscoreList;
@@ -82,6 +82,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
             e.printStackTrace();
         }
 
@@ -102,6 +103,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -116,6 +118,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -133,6 +136,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
             return(rs.getInt(1));
 
         } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
             e.printStackTrace();
         }
         return 0;
@@ -145,6 +149,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
             e.printStackTrace();
         }
     }
