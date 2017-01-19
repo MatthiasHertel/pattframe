@@ -6,7 +6,7 @@ import java.util.Collection;
  * Created by matthias on 15.01.17.
  */
 public class History implements ChatObject{
-    Collection<Message> messages;
+    public Collection<Message> messages;
 
     public Collection<Message> getMessages() {
         return messages;

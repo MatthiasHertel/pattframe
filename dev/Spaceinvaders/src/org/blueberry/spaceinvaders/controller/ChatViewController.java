@@ -1,4 +1,4 @@
-package org.blueberry.spaceinvaders.chat;
+package org.blueberry.spaceinvaders.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.chat.*;
 
 import java.lang.reflect.Type;
 import java.net.URI;
