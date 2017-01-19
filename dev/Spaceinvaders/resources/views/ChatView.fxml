@@ -6,7 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.ChatViewController">
    <children>
       <AnchorPane id="displayManual" maxHeight="600.0" prefHeight="600.0" prefWidth="1024.0">
@@ -75,7 +74,6 @@
                   <Insets top="50.0" />
                </padding>
               </BorderPane>
-              <HBox alignment="CENTER" layoutY="711.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0" />
           </children>
       </AnchorPane>
    </children>

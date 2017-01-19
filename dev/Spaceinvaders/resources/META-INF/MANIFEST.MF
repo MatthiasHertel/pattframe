@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Class-Path: javax.websocket-client-api-1.1.jar jsonj-0.8.jar json-simp
+ le-1.1.1.jar junit-4.10.jar hamcrest-core-1.1.jar commons-lang-2.6.ja
+ r controlsfx-8.40.12.jar tyrus-standalone-client-1.9.jar gson-2.8.0.j
+ ar mysql-connector-java-5.1.40-bin.jar
+Main-Class: org.blueberry.spaceinvaders.SpaceInvaders
+

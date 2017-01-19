@@ -45,12 +45,12 @@
              </children>
           </HBox>
           <!--message banner   -->
-          <HBox fx:id="message_banner" alignment="CENTER" layoutY="620.0" prefHeight="77.0" prefWidth="1024.0">
+          <HBox fx:id="message_banner" alignment="CENTER" layoutY="300.0" prefHeight="77.0" prefWidth="1024.0">
             <children>
       </children>
           </HBox>
           <!--inputs to save in highscore  -->
-          <HBox fx:id="hbox_input" alignment="CENTER" layoutX="17.0" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
+          <HBox fx:id="hbox_input" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
            <children>
               <!--<Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">-->
                  <!--<HBox.margin>-->
@@ -83,7 +83,7 @@
                <children>
                   <Button id="mainmenuBtn" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenu">
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets />
                      </HBox.margin>
                   </Button>
                </children>
