@@ -89,7 +89,7 @@ public class ChatViewController implements Initializable {
                             ListCell<MessageTypeMessage> cell = new ListCell<MessageTypeMessage>() {
                                 @Override
                                 protected void updateItem(MessageTypeMessage item, boolean empty) {
-                                    System.out.println(item);
+//                                    System.out.println(item);
                                     super.updateItem(item, empty);
                                     setText(empty ? null : item.toChatString());
                                     if (!isEmpty() && item.getColor() != null) {
@@ -97,7 +97,7 @@ public class ChatViewController implements Initializable {
                                         if (color.isEmpty() || color.equals("null")) {
                                            color = "black";
                                         }
-                                        System.out.println(color);
+//                                        System.out.println(color);
                                         this.setStyle("-fx-text-fill: " + color);
                                     }
 //                                    if()

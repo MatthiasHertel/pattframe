@@ -28,9 +28,9 @@ public class SpaceInvaders extends Application {
 
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
 
-//        setScreen("WelcomeView");
+        setScreen("WelcomeView");
 //        setScreen("GameplayView");
-        setScreen("ChatView");
+//        setScreen("ChatView");
 
         Group root = new Group();
         root.getChildren().addAll(screenController);
@@ -39,7 +39,7 @@ public class SpaceInvaders extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
 
-        primaryStage.setFullScreen(false);
+        primaryStage.setFullScreen(true);
         primaryStage.setFullScreenExitHint("");
 //        primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         primaryStage.setFullScreenExitKeyCombination(new KeyCodeCombination(KeyCode.F11));
