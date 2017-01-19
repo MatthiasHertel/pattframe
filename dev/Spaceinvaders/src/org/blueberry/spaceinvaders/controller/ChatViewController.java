@@ -20,7 +20,9 @@ import org.blueberry.spaceinvaders.chat.*;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -35,6 +37,9 @@ public class ChatViewController implements Initializable {
     private TextField userNameTextfield;
 
     @FXML
+    private Label userNameLabel;
+
+    @FXML
     private TextField messageTextField;
 
     @FXML
@@ -42,7 +47,7 @@ public class ChatViewController implements Initializable {
 
 
     @FXML
-    private ListView<String> chatListView;
+    private ListView<MessageTypeMessage> chatListView;
 
     private final ChatModel model = new ChatModel();
 
@@ -57,10 +62,11 @@ public class ChatViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         model.userName.bindBidirectional(userNameTextfield.textProperty());
         model.readyToChat.bind(model.userName.isNotEmpty());
+//        connectButton.disableProperty().bind(model.readyToChat.not());
         chatButton.disableProperty().bind(model.connected.not());
         messageTextField.disableProperty().bind(model.connected.not());
         messageTextField.textProperty().bindBidirectional(model.currentMessage);
-        connectButton.disableProperty().bind(model.readyToChat.not());
+
         chatListView.setItems(model.chatHistory);
         messageTextField.setOnAction(event -> {
             handleSendMessage();
@@ -79,40 +85,20 @@ public class ChatViewController implements Initializable {
                         System.out.println(responseString);
                         ChatObject chatObject = getChatObject(responseString);
                         chatObject.handle(model);
+                        String color = model.color.get();
+                        if (color == null) {
+                            color = "black";
+                        }
+                        userNameLabel.setStyle("-fx-text-fill:" + color);
                         chatListView.scrollTo(model.chatHistory.size());
-                        chatListView.setCellFactory(list -> {
-                            ListCell<String> cell = new ListCell<String>() {
-                                @Override
-                                protected void updateItem(String item, boolean empty) {
-                                    super.updateItem(item, empty);
-                                    setText(empty ? null : item);
-                                    // String currentcolor fetch here
-                                    // posible colors from socket server 'red', 'green', 'blue', 'magenta', 'purple', 'plum', 'orange'
-                                    if (!isEmpty()) {
-                                        if(item.contains("(red)"))
-                                            this.setStyle("-fx-text-fill: red");
-                                        if(item.contains("(green)"))
-                                            this.setStyle("-fx-text-fill: green");
-                                        if(item.contains("(blue)"))
-                                            this.setStyle("-fx-text-fill: blue");
-                                        if(item.contains("(magenta)"))
-                                            this.setStyle("-fx-text-fill: magenta");
-                                        if(item.contains("(purple)"))
-                                            this.setStyle("-fx-text-fill: purple");
-                                        if(item.contains("(plum)"))
-                                            this.setStyle("-fx-text-fill: plum");
-                                        if(item.contains("(orange)"))
-                                            this.setStyle("-fx-text-fill: orange");
-                                    }
-                                }
-                            };
-                            return cell;
-                        });
+                        chatListView.setCellFactory(chatListView -> new ChatMessageListViewCell());
                     });
                 });
                 clientEndPoint.sendMessage(model.userName.getValueSafe());
+                connectButton.setDisable(true);
+                userNameTextfield.setDisable(true);
                 model.connected.set(true);
-
+                userNameLabel.textProperty().setValue(model.userName.getValue());
             } catch (Exception e) {
                 SpaceInvaders.showDialog("Error: " + e.getMessage());
                 System.out.println(e.getMessage());
@@ -149,7 +135,12 @@ public class ChatViewController implements Initializable {
                 return messageTypeHistory;
             }
             case "color": {
-                String colorname = data.getAsString();
+                String colorname = "black";
+                try {
+                    colorname = data.getAsString();
+                } catch(NullPointerException e) {
+                    System.out.println(e.getMessage());
+                }
                 MessageTypeColor messageTypeColor = new MessageTypeColor();
                 messageTypeColor.color = colorname;
                 return messageTypeColor;

@@ -22,11 +22,13 @@ public class MessageTypeMessage implements ChatObject{
 
         String afterDecoding = StringEscapeUtils.unescapeHtml(text);
 
-        return "" + "(" + color + ")" + author + '@' + strtime + ": " + afterDecoding;
+//        return "" + "(" + color + ")" + author + '@' + strtime + ": " + afterDecoding;
+        return "" + author + '@' + strtime + ": " + afterDecoding;
     }
 
     public void handle(ChatModel chat) {
-        chat.chatHistory.add(this.toChatString());
+//        System.out.println(color);
+        chat.chatHistory.add(this);
     }
 
     @Override
@@ -60,7 +62,10 @@ public class MessageTypeMessage implements ChatObject{
     }
 
     public void setColor(String color) {
-        this.color = color;
+
+
+
+
     }
 
     public String getText() {
