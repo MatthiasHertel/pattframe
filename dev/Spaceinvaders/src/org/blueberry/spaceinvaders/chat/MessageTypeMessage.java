@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by matthias on 15.01.17.
  */
-public class Message implements ChatObject{
+public class MessageTypeMessage implements ChatObject{
     String time;
     String author;
     String color;
@@ -31,7 +31,7 @@ public class Message implements ChatObject{
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "MessageTypeMessage{" +
                 "time='" + time + '\'' +
                 ", author='" + author + '\'' +
                 ", color='" + color + '\'' +

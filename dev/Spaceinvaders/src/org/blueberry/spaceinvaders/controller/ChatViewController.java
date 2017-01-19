@@ -152,20 +152,20 @@ public class ChatViewController implements Initializable {
         com.google.gson.JsonElement data = jo.get("data");
         switch (msgType) {
             case "history": {
-                Type collectionMessagesType = new TypeToken<Collection<Message>>(){}.getType();
-                Collection<Message> messages = gson.fromJson(data, collectionMessagesType);
-                History history = new History();
-                history.messages = messages;
-                return history;
+                Type collectionMessagesType = new TypeToken<Collection<MessageTypeMessage>>(){}.getType();
+                Collection<MessageTypeMessage> messageTypeMessages = gson.fromJson(data, collectionMessagesType);
+                MessageTypeHistory messageTypeHistory = new MessageTypeHistory();
+                messageTypeHistory.messageTypeMessages = messageTypeMessages;
+                return messageTypeHistory;
             }
             case "color": {
                 String colorname = data.getAsString();
-                Color color = new Color();
-                color.color = colorname;
-                return color;
+                MessageTypeColor messageTypeColor = new MessageTypeColor();
+                messageTypeColor.color = colorname;
+                return messageTypeColor;
             }
             case "message": {
-                Message msg = gson.fromJson(data, Message.class);
+                MessageTypeMessage msg = gson.fromJson(data, MessageTypeMessage.class);
                 return msg;
 
             }

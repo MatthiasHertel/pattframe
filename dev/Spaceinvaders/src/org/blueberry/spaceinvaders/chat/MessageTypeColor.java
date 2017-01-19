@@ -3,12 +3,12 @@ package org.blueberry.spaceinvaders.chat;
 /**
  * Created by matthias on 15.01.17.
  */
-public class Color implements ChatObject{
+public class MessageTypeColor implements ChatObject{
     public String color;
 
     @Override
     public String toString() {
-        return "Color{" +
+        return "MessageTypeColor{" +
                 "color='" + color + '\'' +
                 '}';
     }
