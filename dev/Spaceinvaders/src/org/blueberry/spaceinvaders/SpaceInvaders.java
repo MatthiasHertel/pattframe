@@ -1,9 +1,14 @@
 package org.blueberry.spaceinvaders;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import org.blueberry.spaceinvaders.controller.ScreenController;
@@ -70,6 +75,18 @@ public class SpaceInvaders extends Application {
      */
     public static void setScreen(String viewName) {
         screenController.setScreen("/views/" + viewName + ".fxml");
+    }
+
+
+    public static void showDialog(final String message) {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        VBox box = new VBox();
+        box.getChildren().addAll(new Label(message));
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(5));
+        dialogStage.setScene(new Scene(box));
+        dialogStage.show();
     }
 }
 

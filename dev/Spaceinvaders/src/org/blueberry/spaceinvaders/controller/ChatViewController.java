@@ -71,7 +71,7 @@ public class ChatViewController implements Initializable {
         connectButton.setOnAction(evt -> {
             try {
                 // for production environment (wss required)
-                clientEndPoint = new ChatClientEndpoint(new URI("wss://mhertel.de:1337"));
+                clientEndPoint = new ChatClientEndpoint(new URI("wss://mhertel.de:133"));
                 // for development environment (ws)
 //				clientEndPoint = new ChatClientEndpoint(new URI("ws://localhost:1337"));
                 clientEndPoint.addMessageHandler(responseString -> {
@@ -114,7 +114,7 @@ public class ChatViewController implements Initializable {
                 model.connected.set(true);
 
             } catch (Exception e) {
-                showDialog("Error: " + e.getMessage());
+                SpaceInvaders.showDialog("Error: " + e.getMessage());
                 System.out.println(e.getMessage());
             }
 
@@ -129,16 +129,6 @@ public class ChatViewController implements Initializable {
         messageTextField.requestFocus();
     }
 
-    private void showDialog(final String message) {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        VBox box = new VBox();
-        box.getChildren().addAll(new Label(message));
-        box.setAlignment(Pos.CENTER);
-        box.setPadding(new Insets(5));
-        dialogStage.setScene(new Scene(box));
-        dialogStage.show();
-    }
 
     public static ChatObject getChatObject(String json) {
         // wenn typ color -> ColorObject

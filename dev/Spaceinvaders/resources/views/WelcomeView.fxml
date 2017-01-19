@@ -19,7 +19,7 @@
           <children>
               <VBox alignment="CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                   <children>
-                      <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+                      <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5" scaleY="1.5">
                           <image>
                               <Image url="@../theme1/graphics/layout/logo.png" />
                           </image>
