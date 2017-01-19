@@ -85,47 +85,12 @@ public class ChatViewController implements Initializable {
                         System.out.println(responseString);
                         ChatObject chatObject = getChatObject(responseString);
                         chatObject.handle(model);
-                        userNameLabel.setStyle("-fx-text-fill:" + model.color.get());
+                        String color = model.color.get();
+                        if (color == null) {
+                            color = "black";
+                        }
+                        userNameLabel.setStyle("-fx-text-fill:" + color);
                         chatListView.scrollTo(model.chatHistory.size());
-//                        chatListView.setCellFactory(list -> {
-//                            ListCell<MessageTypeMessage> cell = new ListCell<MessageTypeMessage>() {
-//                                @Override
-//                                protected void updateItem(MessageTypeMessage item, boolean empty) {
-////                                    System.out.println(item);
-//                                    super.updateItem(item, empty);
-//
-//                                    setText(empty ? null : item.toChatString());
-////                                    setText();
-////                                    List<String> message = new ArrayList<String>();
-////                                    // this.setStyle("-fx-text-fill: " + color);
-////                                    message.add(item.getAuthor());
-////                                    // this.setStyle("-fx-text-fill: black");
-////                                    message.add(item.getTime());
-////                                    message.add(item.getText());
-////                                    for (int i=0; i<message.size(); i++) {
-////                                        Label lbl = new Label(message.get(i));
-////                                        lbl.setStyle("-fx-text-fill: " + item.getColor());
-////                                        setText(lbl.toString());
-////                                    }
-////                                    // nur getAuthor soll textfill bekommen
-////                                    System.out.println(item.getAuthor());
-////                                    // black
-////                                    System.out.println(item.getTime());
-////                                    System.out.println(item.getText());
-//
-//                                    if (!isEmpty()){
-//
-//                                        String color = item.getColor();
-//                                        if (color == null || color.isEmpty() || color.equals("null")) {
-//                                            color = "black";
-//                                        }
-//                                        setStyle("-fx-text-fill: " + color);
-//
-//                                    }
-//                                }
-//                            };
-//                            return cell;
-//                        });
                         chatListView.setCellFactory(chatListView -> new ChatMessageListViewCell());
                     });
                 });

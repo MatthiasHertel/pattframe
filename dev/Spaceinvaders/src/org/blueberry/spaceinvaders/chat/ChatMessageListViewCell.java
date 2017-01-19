@@ -7,6 +7,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import org.apache.commons.lang.StringEscapeUtils;
+import java.text.SimpleDateFormat;
+
 
 
 /**
@@ -57,8 +60,20 @@ public class ChatMessageListViewCell extends ListCell<MessageTypeMessage>{
 			}
 
 			label1.setText(message.getAuthor());
-			label3.setText(message.getTime());
-			label5.setText(message.getText());
+			String color = message.getColor();
+			// set default color wenn der socketserver keine farbe mehr liefert
+			if (color == null) {
+				color = "black";
+			}
+
+			label1.setStyle("-fx-text-fill:" + color);
+			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+			long unixTimestamp = new Long(message.getTime());
+			String strtime = formatter.format(unixTimestamp);
+			label3.setText(strtime);
+
+			String afterDecoding = StringEscapeUtils.unescapeHtml(message.getText());
+			label5.setText(afterDecoding);
 
 
 
