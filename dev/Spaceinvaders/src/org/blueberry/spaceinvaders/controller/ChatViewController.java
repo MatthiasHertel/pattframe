@@ -20,7 +20,9 @@ import org.blueberry.spaceinvaders.chat.*;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -91,37 +93,35 @@ public class ChatViewController implements Initializable {
                                 protected void updateItem(MessageTypeMessage item, boolean empty) {
 //                                    System.out.println(item);
                                     super.updateItem(item, empty);
+
                                     setText(empty ? null : item.toChatString());
-                                    if (!isEmpty() && item.getColor() != null) {
-                                        String color = item.getColor();
-                                        if (color.isEmpty() || color.equals("null")) {
-                                           color = "black";
-                                        }
-//                                        System.out.println(color);
-                                        this.setStyle("-fx-text-fill: " + color);
-                                    }
-//                                    if()
-//                                    System.out.println(item.getColor());
-//                                     String currentcolor fetch here
-//                                     posible colors from socket server 'red', 'green', 'blue', 'magenta', 'purple', 'plum', 'orange'
-//                                    if (!isEmpty()) {
-//                                        if(itemasd.contains("(red)"))
-//                                            this.setStyle("-fx-text-fill: red");
-//                                        if(item.contains("(green)"))
-//                                            this.setStyle("-fx-text-fill: green");
-//                                        if(item.contains("(blue)"))
-//                                            this.setStyle("-fx-text-fill: blue");
-//                                        if(item.contains("(magenta)"))
-//                                            this.setStyle("-fx-text-fill: magenta");
-//                                        if(item.contains("(purple)"))
-//                                            this.setStyle("-fx-text-fill: purple");
-//                                        if(item.contains("(plum)"))
-//                                            this.setStyle("-fx-text-fill: plum");
-//                                        if(item.contains("(orange)"))
-//                                            this.setStyle("-fx-text-fill: orange");
-//                                         the color information is within the to chatstring method of the messagetype
-//                                        this.setText(item.substring(item.lastIndexOf(")")+1));
+//                                    setText();
+//                                    List<String> message = new ArrayList<String>();
+//                                    // this.setStyle("-fx-text-fill: " + color);
+//                                    message.add(item.getAuthor());
+//                                    // this.setStyle("-fx-text-fill: black");
+//                                    message.add(item.getTime());
+//                                    message.add(item.getText());
+//                                    for (int i=0; i<message.size(); i++) {
+//                                        Label lbl = new Label(message.get(i));
+//                                        lbl.setStyle("-fx-text-fill: " + item.getColor());
+//                                        setText(lbl.toString());
 //                                    }
+//                                    // nur getAuthor soll textfill bekommen
+//                                    System.out.println(item.getAuthor());
+//                                    // black
+//                                    System.out.println(item.getTime());
+//                                    System.out.println(item.getText());
+
+                                    if (!isEmpty()){
+
+                                        String color = item.getColor();
+                                        if (color == null || color.isEmpty() || color.equals("null")) {
+                                            color = "black";
+                                        }
+                                        setStyle("-fx-text-fill: " + color);
+
+                                    }
                                 }
                             };
                             return cell;
