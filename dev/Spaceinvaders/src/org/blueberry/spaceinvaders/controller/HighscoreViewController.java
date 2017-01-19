@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,14 +14,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.gameengine.Game;
-import org.blueberry.spaceinvaders.highscore.DatabaseConnector;
 import org.blueberry.spaceinvaders.highscore.Highscore;
+import org.blueberry.spaceinvaders.highscore.IDatabaseConnector;
+import org.blueberry.spaceinvaders.highscore.MySQLDBConnector;
 
 /**
  * HighscoreViewController-Klasse
@@ -55,19 +56,27 @@ public class HighscoreViewController implements Initializable {
     private int itemsPerPage = 15;
     private int currentPageIndex = 0;
 
-    private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
-    private DatabaseConnector mysqlConnector;
+//    private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
+    private ObservableList<Highscore> highscore;
+//    private DatabaseConnector mysqlConnector;
+    private IDatabaseConnector mysqlConnector;
 
     private Label messageLabel = new Label();
-    private String punkt;
+    private int punkt = 0;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        mysqlConnector = new DatabaseConnector();
-        mysqlConnector.launchConnection();
+
+        mysqlConnector = new MySQLDBConnector();
+        mysqlConnector.connect(SpaceInvaders.getSettings("db.url"), SpaceInvaders.getSettings("db.username"), SpaceInvaders.getSettings("db.password"));
+
+//        mysqlConnector = new DatabaseConnector();
+//        mysqlConnector.launchConnection();
+
+
 
         // set resize policy
         crudTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -82,13 +91,13 @@ public class HighscoreViewController implements Initializable {
         hbox_input.setVisible(false);
 
         //Fetch data from gameplay
-        punkt = new Integer(Game.getInstance().getPlayer().getScore()).toString();
+        punkt = Game.getInstance().getPlayer().getScore();
 
         // if clause to determine game score
         // TODO there should be a flag from game instance
-        if (!"0".equals(punkt)) {
+        if (punkt != 0) {
             hbox_mainmenuBtn.setVisible(false);
-            String position = mysqlConnector.determinePosition(punkt);
+            int position = mysqlConnector.determinePosition(punkt);
             messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + position + " in der Highscore belegt!!!");
             messageLabel.setTextFill(Color.GREEN);
             messageLabel.setFont(Font.font("Impact", 30));
@@ -103,6 +112,12 @@ public class HighscoreViewController implements Initializable {
 
 
         highscore = mysqlConnector.getHighscoreList();
+
+//        highscore = FXCollections.observableArrayList();
+//        for(Object record : mysqlConnector.getRecords("highscore")){
+//            highscore.add((Highscore) record);
+//        }
+
         pageCount = getPageCount(highscore.size(), itemsPerPage);
 
         // hide pagination if highscore.size items perpage (only one site)
@@ -137,7 +152,7 @@ public class HighscoreViewController implements Initializable {
         switch (button.getId()) {
             case "addButton": {
                 System.out.println("addButton");
-                addNewHighscore();
+                addNewHighscore(punkt);
                 refreshList();
                 break;
             }
@@ -155,17 +170,16 @@ public class HighscoreViewController implements Initializable {
     /**
      * addNewHighscore
      */
-    public void addNewHighscore() {
+    public void addNewHighscore(int punkte) {
         String id = "1";
         String name = nameField.getText();
-        Integer punkte = Integer.parseInt(punkt);
         String date = " ";
         Highscore newHighscore = new Highscore(id, name, punkte, date);
         mysqlConnector.insertHighscore(newHighscore);
         refreshList();
         hbox_input.setVisible(false);
-        // after save data set score to 0
-        Game.getInstance().getPlayer().setScore(0);
+
+        Game.reset();
         message_banner.setVisible(false);
         // TODO show toast message crud successfully
         // controlfx notification toast message

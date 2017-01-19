@@ -71,7 +71,7 @@ public class ChatViewController implements Initializable {
         connectButton.setOnAction(evt -> {
             try {
                 // for production environment (wss required)
-                clientEndPoint = new ChatClientEndpoint(new URI("wss://mhertel.de:133"));
+                clientEndPoint = new ChatClientEndpoint(new URI("wss://mhertel.de:1337"));
                 // for development environment (ws)
 //				clientEndPoint = new ChatClientEndpoint(new URI("ws://localhost:1337"));
                 clientEndPoint.addMessageHandler(responseString -> {

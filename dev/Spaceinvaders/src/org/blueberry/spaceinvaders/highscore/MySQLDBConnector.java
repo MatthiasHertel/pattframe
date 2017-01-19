@@ -7,47 +7,41 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by matthias on 22.12.16.
+ * Created by KK on 19.01.2017.
  */
-public class DatabaseConnector {
+public class MySQLDBConnector implements IDatabaseConnector {
+
     private Connection connection;
-    private Statement myStatement;
-    private ObservableList<Highscore> highscoreList;
-    public void launchConnection(){
 
-        //        bind credentials ... TODO come from .env file by herzlchen
 
-//        String url = "TODO";
-        String url = SpaceInvaders.getSettings("db.url");
-//        String username = "TODO";
-        String username = SpaceInvaders.getSettings("db.username");
-
-//        String password = "TODO";
-        String password = SpaceInvaders.getSettings("db.password");
+    @Override
+    public void connect(String url, String user, String pw) {
 
         try {
-            connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url, user, pw);
         } catch (SQLException e) {
-            System.out.println("Datenbank Connection konnte nicht hergestellt werden.");
-            System.out.println("Sind die Credentials in der config/application.properties korrekt ?");
-            System.out.println("url:" + url);
-            System.out.println("username:" + username);
-            System.out.println("password:" + password);
-            System.out.println("Haben sie Internet ?");
+            String message = "Datenbank Connection konnte nicht hergestellt werden.\n" +
+                    "Sind die Credentials in der config/application.properties korrekt?\n" +
+                    "url:" + url + "\n" +
+                    "username:" + user + "\n" +
+                    "password:" + pw + "\n" +
+                    "Haben sie Internet?";
+            System.out.println(message);
+            SpaceInvaders.showDialog(message + "\n" + e.getMessage());
+
 //            TODO check ping
-
-
-
-
-//            e.printStackTrace();
         }
     }
+
+    @Override
     public ObservableList<Highscore> getHighscoreList(){
         String query = "SELECT * FROM highscore ORDER BY punkte DESC";
 
-        highscoreList = FXCollections.observableArrayList();
+        ObservableList<Highscore> highscoreList = FXCollections.observableArrayList();
         Integer ranking = 0;
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -76,25 +70,24 @@ public class DatabaseConnector {
         return highscoreList;
     }
 
+
+
+    @Override
     public void insertHighscore(Highscore highscore){
         try {
             PreparedStatement ps = connection
-                    .prepareStatement("INSERT INTO highscore (name, punkte, created_at, updated_at ) VALUES  (?,?,?,?);");
+                    .prepareStatement("INSERT INTO highscore (name, punkte) VALUES  (?,?);");
             ps.setString(1, highscore.getName());
             ps.setInt(2, highscore.getPunkte());
-            java.util.Date dt = new java.util.Date();
-            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String currentTime = sdf.format(dt);
-            ps.setString(3, currentTime);
-            ps.setString(4, currentTime);
             ps.executeUpdate();
             ps.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
+    @Override
     public void updateHighscore(Highscore highscore){
         try {
             PreparedStatement ps = connection
@@ -113,6 +106,8 @@ public class DatabaseConnector {
         }
     }
 
+
+    @Override
     public void deleteHighscore(Highscore highscore){
         try {
             PreparedStatement ps = connection
@@ -125,7 +120,25 @@ public class DatabaseConnector {
         }
     }
 
-    public void resetHighscore () {
+
+
+    @Override
+    public int determinePosition(int punkte) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("select COUNT(*)+1 from highscore WHERE punkte >= ?");
+            ps.setInt(1, punkte);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            return(rs.getInt(1));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void resetHighscoreTable() {
         String query = "TRUNCATE highscore;";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -134,21 +147,5 @@ public class DatabaseConnector {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public String determinePosition(String punkte) {
-        Integer punkt = Integer.parseInt(punkte);
-        try {
-            PreparedStatement ps = connection.prepareStatement("select COUNT(*)+1 AS position from highscore WHERE punkte >= ?");
-            ps.setInt(1, punkt);
-            ResultSet pos = ps.executeQuery();
-            while (pos.next()) {
-                String position = pos.getString("position");
-                return(position);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ("Konnte keinen Wert ermitteln.");
     }
 }
