@@ -145,7 +145,12 @@ public class ChatViewController implements Initializable {
                 return messageTypeHistory;
             }
             case "color": {
-                String colorname = data.getAsString();
+                String colorname = "black";
+                try {
+                    colorname = data.getAsString();
+                } catch(NullPointerException e) {
+                    System.out.println(e.getMessage());
+                }
                 MessageTypeColor messageTypeColor = new MessageTypeColor();
                 messageTypeColor.color = colorname;
                 return messageTypeColor;
