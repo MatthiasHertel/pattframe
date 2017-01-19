@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
 public class ChatModel {
     public final BooleanProperty connected = new SimpleBooleanProperty(false);
     public final BooleanProperty readyToChat = new SimpleBooleanProperty(false);
-    public final ObservableList<String> chatHistory = FXCollections.observableArrayList();
+    public final ObservableList<MessageTypeMessage> chatHistory = FXCollections.observableArrayList();
     public final StringProperty currentMessage = new SimpleStringProperty();
     public final StringProperty userName = new SimpleStringProperty();
     public final StringProperty color = new SimpleStringProperty();

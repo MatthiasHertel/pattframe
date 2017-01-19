@@ -24,5 +24,6 @@ public class MessageTypeColor implements ChatObject{
     @Override
     public void handle(ChatModel chat) {
         // TODO
+        chat.color.setValue(color);
     }
 }
