@@ -28,8 +28,8 @@ public class SpaceInvaders extends Application {
 
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
 
-//        setScreen("WelcomeView");
-        setScreen("GameplayView");
+        setScreen("WelcomeView");
+//        setScreen("GameplayView");
 
         Group root = new Group();
         root.getChildren().addAll(screenController);
