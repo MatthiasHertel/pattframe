@@ -3,14 +3,16 @@ package org.blueberry.spaceinvaders.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.sun.javafx.scene.control.skin.TableColumnHeader;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -19,9 +21,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.gameengine.Game;
+import org.blueberry.spaceinvaders.gameengine.InvaderGroup;
 import org.blueberry.spaceinvaders.highscore.Highscore;
 import org.blueberry.spaceinvaders.highscore.IDatabaseConnector;
 import org.blueberry.spaceinvaders.highscore.MySQLDBConnector;
+
+import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.PAUSE;
+import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.PLAY;
 
 /**
  * HighscoreViewController-Klasse
@@ -63,12 +69,71 @@ public class HighscoreViewController implements Initializable {
 
     private Label messageLabel = new Label();
     private int punkt = 0;
+    private String orderBy = "punkte DESC";
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+
+        crudTable.addEventFilter(
+            MouseEvent.MOUSE_CLICKED, event -> {
+//                MouseEvent.MOUSE_RELEASED, event -> {
+                if (event.getTarget() instanceof TableColumnHeader) {
+
+                    switch (((TableColumnHeader) event.getTarget()).getId()){
+                        case "dateColumn":
+                            orderBy = orderBy == "created_at DESC" ? "created_at ASC" : "created_at DESC";
+                            break;
+                        case "punkteColumn":
+                            orderBy = orderBy == "punkte DESC" ? "punkte ASC" : "punkte DESC";
+                            break;
+                        case "idColumn":
+                            orderBy = orderBy == "position ASC" ? "position DESC" : "position ASC";
+                            break;
+                        case "nameColumn":
+                            orderBy = orderBy == "name ASC" ? "name DESC" : "name ASC";
+                            break;
+                    }
+
+                    if (pagination.getCurrentPageIndex() == 0){
+                        crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(0, itemsPerPage, orderBy));
+                    }
+                    else {
+                        pagination.setCurrentPageIndex(0);
+                    }
+                    event.consume();
+                }
+            }
+        );
+
+
+
+        crudTable.setFocusTraversable(true);
+
+        crudTable.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+
+                int index = pagination.getCurrentPageIndex();
+
+                switch (event.getCode()) {
+                    case LEFT:
+                        if (index > 0) pagination.setCurrentPageIndex(--index);
+                        break;
+                    case RIGHT:
+                        if (index < pagination.getPageCount()) pagination.setCurrentPageIndex(++index);
+                        break;
+                    case ESCAPE:
+                        SpaceInvaders.setScreen("WelcomeView");
+                        break;
+                }
+            }
+        });
+
+
 
         mysqlConnector = new MySQLDBConnector();
         mysqlConnector.connect(SpaceInvaders.getSettings("db.url"), SpaceInvaders.getSettings("db.username"), SpaceInvaders.getSettings("db.password"));
@@ -82,7 +147,7 @@ public class HighscoreViewController implements Initializable {
         crudTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         //populate the table
-        idColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<Highscore, Integer>("id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("name"));
         punkteColumn.setCellValueFactory(new PropertyValueFactory<Highscore, Integer>("punkte"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<Highscore, String>("created_at"));
@@ -110,34 +175,31 @@ public class HighscoreViewController implements Initializable {
                 Bindings.greaterThan(4, nameField.textProperty().length())
         );
 
-
-        highscore = mysqlConnector.getHighscoreList();
+//        highscore = mysqlConnector.getHighscoreList();
 
 //        highscore = FXCollections.observableArrayList();
 //        for(Object record : mysqlConnector.getRecords("highscore")){
 //            highscore.add((Highscore) record);
 //        }
 
-        pageCount = getPageCount(highscore.size(), itemsPerPage);
+//        pageCount = getPageCount(highscore.size(), itemsPerPage);
+        int highScoreCompleteCount = mysqlConnector.getCount();
 
         // hide pagination if highscore.size items perpage (only one site)
-        if (highscore.size() < itemsPerPage) {
+        if (highScoreCompleteCount < itemsPerPage) {
             pagination.setVisible(false);
         }
+        else {
+            pagination.setPageCount(getPageCount(highScoreCompleteCount, itemsPerPage));
 
-        pagination.setPageCount(pageCount);
+            pagination.currentPageIndexProperty().addListener((observable, oldValue, newValue) ->
+                    crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(newValue.intValue() * itemsPerPage, itemsPerPage, orderBy))
+            );
+        }
 
-        pagination.currentPageIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("Pagination Changed from " + oldValue + " , to " + newValue);
-                currentPageIndex = newValue.intValue();
-                refreshList();
-            }
-        });
 
-        // call refreshlist to init table
-        refreshList();
+        // init tableView content
+        crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(0, itemsPerPage, orderBy));
     }
 
     /**
@@ -153,7 +215,8 @@ public class HighscoreViewController implements Initializable {
             case "addButton": {
                 System.out.println("addButton");
                 addNewHighscore(punkt);
-                refreshList();
+//                refreshList();
+                crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(0, itemsPerPage, "created_at DESC"));
                 break;
             }
         }
@@ -164,19 +227,25 @@ public class HighscoreViewController implements Initializable {
      */
     private void refreshList() {
         highscore = mysqlConnector.getHighscoreList();
-        crudTable.getItems().setAll(highscore.subList(currentPageIndex * itemsPerPage, ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size()) ? currentPageIndex * itemsPerPage + itemsPerPage : highscore.size())));
+//        crudTable.getItems().setAll(highscore.subList(currentPageIndex * itemsPerPage, ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size())  ? currentPageIndex * itemsPerPage + itemsPerPage : highscore.size())));
+        crudTable.getItems().setAll(
+                highscore.subList(currentPageIndex * itemsPerPage,
+                        ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size())
+                                ? currentPageIndex * itemsPerPage + itemsPerPage
+                                : highscore.size())
+                ));
     }
 
     /**
      * addNewHighscore
      */
     public void addNewHighscore(int punkte) {
-        String id = "1";
+        int id = 1;
         String name = nameField.getText();
         String date = " ";
         Highscore newHighscore = new Highscore(id, name, punkte, date);
         mysqlConnector.insertHighscore(newHighscore);
-        refreshList();
+//        refreshList();
         hbox_input.setVisible(false);
 
         Game.reset();

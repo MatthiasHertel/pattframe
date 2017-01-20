@@ -17,7 +17,7 @@
 
 <StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
    <children>
-      <AnchorPane id="displayHighscore" maxHeight="600.0" maxWidth="1024.0" prefHeight="600.0" prefWidth="1024.0">
+      <AnchorPane id="displayHighscore" fx:id="displayHighscore" maxHeight="600.0" maxWidth="1024.0" prefHeight="600.0" prefWidth="1024.0">
         <children>
           <!--header screen description  -->
           <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
@@ -33,7 +33,7 @@
           <TableView fx:id="crudTable" layoutY="83.0" maxWidth="-Infinity" prefHeight="415.0" prefWidth="1024.0">
           <columns>
               <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
-              <TableColumn fx:id="nameColumn" prefWidth="100.0" text="Name" />
+              <TableColumn fx:id="nameColumn" editable="false" prefWidth="100.0" text="Name" />
               <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
               <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
           </columns>

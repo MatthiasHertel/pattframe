@@ -7,13 +7,13 @@ import javafx.beans.property.SimpleStringProperty;
  */
 public class Highscore {
 
-    private SimpleStringProperty id;
+    private SimpleIntegerProperty id;
     private SimpleStringProperty name;
     private SimpleIntegerProperty punkte;
     private SimpleStringProperty created_at;
 
-    public Highscore(String xid, String xname, Integer xpunkte, String xcreated_at) {
-        this.id = new SimpleStringProperty(xid);
+    public Highscore(Integer xid, String xname, Integer xpunkte, String xcreated_at) {
+        this.id = new SimpleIntegerProperty(xid);
         this.name = new SimpleStringProperty(xname);
         this.punkte= new SimpleIntegerProperty(xpunkte);
         this.created_at = new SimpleStringProperty(xcreated_at);
@@ -24,14 +24,14 @@ public class Highscore {
     }
 
     public int getId() {
-        return Integer.parseInt(id.get());
+        return id.get();
     }
 
-    public SimpleStringProperty idProperty() {
+    public SimpleIntegerProperty idProperty() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id.set(id);
     }
 

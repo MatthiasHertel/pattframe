@@ -50,7 +50,6 @@ public class MySQLDBConnector implements IDatabaseConnector {
             while (selectionResult.next()){
                 ranking++;
 //                Integer dbId = selectionResult.getInt("ID");
-                String id = ranking.toString();
                 String name = selectionResult.getString("name");
                 Integer punkte = selectionResult.getInt("punkte");
                 DateFormat df = new SimpleDateFormat("dd.MM.YY  HH:mm");
@@ -58,7 +57,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
                 String created_at = df.format(selectionResult.getTimestamp("created_at")).concat(" Uhr");
 //                String created_at = selectionResult.getTimestamp("created_at").toString();
 
-                Highscore selectedHighscore = new Highscore(id,name, punkte, created_at);
+                Highscore selectedHighscore = new Highscore(ranking, name, punkte, created_at);
                 highscoreList.add(selectedHighscore);
             }
 
@@ -152,5 +151,59 @@ public class MySQLDBConnector implements IDatabaseConnector {
             SpaceInvaders.showDialog(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int getCount() {
+        String query = "SELECT COUNT(*) FROM highscore;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            ps.close();
+            return count;
+
+        } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    @Override
+    public ObservableList<Highscore> getHighscoreListPage(int from, int till, String orderBy){
+//        String query = "SELECT * FROM highscore ORDER BY " + orderBy + " LIMIT " + from + "," + till ;
+        String query = "SELECT name, created_at, punkte, (select COUNT(DISTINCT punkte)+1 from highscore WHERE punkte > h.punkte)AS position FROM highscore h order by " + orderBy + " LIMIT " + from + "," + till ;
+
+        ObservableList<Highscore> highscoreList = FXCollections.observableArrayList();
+        Integer ranking = from;
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet selectionResult = ps.executeQuery();
+
+
+            while (selectionResult.next()){
+                ranking++;
+//                Integer dbId = selectionResult.getInt("ID");
+                String name = selectionResult.getString("name");
+                Integer punkte = selectionResult.getInt("punkte");
+                Integer position = selectionResult.getInt("position");
+                DateFormat df = new SimpleDateFormat("dd.MM.YY  HH:mm");
+
+                String created_at = df.format(selectionResult.getTimestamp("created_at")).concat(" Uhr");
+//                String created_at = selectionResult.getTimestamp("created_at").toString();
+
+                Highscore selectedHighscore = new Highscore(position, name, punkte, created_at);
+                highscoreList.add(selectedHighscore);
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
+            e.printStackTrace();
+        }
+        return highscoreList;
     }
 }
