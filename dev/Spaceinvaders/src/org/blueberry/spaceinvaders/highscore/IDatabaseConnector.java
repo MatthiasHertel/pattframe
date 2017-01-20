@@ -22,5 +22,6 @@ public interface IDatabaseConnector {
     int determinePosition(int punkte);
     void resetHighscoreTable();
     int getCount();
+    boolean isClosed();
 
 }

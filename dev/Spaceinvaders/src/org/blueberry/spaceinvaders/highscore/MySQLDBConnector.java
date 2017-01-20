@@ -15,7 +15,14 @@ import java.text.SimpleDateFormat;
 public class MySQLDBConnector implements IDatabaseConnector {
 
     private Connection connection;
+    private static final MySQLDBConnector mySQLDBConnector = new MySQLDBConnector();
 
+
+    private MySQLDBConnector(){}
+
+    public static MySQLDBConnector getInstance(){
+        return mySQLDBConnector;
+    }
 
     @Override
     public void connect(String url, String user, String pw) {
@@ -34,6 +41,21 @@ public class MySQLDBConnector implements IDatabaseConnector {
 
 //            TODO check ping
         }
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                try {
+                    if (!connection.isClosed() && connection != null) {
+                        connection.close();
+                        if (connection.isClosed())
+                            System.out.println("Connection to Database closed");
+                    }
+                } catch (SQLException e) {
+                    SpaceInvaders.showDialog(e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -127,7 +149,9 @@ public class MySQLDBConnector implements IDatabaseConnector {
     @Override
     public int determinePosition(int punkte) {
         try {
-            PreparedStatement ps = connection.prepareStatement("select COUNT(*)+1 from highscore WHERE punkte >= ?");
+//            PreparedStatement ps = connection.prepareStatement("select COUNT(*)+1 from highscore WHERE punkte >= ?");
+            PreparedStatement ps = connection.prepareStatement("select COUNT(DISTINCT punkte)+1 from highscore WHERE punkte > ?");
+
             ps.setInt(1, punkte);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -205,5 +229,19 @@ public class MySQLDBConnector implements IDatabaseConnector {
             e.printStackTrace();
         }
         return highscoreList;
+    }
+
+    public boolean isClosed()  {
+
+        if (connection == null) return true;
+        try {
+            if (!connection.isClosed()) {
+                return  false;
+            }
+        } catch (SQLException e) {
+            SpaceInvaders.showDialog(e.getMessage());
+            e.printStackTrace();
+        }
+        return true;
     }
 }

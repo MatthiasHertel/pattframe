@@ -4,7 +4,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,6 +24,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.chat.ChatMessageListViewCell;
+import org.blueberry.spaceinvaders.chat.ChatObject;
 import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.gameengine.InvaderGroup;
 import org.blueberry.spaceinvaders.highscore.Highscore;
@@ -62,14 +68,15 @@ public class HighscoreViewController implements Initializable {
     private int itemsPerPage = 15;
     private int currentPageIndex = 0;
 
-//    private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
-    private ObservableList<Highscore> highscore;
+    private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
+//    private ObservableList<Highscore> highscore;
 //    private DatabaseConnector mysqlConnector;
-    private IDatabaseConnector mysqlConnector;
+    private IDatabaseConnector mysqlConnector = MySQLDBConnector.getInstance();
 
     private Label messageLabel = new Label();
     private int punkt = 0;
     private String orderBy = "punkte DESC";
+    private SimpleIntegerProperty ranking = new SimpleIntegerProperty(0);
 
     /**
      * Initializes the controller class.
@@ -80,7 +87,6 @@ public class HighscoreViewController implements Initializable {
 
         crudTable.addEventFilter(
             MouseEvent.MOUSE_CLICKED, event -> {
-//                MouseEvent.MOUSE_RELEASED, event -> {
                 if (event.getTarget() instanceof TableColumnHeader) {
 
                     switch (((TableColumnHeader) event.getTarget()).getId()){
@@ -134,12 +140,10 @@ public class HighscoreViewController implements Initializable {
         });
 
 
+//        long start = System.currentTimeMillis();
+//        long end = System.currentTimeMillis();
+//        System.out.println("Zeit: " + (end - start));
 
-        mysqlConnector = new MySQLDBConnector();
-        mysqlConnector.connect(SpaceInvaders.getSettings("db.url"), SpaceInvaders.getSettings("db.username"), SpaceInvaders.getSettings("db.password"));
-
-//        mysqlConnector = new DatabaseConnector();
-//        mysqlConnector.launchConnection();
 
 
 
@@ -161,46 +165,55 @@ public class HighscoreViewController implements Initializable {
         // if clause to determine game score
         // TODO there should be a flag from game instance
         if (punkt != 0) {
-            hbox_mainmenuBtn.setVisible(false);
-            int position = mysqlConnector.determinePosition(punkt);
-            messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + position + " in der Highscore belegt!!!");
-            messageLabel.setTextFill(Color.GREEN);
-            messageLabel.setFont(Font.font("Impact", 30));
-            message_banner.getChildren().add(messageLabel);
-            hbox_input.setVisible(true);
+            getRanking();
+
         }
+
+        ranking.addListener((observable, oldValue, newValue) -> {
+
+            Platform.runLater(() -> {
+                hbox_mainmenuBtn.setVisible(false);
+
+                messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + newValue.intValue() + " in der Highscore belegt!!!");
+                messageLabel.setTextFill(Color.GREEN);
+                messageLabel.setFont(Font.font("Impact", 30));
+                message_banner.getChildren().add(messageLabel);
+                hbox_input.setVisible(true);
+
+            });
+        });
 
         // disable Button until Namefield has 4 chars
         addButton.disableProperty().bind(
                 Bindings.greaterThan(4, nameField.textProperty().length())
         );
 
-//        highscore = mysqlConnector.getHighscoreList();
-
-//        highscore = FXCollections.observableArrayList();
-//        for(Object record : mysqlConnector.getRecords("highscore")){
-//            highscore.add((Highscore) record);
-//        }
-
-//        pageCount = getPageCount(highscore.size(), itemsPerPage);
-        int highScoreCompleteCount = mysqlConnector.getCount();
-
-        // hide pagination if highscore.size items perpage (only one site)
-        if (highScoreCompleteCount < itemsPerPage) {
-            pagination.setVisible(false);
-        }
-        else {
-            pagination.setPageCount(getPageCount(highScoreCompleteCount, itemsPerPage));
-
+//
             pagination.currentPageIndexProperty().addListener((observable, oldValue, newValue) ->
-                    crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(newValue.intValue() * itemsPerPage, itemsPerPage, orderBy))
+                    getDBData(newValue.intValue())
+//                    crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(newValue.intValue() * itemsPerPage, itemsPerPage, orderBy))
             );
-        }
 
 
-        // init tableView content
-        crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(0, itemsPerPage, orderBy));
+        crudTable.setItems(highscore);
+        getDBData(0);
     }
+
+    private void getRanking() {
+
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+
+                if(mysqlConnector.isClosed()) {
+                    mysqlConnector.connect(SpaceInvaders.getSettings("db.url"), SpaceInvaders.getSettings("db.username"), SpaceInvaders.getSettings("db.password"));
+                }
+                ranking.set(mysqlConnector.determinePosition(punkt));
+                return null;
+            }
+        };
+        new Thread(task).start();
+    }
+
 
     /**
      * onEventOccured
@@ -222,19 +235,6 @@ public class HighscoreViewController implements Initializable {
         }
     }
 
-    /**
-     * refreshList
-     */
-    private void refreshList() {
-        highscore = mysqlConnector.getHighscoreList();
-//        crudTable.getItems().setAll(highscore.subList(currentPageIndex * itemsPerPage, ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size())  ? currentPageIndex * itemsPerPage + itemsPerPage : highscore.size())));
-        crudTable.getItems().setAll(
-                highscore.subList(currentPageIndex * itemsPerPage,
-                        ((currentPageIndex * itemsPerPage + itemsPerPage <= highscore.size())
-                                ? currentPageIndex * itemsPerPage + itemsPerPage
-                                : highscore.size())
-                ));
-    }
 
     /**
      * addNewHighscore
@@ -257,6 +257,37 @@ public class HighscoreViewController implements Initializable {
         // pagination.currentPageIndexProperty().setValue(2);
         hbox_mainmenuBtn.setVisible(true);
     }
+
+    public void getDBData(int page){
+
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+
+                if(mysqlConnector.isClosed()) {
+                    mysqlConnector.connect(SpaceInvaders.getSettings("db.url"), SpaceInvaders.getSettings("db.username"), SpaceInvaders.getSettings("db.password"));
+                }
+
+                highscore.setAll(mysqlConnector.getHighscoreListPage(page * itemsPerPage, itemsPerPage, orderBy));
+
+                Platform.runLater(() -> {
+                    int highScoreCompleteCount = mysqlConnector.getCount();
+                    if (highScoreCompleteCount < itemsPerPage) {
+                        pagination.setVisible(false);
+                    }
+                    else {
+                        pagination.setPageCount(getPageCount(highScoreCompleteCount, itemsPerPage));
+                        pagination.setVisible(true);
+                    }
+                });
+
+                return null;
+            }
+        };
+
+//        task.run();
+        new Thread(task).start();
+    }
+
 
     /**
      * getPageCount
