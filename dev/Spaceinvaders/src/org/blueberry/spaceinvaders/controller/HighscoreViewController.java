@@ -8,7 +8,9 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -69,14 +71,13 @@ public class HighscoreViewController implements Initializable {
     private int currentPageIndex = 0;
 
     private ObservableList<Highscore> highscore = FXCollections.observableArrayList();
-//    private ObservableList<Highscore> highscore;
 //    private DatabaseConnector mysqlConnector;
     private IDatabaseConnector mysqlConnector = MySQLDBConnector.getInstance();
 
     private Label messageLabel = new Label();
     private int punkt = 0;
     private String orderBy = "punkte DESC";
-    private SimpleIntegerProperty ranking = new SimpleIntegerProperty(0);
+    private SimpleIntegerProperty highScoreCompleteCount= new SimpleIntegerProperty(0);
 
     /**
      * Initializes the controller class.
@@ -105,7 +106,7 @@ public class HighscoreViewController implements Initializable {
                     }
 
                     if (pagination.getCurrentPageIndex() == 0){
-                        crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(0, itemsPerPage, orderBy));
+                        getDBData(0);
                     }
                     else {
                         pagination.setCurrentPageIndex(0);
@@ -119,23 +120,20 @@ public class HighscoreViewController implements Initializable {
 
         crudTable.setFocusTraversable(true);
 
-        crudTable.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
+        crudTable.setOnKeyPressed(event -> {
 
-                int index = pagination.getCurrentPageIndex();
+            int index = pagination.getCurrentPageIndex();
 
-                switch (event.getCode()) {
-                    case LEFT:
-                        if (index > 0) pagination.setCurrentPageIndex(--index);
-                        break;
-                    case RIGHT:
-                        if (index < pagination.getPageCount()) pagination.setCurrentPageIndex(++index);
-                        break;
-                    case ESCAPE:
-                        SpaceInvaders.setScreen("WelcomeView");
-                        break;
-                }
+            switch (event.getCode()) {
+                case LEFT:
+                    if (index > 0) pagination.setCurrentPageIndex(--index);
+                    break;
+                case RIGHT:
+                    if (index < pagination.getPageCount()) pagination.setCurrentPageIndex(++index);
+                    break;
+                case ESCAPE:
+                    SpaceInvaders.setScreen("WelcomeView");
+                    break;
             }
         });
 
@@ -165,54 +163,47 @@ public class HighscoreViewController implements Initializable {
         // if clause to determine game score
         // TODO there should be a flag from game instance
         if (punkt != 0) {
-            getRanking();
 
-        }
-
-        ranking.addListener((observable, oldValue, newValue) -> {
-
-            Platform.runLater(() -> {
+            RankingService rankingService = new RankingService();
+            rankingService.setOnSucceeded(t -> {
                 hbox_mainmenuBtn.setVisible(false);
 
-                messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + newValue.intValue() + " in der Highscore belegt!!!");
+                messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + t.getSource().getValue() + " in der Highscore belegt!!!");
                 messageLabel.setTextFill(Color.GREEN);
                 messageLabel.setFont(Font.font("Impact", 30));
                 message_banner.getChildren().add(messageLabel);
                 hbox_input.setVisible(true);
-
             });
-        });
+            rankingService.start();
+        }
 
         // disable Button until Namefield has 4 chars
         addButton.disableProperty().bind(
                 Bindings.greaterThan(4, nameField.textProperty().length())
         );
 
-//
-            pagination.currentPageIndexProperty().addListener((observable, oldValue, newValue) ->
-                    getDBData(newValue.intValue())
-//                    crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(newValue.intValue() * itemsPerPage, itemsPerPage, orderBy))
-            );
+        pagination.currentPageIndexProperty().addListener((observable, oldValue, newValue) ->
+                getDBData(newValue.intValue())
+        );
+
+
+        highScoreCompleteCount.addListener((observable, oldValue, newValue) -> {
+            Platform.runLater(() -> {
+                if (newValue.intValue() < itemsPerPage) {
+                    pagination.setVisible(false);
+                }
+                else {
+                    pagination.setPageCount(getPageCount(newValue.intValue(), itemsPerPage));
+                    pagination.setVisible(true);
+                }
+            });
+        });
 
 
         crudTable.setItems(highscore);
         getDBData(0);
     }
 
-    private void getRanking() {
-
-        Task task = new Task<Void>() {
-            @Override public Void call() {
-
-                if(mysqlConnector.isClosed()) {
-                    mysqlConnector.connect(SpaceInvaders.getSettings("db.url"), SpaceInvaders.getSettings("db.username"), SpaceInvaders.getSettings("db.password"));
-                }
-                ranking.set(mysqlConnector.determinePosition(punkt));
-                return null;
-            }
-        };
-        new Thread(task).start();
-    }
 
 
     /**
@@ -228,8 +219,8 @@ public class HighscoreViewController implements Initializable {
             case "addButton": {
                 System.out.println("addButton");
                 addNewHighscore(punkt);
-//                refreshList();
-                crudTable.getItems().setAll(mysqlConnector.getHighscoreListPage(0, itemsPerPage, "created_at DESC"));
+                orderBy = "created_at DESC";
+                getDBData(0);
                 break;
             }
         }
@@ -269,16 +260,10 @@ public class HighscoreViewController implements Initializable {
 
                 highscore.setAll(mysqlConnector.getHighscoreListPage(page * itemsPerPage, itemsPerPage, orderBy));
 
-                Platform.runLater(() -> {
-                    int highScoreCompleteCount = mysqlConnector.getCount();
-                    if (highScoreCompleteCount < itemsPerPage) {
-                        pagination.setVisible(false);
-                    }
-                    else {
-                        pagination.setPageCount(getPageCount(highScoreCompleteCount, itemsPerPage));
-                        pagination.setVisible(true);
-                    }
-                });
+                int currentHighScoreCompleteCount = mysqlConnector.getCount();
+                if (currentHighScoreCompleteCount != highScoreCompleteCount.get()) {
+                    highScoreCompleteCount.set(currentHighScoreCompleteCount);
+                }
 
                 return null;
             }
@@ -302,6 +287,26 @@ public class HighscoreViewController implements Initializable {
         return ((floatCount > intCount) ? ++intCount : intCount);
 
     }
+
+    private class RankingService extends Service<Integer> {
+
+        @Override
+        protected Task<Integer> createTask() {
+            return new Task<Integer>() {
+                @Override
+                protected Integer call() {
+
+                    if(mysqlConnector.isClosed()) {
+                        mysqlConnector.connect(SpaceInvaders.getSettings("db.url"), SpaceInvaders.getSettings("db.username"), SpaceInvaders.getSettings("db.password"));
+                    }
+                    return mysqlConnector.determinePosition(punkt);
+                }
+            };
+        }
+    }
+
+
+
 
     /**
      * Wechselt zur Welcome-View.
