@@ -24,7 +24,7 @@ public class SpaceInvaders extends Application {
     private static ScreenController screenController = new ScreenController();
 
     /**
-     * Start-Methode
+     * Start-Methode lädt als Standard-Screen die WelcomeView und lädt die Application-Properties
      * @param primaryStage Hauptbühne
      * @throws Exception
      */
@@ -60,7 +60,7 @@ public class SpaceInvaders extends Application {
     }
 
     /**
-     * Ruft die Settings ab.
+     * Globale Methode zum Abrufen der Schlüssel-Wert-Paare aus den Application-Properties
      * @param property Name der Property-Datei
      * @return
      */
@@ -69,14 +69,17 @@ public class SpaceInvaders extends Application {
     }
 
     /**
-     * Legt den Screen-Namen fest.
-     * @param viewName Name der View
+     * Setzt den Screen
+     * @param viewName Name der View (fxml-Dateiname)
      */
     public static void setScreen(String viewName) {
         screenController.setScreen("/views/" + viewName + ".fxml");
     }
 
-
+    /**
+     * Globale Hilsmethode zur Ausgabe in einem modalen Dialogs insbesodere zur Fehlerausgabe
+     * @param message Meldung
+     */
     public static void showDialog(final String message) {
         Stage dialogStage = new Stage();
         dialogStage.initModality(Modality.WINDOW_MODAL);

@@ -7,7 +7,7 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.util.List;
 
 /**
- * ShelterPart-Klasse
+ * Bunker-Teil
  */
 public class ShelterPart extends ImageView implements ISprite {
 
@@ -18,12 +18,12 @@ public class ShelterPart extends ImageView implements ISprite {
     private List<Image> imageList;
 
     /**
-     * ShelterPart
-     * @param imageList
-     * @param positionX
-     * @param positionY
-     * @param type
-     * @param rotation
+     * Konstruktor für ein Bunker-Teil
+     * @param imageList Bunker-Stautusbild
+     * @param positionX X-Position
+     * @param positionY Y-Position
+     * @param type Teilen-Typ (Ecke oder Quadrat)
+     * @param rotation Rotation der Eck-Teile
      */
     ShelterPart(List<Image> imageList, int positionX, int positionY, int type, int rotation) {
 
@@ -48,7 +48,7 @@ public class ShelterPart extends ImageView implements ISprite {
     }
 
     /**
-     * getState
+     * Getter-Methode für den Zerstörungsstatus eines Bunker-Teiles
      * @return
      */
     public int getState() {
@@ -56,8 +56,8 @@ public class ShelterPart extends ImageView implements ISprite {
     }
 
     /**
-     * move
-     * @param direction
+     * Implementiert die Bewegung des eines Bunker-Teils (z.Z. nicht implementiert, für zuknftige Spielvariante vorgesehen)
+     * @param direction die Bewegungsrichtung
      */
     @Override
     public void move(InvaderGroup.MoveDirection direction) {
@@ -65,7 +65,7 @@ public class ShelterPart extends ImageView implements ISprite {
     }
 
     /**
-     * damagedFromTop
+     * Visuelle Darstellung der Zerstörung von oben (Typ 1: a-b; Typ 2: a)
      */
     public void damagedFromTop() {
         if (shelterType == 1) {
@@ -84,7 +84,7 @@ public class ShelterPart extends ImageView implements ISprite {
     }
 
     /**
-     * damagedFromBottom
+     * Visuelle Darstellung der Zerstörung von unten (Typ 1: e-f; Typ 2: c)
      */
     public void damagedFromBottom() {
         if (shelterType == 1) {

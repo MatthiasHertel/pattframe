@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 /**
- * Player-Klasse
+ * Spieler
  */
 public class Player {
 
@@ -13,24 +13,24 @@ public class Player {
     private IntegerProperty score = new SimpleIntegerProperty(0);
 
     /**
-     * scoreProperty
-     * @return
+     * Property für Punkte
+     * @return Punkte-Wert
      */
     public IntegerProperty scoreProperty() {
         return score;
     }
 
     /**
-     * setScore
-     * @param value
+     * Setter-Methode für den Punkte-Wert
+     * @param value Punkte-Wert
      */
     public void setScore(int value) {
         score.set(value);
     }
 
     /**
-     * getScore
-     * @return
+     * Getter-Methode für den Punkte-Wert
+     * @return Punkte-Wert
      */
     public int getScore() {
         return score.get();
@@ -40,24 +40,24 @@ public class Player {
     private IntegerProperty lives = new SimpleIntegerProperty(Integer.parseInt(SpaceInvaders.getSettings("player.lives")));
 
     /**
-     * livesProperty
-     * @return
+     * Property für die Spieler-Leben
+     * @return Spieler-Leben
      */
     public IntegerProperty livesProperty() {
         return lives;
     }
 
     /**
-     * setlives
-     * @param value
+     * Setter-Methode für die Spieler-Leben
+     * @param value Spieler-Leben
      */
     public void setlives(int value) {
         lives.set(value);
     }
 
     /**
-     * getlives
-     * @return
+     * Getter-Methode für die Spieler-Leben
+     * @return Spieler-Leben
      */
     public int getlives() {
         return lives.get();

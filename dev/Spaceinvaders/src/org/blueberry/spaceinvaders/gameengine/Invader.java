@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 /**
- * Invader-Klasse
+ * Invader
  */
 public class Invader extends ImageView implements IGunSprite {
 
@@ -21,12 +21,12 @@ public class Invader extends ImageView implements IGunSprite {
     private int moveYPixels = Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"));
 
     /**
-     * Invader
-     * @param image1
-     * @param image2
-     * @param positionX
-     * @param positionY
-     * @param value
+     * Konstruktor für einen Invader
+     * @param image1 Invader-Bewegungsanimationszustand 1
+     * @param image2 Invader-Bewegungsanimationszustand 2
+     * @param positionX X-Position
+     * @param positionY Y-Position
+     * @param value Punkte-Wert
      */
     public Invader(Image image1, Image image2, int positionX, int positionY, int value) {
 
@@ -55,15 +55,15 @@ public class Invader extends ImageView implements IGunSprite {
     }
 
     /**
-     * changeView
+     * Wechselt den Bewegungsanimationszustand
      */
     private void changeView() {
         this.setImage(this.getImage() == image1 ? image2 : image1);
     }
 
     /**
-     * move
-     * @param direction
+     * Implementiert die Bewegung des Invaders
+     * @param direction die Bewegungsrichtung
      */
     @Override
     public void move(InvaderGroup.MoveDirection direction) {
@@ -83,7 +83,7 @@ public class Invader extends ImageView implements IGunSprite {
     }
 
     /**
-     * shoot
+     * Setzt einen Invade-Schuss ab
      */
     public void shoot() {
         //Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound
@@ -92,7 +92,7 @@ public class Invader extends ImageView implements IGunSprite {
     }
 
     /**
-     * newBullet
+     * Erzeugt ein neues Projektil
      */
     @Override
     public void newBullet() {
@@ -102,8 +102,8 @@ public class Invader extends ImageView implements IGunSprite {
     }
 
     /**
-     * getBullet
-     * @return
+     * Getter-Methode für das Projektil
+     * @return Projektil
      */
     @Override
     public Bullet getBullet() {
@@ -111,7 +111,7 @@ public class Invader extends ImageView implements IGunSprite {
     }
 
     /**
-     * removeBullet
+     * Entfernt das Projektil
      */
     @Override
     public void removeBullet() {
@@ -119,24 +119,24 @@ public class Invader extends ImageView implements IGunSprite {
     }
 
     /**
-     * getValue
-     * @return
+     * Getter-Methode für den Punkte-Wert
+     * @return Punkte-Wert
      */
     public int getValue() {
         return value;
     }
 
     /**
-     * getWidth
-     * @return
+     * Getter-Methode für die Invader-Breite
+     * @return Breite
      */
     public int getWidth() {
         return width;
     }
 
     /**
-     * getHeight
-     * @return
+     * Getter-Methode für die Invader-Höhe
+     * @return Höhe
      */
     public int getHeight() {
         return height;

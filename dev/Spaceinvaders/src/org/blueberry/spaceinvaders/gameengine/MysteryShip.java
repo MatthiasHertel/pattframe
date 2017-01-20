@@ -12,7 +12,7 @@ import org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection;
 import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
 /**
- * MysteryShip-Klasse
+ * MysteryShip
  */
 public class MysteryShip extends ImageView implements ISprite {
 
@@ -24,9 +24,9 @@ public class MysteryShip extends ImageView implements ISprite {
     private MoveDirection moveDirection;
 
     /**
-     * MysteryShip
-     * @param image
-     * @param direction
+     * Konstruktor für ein MysteryShip
+     * @param image Bildelement
+     * @param direction die Bewedungsrichting
      */
     public MysteryShip(Image image, MoveDirection direction) {
 
@@ -46,8 +46,8 @@ public class MysteryShip extends ImageView implements ISprite {
     }
 
     /**
-     * move
-     * @param direction
+     * Implementiert die Bewegung des MysteryShips
+     * @param direction die Bewegungsrichtung
      */
     @Override
     public void move(MoveDirection direction) {
@@ -71,16 +71,16 @@ public class MysteryShip extends ImageView implements ISprite {
     }
 
     /**
-     * getTimeLine
-     * @return
+     * Getter-Methode für das Timeline-Objekt
+     * @return Timeline
      */
     public Timeline getTimeLine() {
         return timeLine;
     }
 
     /**
-     * getValue
-     * @return
+     * Getter-Methode für den Punkt-Wert, der dem Spieler gutgeschrieben wird
+     * @return Punkt-Wert
      */
     public int getValue() {
         return value;

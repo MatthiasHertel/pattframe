@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Shelter-Klasse
+ * Bunker / Schutz für den Spieler
  */
 public class Shelter {
 
@@ -25,7 +25,7 @@ public class Shelter {
     }
 
     /**
-     * constructShelter
+     * Erzeugt einen Bunker aus vielen Teilen
      */
     public void constructShelter() {
 
@@ -83,11 +83,11 @@ public class Shelter {
     }
 
     /**
-     * addNewShelterPart
-     * @param x
-     * @param y
-     * @param typ
-     * @param rotation
+     * Fügt dem Bunker ein Teil hin zu
+     * @param x X-Position
+     * @param y Y-Position
+     * @param typ Teilen-Typ (Ecke oder Quadrat)
+     * @param rotation Rotation
      */
     private void addNewShelterPart(int x, int y, int typ, int rotation) {
 
@@ -109,7 +109,10 @@ public class Shelter {
         shelterParts.add(new ShelterPart(shelterPartsImageList, x, y, typ, rotation));
     }
 
-
+    /**
+     * Gibt die Ausmaße des Bunker zurück
+     * @return Rechteck
+     */
     public Rectangle2D getLayoutBounds(){
         int width = 10 * shelterPartWidth;
         int height = 5 * shelterPartWidth;
@@ -117,8 +120,8 @@ public class Shelter {
     }
 
     /**
-     * getShelterParts
-     * @return
+     * Gibt die Bunker-Teile zurück
+     * @return Liste der Bunker-Teile
      */
     public List<ShelterPart> getShelterParts() {
         return shelterParts;

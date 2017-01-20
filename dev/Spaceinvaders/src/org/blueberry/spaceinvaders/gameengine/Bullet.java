@@ -9,17 +9,17 @@ import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 /**
- * Bullet
+ * Stellt das Projektil des Spielers und der Invaders dar
  */
 public class Bullet extends ImageView implements ISprite {
 
     private Timeline timeLine;
 
     /**
-     * Bullet
-     * @param image
-     * @param positionX
-     * @param positionY
+     * Konstruktor für das Projektil
+     * @param image Bild des Projektils
+     * @param positionX X-Position des Projektils
+     * @param positionY Y-Position des Projektils
      */
     public Bullet(Image image, int positionX, int positionY){
         this.setX(positionX);
@@ -32,16 +32,16 @@ public class Bullet extends ImageView implements ISprite {
     }
 
     /**
-     * getTimeLine
-     * @return
+     * Getter-Methode für das Timeline-Objekt
+     * @return Timeline
      */
     public Timeline getTimeLine(){
         return timeLine;
     }
 
     /**
-     * move
-     * @param direction
+     * Implementiert die Bewegung des Projektils
+     * @param direction die Bewegungsrichtung
      */
     @Override
     public void move(InvaderGroup.MoveDirection direction){

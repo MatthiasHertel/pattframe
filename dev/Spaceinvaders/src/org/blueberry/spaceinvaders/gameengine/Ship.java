@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 /**
- * Ship-Klasse
+ * Spielfigur
  */
 public class Ship extends ImageView implements IGunSprite {
 
@@ -18,8 +18,8 @@ public class Ship extends ImageView implements IGunSprite {
     private InvaderGroup.MoveDirection moveDirection = InvaderGroup.MoveDirection.NONE;
 
     /**
-     * Ship
-     * @param image
+     * Konstruktor für die Spielfigur
+     * @param image Spielfigurelement
      */
     public Ship(Image image) {
 
@@ -37,8 +37,8 @@ public class Ship extends ImageView implements IGunSprite {
     }
 
     /**
-     * move
-     * @param direction
+     * Implementiert die Bewegung der Spielfigur
+     * @param direction die Bewegungsrichtung
      */
     @Override
     public void move(InvaderGroup.MoveDirection direction) {
@@ -61,7 +61,7 @@ public class Ship extends ImageView implements IGunSprite {
     }
 
     /**
-     * shoot
+     * Setzt einen Schiffs-Schuss ab
      */
     public void shoot() {
         Game.getInstance().getAudioAsset("shipShoot").play();
@@ -71,23 +71,23 @@ public class Ship extends ImageView implements IGunSprite {
     }
 
     /**
-     * setMoveDirection
-     * @param direction
+     * Setter-Methode für die Bewegungsrichtung
+     * @param direction die Bewegungsrichtung
      */
     public void setMoveDirection(InvaderGroup.MoveDirection direction) {
         this.moveDirection = direction;
     }
 
     /**
-     * getMoveDirection
-     * @return
+     * Getter-Methode für die Bewegungsrichtung
+     * @return die Bewegungsrichtung
      */
     public InvaderGroup.MoveDirection getMoveDirection() {
         return this.moveDirection;
     }
 
     /**
-     * newBullet
+     * Erzeugt ein neues Projektil
      */
     @Override
     public void newBullet() {
@@ -98,7 +98,7 @@ public class Ship extends ImageView implements IGunSprite {
     }
 
     /**
-     * removeBullet
+     * Entfernt das Projektil
      */
     @Override
     public void removeBullet() {
@@ -106,8 +106,8 @@ public class Ship extends ImageView implements IGunSprite {
     }
 
     /**
-     * getBullet
-     * @return
+     * Getter-Methode für das Projektil
+     * @return Projektil
      */
     @Override
     public Bullet getBullet() {

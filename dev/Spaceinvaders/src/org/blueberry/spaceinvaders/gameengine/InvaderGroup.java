@@ -9,15 +9,15 @@ import java.util.List;
 import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
 /**
- * InvaderGroup-Klasse
+ * Invader-Gruppe
  */
 public class InvaderGroup {
 
     private static InvaderGroup ourInstance = new InvaderGroup();
 
     /**
-     * getInstance
-     * @return
+     * Gibt die Objektistanz der Invader-Gruppe zurück (Singleton)
+     * @return Invader-Gruppe
      */
     public static InvaderGroup getInstance() {
         return ourInstance;
@@ -35,15 +35,15 @@ public class InvaderGroup {
     private MoveDirection lastLeftRightDirection = moveDirection;
 
     /**
-     * InvaderGroup
+     * Konstruktor für die Invader-Gruppe
      */
     private InvaderGroup() {
     }
 
     /**
-     * createGroup
-     * @param positionX
-     * @param positionY
+     * Erzeugt die Invader-Gruppe
+     * @param positionX X-Position
+     * @param positionY Y-Position
      */
     public void createGroup(int positionX, int positionY) {
         ourInstance = new InvaderGroup();
@@ -74,16 +74,16 @@ public class InvaderGroup {
     }
 
     /**
-     * addNewInvadersToGroup
-     * @param invaderGroup
-     * @param invaderType
-     * @param positionX
-     * @param positionY
-     * @param invaderXGap
-     * @param invaderYGap
-     * @param invaderWidth
-     * @param invaderHeight
-     * @param invaderPerLine
+     * Fügt die Invader zu der Gruppe hinzu, in Abhängigkeit der Application-Properties
+     * @param invaderGroup Invader-Gruppe
+     * @param invaderType Invader-Typ (1-3)
+     * @param positionX X-Position
+     * @param positionY Y-Position
+     * @param invaderXGap Invader-X-Abstand
+     * @param invaderYGap Invader-Y-Abstand
+     * @param invaderWidth Invader-Breite
+     * @param invaderHeight Invader-Höhe
+     * @param invaderPerLine Invader pro Linie
      */
     //adds Invader, depends from typ(1,2,3) and values from application.properties - called from createGroup
     private void addNewInvadersToGroup(List<List<Invader>> invaderGroup, int invaderType, int positionX, int positionY, int invaderXGap, int invaderYGap, int invaderWidth, int invaderHeight, int invaderPerLine) {
@@ -105,8 +105,8 @@ public class InvaderGroup {
     }
 
     /**
-     * invadersToList
-     * @return
+     * Erstell aus dem zweidimensionalen Invader-Array eine handhabbare Invader-Liste
+     * @return Invader-Liste
      */
     private List<Invader> invadersToList() {
         List<Invader> invaderReturnList = new ArrayList<>();
@@ -119,23 +119,23 @@ public class InvaderGroup {
     }
 
     /**
-     * getInvaderList
-     * @return
+     * Getter-Methode für die eindimensionale Invader-Liste
+     * @return Invader-Liste
      */
     public List<Invader> getInvaderList() {
         return invaderList;
     }
 
     /**
-     * getInvaders
-     * @return
+     * Getter-Methode für die zweidimensionale Invader-Liste
+     * @return Invader-Liste
      */
     public List<List<Invader>> getInvaders() {
         return invaders;
     }
 
     /**
-     * move
+     * Invader-Gruppen-Bewegung
      */
     public void move() {
 
@@ -151,7 +151,7 @@ public class InvaderGroup {
     }
 
     /**
-     * gameOver
+     * Game-Over - die Invader haben gewonnen
      */
     private void gameOver() {
         ourInstance = new InvaderGroup();
@@ -159,9 +159,9 @@ public class InvaderGroup {
     }
 
     /**
-     * testNextGroupMove
-     * @param direction
-     * @return
+     * Testet die Bewegungsrichtung
+     * @param direction die Bewegungsrichtung
+     * @return boolean
      */
     private boolean testNextGroupMove(MoveDirection direction) {
 
@@ -202,7 +202,7 @@ public class InvaderGroup {
     }
 
     /**
-     * setNextGroupMoveDirection
+     * Setzt die Bewegungsrichtungsänderung der Invader-Gruppe
      */
     private void setNextGroupMoveDirection() {
 
@@ -222,7 +222,7 @@ public class InvaderGroup {
     }
 
     /**
-     * removeInvader
+     * Entfernt einen Invader aus der Gruppe
      * @param invader
      */
     public void removeInvader(Invader invader) {
@@ -232,8 +232,9 @@ public class InvaderGroup {
         }
     }
 
+    // TODO: Refactoring (Direction kk)
     /**
-     * MoveDirection
+     * Bewegungsrichtung
      */
     public enum MoveDirection {
         RIGHT,

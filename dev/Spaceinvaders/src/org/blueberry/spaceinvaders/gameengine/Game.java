@@ -23,21 +23,23 @@ import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.*;
 
 import org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection;
 
+import javax.xml.bind.SchemaOutputResolver;
+
 import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
 /**
- * Game-Klasse
+ * Spiel, enthält die gesamte Spielelogik
  */
 public class Game {
 
     /**
-     * ourInstance
+     * Konstruktor (privat), für Singleton
      */
     private static Game ourInstance;
 
     /**
-     * Game
-     * @return
+     * Getter-Methode für die Spiel-Instanz
+     * @return Spiel-Instanz
      */
     public static Game getInstance() {
         if (ourInstance == null) {
@@ -76,11 +78,9 @@ public class Game {
 
     private GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
 
-    private Label gameStatusLabel = new Label(); //TODO: wieder entfernen nur temporär
-
     /**
-     * loadAssets
-     * @param theme
+     * lädt die Medien für das Spiel
+     * @param theme (dient dem einfachen Auswechseln des Themes ueber einen prefix path)
      */
     public void loadAssets(String theme) {
 
@@ -118,9 +118,9 @@ public class Game {
     }
 
     /**
-     * addInvadersToPane
-     * @param anchorPane
-     * @param invaderList
+     * Fügt die Invaders zur Anchorpane hinzu
+     * @param anchorPane Entrynode in der View
+     * @param invaderList Invaderliste
      */
     public void addInvadersToPane(AnchorPane anchorPane, List<Invader> invaderList) {
 
@@ -130,9 +130,9 @@ public class Game {
     }
 
     /**
-     * addShelterToPane
-     * @param anchorPane
-     * @param shelter
+     * Fügt die Shelters (Schutzbunker) zur Anchorpane hinzu
+     * @param anchorPane Entrynode in der View
+     * @param shelter Schutzbunker für den Spielavatar
      */
     public void addShelterToPane(AnchorPane anchorPane, Shelter shelter) {
 
@@ -140,6 +140,11 @@ public class Game {
             anchorPane.getChildren().add(shelterPart);
         }
     }
+    /**
+     * Löscht die Shelters (Schutzbunker) von der Anchorpane
+     * @param anchorPane Entrynode in der View
+     * @param shelter Schutzbunker für den Spielavatar
+     */
 
     public void removeShelterFromPane(AnchorPane anchorPane, Shelter shelter) {
 
@@ -149,25 +154,26 @@ public class Game {
     }
 
     /**
-     * getImageAsset
+     * Getter-Methode für Imageasset aus der Map
      * @param key
-     * @return
+     * @return Image
      */
     public Image getImageAsset(String key) {
         return imageAssets.get(key);
     }
 
     /**
-     * getAudioAsset
+     * Getter-Methode für Audioasset aus der Map
      * @param key
-     * @return
+     * @return AudioClip
      */
     public AudioClip getAudioAsset(String key) {
         return audioAssets.get(key);
     }
 
     /**
-     * Game
+     * Singleton: - lädt die Assets
+     * erzeugt neue Instanz der Klasse Player
      */
     private Game() {
         loadAssets(SpaceInvaders.getSettings("game.standardtheme"));
@@ -175,8 +181,10 @@ public class Game {
     }
 
     /**
-     * constructGame
-     * @param pane
+     * Konstruiert den Spielplatz für alle Elemente
+     * bindet die Spiellogikrelevanten Elemente (Score, Leben) an die View
+     * listener fuer Key interaktionen des Spielers
+     * @param pane Entrynode in der View
      */
     public void constructGame(AnchorPane pane) {
         this.display = pane;
@@ -187,11 +195,9 @@ public class Game {
 
         createShelter();
 
-        gameStatusLabel.textProperty().bind(gameStatus.asString()); //TODO: raus damit
-        display.getChildren().add(gameStatusLabel); //TODO: raus damit
-
         display.setFocusTraversable(true);
 
+        // TODO: refactore in GameplayViewController oder gameinteractioncontroller
         display.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -258,6 +264,9 @@ public class Game {
         });
     }
 
+    /**
+     * Erzeugt die Bunker (mit Aufräumen)
+     */
     private void createShelter() {
 
         if(shelterList != null){
@@ -274,16 +283,16 @@ public class Game {
     }
 
     /**
-     * pauseActiveTimeLines
+     * setzt alle Timelines auf Pause
      * @param timeLines
      */
     private void pauseActiveTimeLines(List<Timeline> timeLines) {
         timeLines.forEach(Timeline::pause);
-        System.out.println("Anzahl aktiver TimeLines: " + timeLines.size());
+//        System.out.println("Anzahl aktiver TimeLines: " + timeLines.size());
     }
 
     /**
-     * playActiveTimeLines
+     * setzt alle Timelines auf Play
      * @param timeLines
      */
     private void playActiveTimeLines(List<Timeline> timeLines) {
@@ -291,31 +300,31 @@ public class Game {
     }
 
     /**
-     * getAllActiveTimeLines
-     * @return
+     * Getter-Methode für alle Timelines
+     * @return Timeline-Liste
      */
     public List<Timeline> getAllActiveTimeLines() {
         return this.allActiveTimeLines;
     }
 
     /**
-     * removeBullet
+     * Entfernt Projektil vom Spielelement und von der View
      * @param sprite
      */
     private void removeBullet(IGunSprite sprite) {
         if (sprite instanceof Invader) {
             currentInvaderBulletsCount--;
         }
-        System.out.println("RemoveBulletAnfang Anzahl aktiver TimeLines: " + allActiveTimeLines.size());
+//        System.out.println("RemoveBulletAnfang Anzahl aktiver TimeLines: " + allActiveTimeLines.size());
         sprite.getBullet().getTimeLine().stop();
         allActiveTimeLines.remove(sprite.getBullet().getTimeLine());
         display.getChildren().remove(sprite.getBullet());
         sprite.removeBullet();
-        System.out.println("RemoveBulletEndeAnzahl aktiver TimeLines: " + allActiveTimeLines.size());
+//        System.out.println("RemoveBulletEndeAnzahl aktiver TimeLines: " + allActiveTimeLines.size());
     }
 
     /**
-     * removeInvader
+     * Entfernt Invader vom Spiel
      * @param invader
      */
     private void removeInvader(Invader invader) {
@@ -324,7 +333,7 @@ public class Game {
     }
 
     /**
-     * removeSprite
+     * Entfernt Sprite vom Spiel(TODO: vereinheitliche mit anderen remove Methoden DRY: removeInvader,removeBullet  )
      * @param sprite
      */
     private void removeSprite(ISprite sprite) {
@@ -338,7 +347,7 @@ public class Game {
     }
 
     /**
-     * tryShipShoot
+     * steuert Eigenschussfrequenz , falls noch kein Schuss aktiv ist , schiesse sonst nicht
      */
     private void tryShipShoot() {
 
@@ -346,7 +355,7 @@ public class Game {
             ship.newBullet();
             ship.getBullet().getTimeLine().setOnFinished(event -> {
                 removeBullet(ship);
-                System.out.println("Schussanimation fertig");
+//                System.out.println("Schussanimation fertig");
             });
 
             display.getChildren().add(ship.getBullet());
@@ -355,7 +364,7 @@ public class Game {
     }
 
     /**
-     * tryInvaderShoot
+     * steuert Invaderschussfrequenz , falls noch kein Schuss aktiv ist , schiesse sonst nicht
      */
     private void tryInvaderShoot() {
 
@@ -387,7 +396,7 @@ public class Game {
     }
 
     /**
-     * createInvaderGroup
+     * erzeugt Invadergruppe im Spiel und fügt sie zur Pane hinzu
      */
     public void createInvaderGroup() {
         invaderGroup = InvaderGroup.getInstance();
@@ -402,36 +411,29 @@ public class Game {
 
 
     /**
-     * getInvaderGroup
-     * @return
+     * Getter-Methode für Invadergroup
+     * @return InvaderGroup
      */
     public InvaderGroup getInvaderGroup() {
         return invaderGroup;
     }
 
-    /**
-     * setTheme
-     * @param theme
-     */
-    public void setTheme(String theme) {
-        loadAssets(theme);
-        invaderGroup.createGroup(Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x")), Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.y")));
-    }
+//    /**
+//     * TODO: theme handle method
+//     * @param theme
+//     */
+//    public void setTheme(String theme) {
+//        loadAssets(theme);
+//        invaderGroup.createGroup(Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x")), Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.y")));
+//    }
+
+
 
     /**
-     * play
-     */
-    public void play() {
-        //GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
-        gameAnimationTimer.start();
-
-    }
-
-    /**
-     * detectCollisionedInvader
-     * @param bullet
-     * @param invaders
-     * @return
+     * Kollisionsdetektion Eigenprojektil <-> Invader
+     * @param bullet Projektil
+     * @param invaders Invader
+     * @return null oder den getroffenen Invader
      */
     private Invader detectCollisionedInvader(Bullet bullet, List<Invader> invaders) {
         for (Invader invader : invaders) {
@@ -587,7 +589,7 @@ public class Game {
     }
 
     /**
-     * removeMysteryShip
+     * Entfernt Geheimschiff
      */
     private void removeMysteryShip() {
         if(mysteryShip == null) return;
@@ -596,11 +598,20 @@ public class Game {
         allActiveTimeLines.remove(mysteryShip.getTimeLine());
         display.getChildren().remove(mysteryShip);
         mysteryShip = null;
-        System.out.println("MysteryShip entfernt");
+//        System.out.println("MysteryShip entfernt");
     }
 
     /**
-     * stop
+     * startet das Spiel
+     */
+    public void play() {
+        //GameAnimationTimer gameAnimationTimer = new GameAnimationTimer();
+        gameAnimationTimer.start();
+
+    }
+
+    /**
+     * stoppt das Spiel
      */
     public void stop() {
         allActiveTimeLines.forEach(Timeline::stop);
@@ -608,7 +619,7 @@ public class Game {
     }
 
     /**
-     * reset
+     * setzt das spiel zurück
      */
     public static void reset() {
         ourInstance = null;
@@ -629,42 +640,46 @@ public class Game {
 
     }
 
+
+    /**
+     * Property Level
+     * @return level
+     */
     public IntegerProperty levelProperty() {
         return level;
     }
 
     /**
-     * getGameStatus
-     * @return
+     * Getter-Methode
+     * @return Spielstatus
      */
-    public final GameStatus getGameStatus() {
-        return gameStatus.get();
-    }
+    public final GameStatus getGameStatus() { return gameStatus.get(); }
 
     /**
-     * setGameStatus
-     * @param status
+     * Setter-Methode
+     * @param status Spielstatus
      */
     public final void setGameStatus(GameStatus status) {
         gameStatusProperty().set(status);
     }
 
     /**
-     * gameStatusProperty
-     * @return
+     * Property Spielstatus
+     * @return Spielstatus
      */
     public final ObjectProperty<GameStatus> gameStatusProperty() {
         return gameStatus;
     }
 
     /**
-     * getPlayer
-     * @return
+     * Getter-Methode Spieler
+     * @return Spieler
      */
     public Player getPlayer() {
         return player;
     }
 
+    // TODO: Refactoring (GameStatus)
     /**
      * GameStatus
      */
