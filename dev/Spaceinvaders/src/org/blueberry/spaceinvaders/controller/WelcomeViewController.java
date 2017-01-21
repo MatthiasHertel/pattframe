@@ -3,16 +3,23 @@ package org.blueberry.spaceinvaders.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Hyperlink;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
 /**
  * WelcomeViewController-Klasse
  */
 public class WelcomeViewController implements Initializable {
+
+    @FXML
+    private Hyperlink hyperLink;
 
     /**
      * Inizialisiert die Controller-Klasse.
@@ -21,7 +28,10 @@ public class WelcomeViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        hyperLink.setOnAction(t -> {
+                SpaceInvaders.getMyHostServices().showDocument("https://www.spaceinvaders.mhertel.de");
+        });
     }
 
     /**

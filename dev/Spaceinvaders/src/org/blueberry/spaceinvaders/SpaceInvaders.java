@@ -1,6 +1,7 @@
 package org.blueberry.spaceinvaders;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,8 +21,11 @@ import java.util.Properties;
  */
 
 public class SpaceInvaders extends Application {
+
     private static final Properties settings = new Properties();
     private static ScreenController screenController = new ScreenController();
+    private static HostServices hostServices ;
+
 
     /**
      * Start-Methode lädt als Standard-Screen die WelcomeView und lädt die Application-Properties
@@ -31,6 +35,7 @@ public class SpaceInvaders extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        hostServices = getHostServices();
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
 
         setScreen("WelcomeView");
@@ -89,6 +94,15 @@ public class SpaceInvaders extends Application {
         box.setPadding(new Insets(5));
         dialogStage.setScene(new Scene(box));
         dialogStage.show();
+    }
+
+    /**
+     * Getter-Methode für den Application.HostServices
+     * wird benutzt, um beim Link-Click-Ereignis eine URL im Default-Browser zu üffnen
+     * @return HostServices
+     */
+    public static HostServices getMyHostServices() {
+        return hostServices ;
     }
 }
 

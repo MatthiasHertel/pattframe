@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.WelcomeViewController">
+<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.WelcomeViewController">
    <children>
       <AnchorPane id="displayWelcome" prefHeight="600.0" prefWidth="1024">
           <children>
@@ -28,6 +25,7 @@
                      <VBox.margin>
                         <Insets bottom="70.0" />
                      </VBox.margin></Label>
+                  <Hyperlink fx:id="hyperLink" text="Hyperlink" />
                       <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreenGameplayView" styleClass="btnIcon" text="Spiel starten" />
                       <Button id="highscoreBtn" mnemonicParsing="false" onAction="#goToScreenHighscoreView" styleClass="btnIcon" text="Highscore" />
                       <Button id="manualBtn" mnemonicParsing="false" onAction="#goToScreenManualView" styleClass="btnIcon" text="Spielanleitung" />
