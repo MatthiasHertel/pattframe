@@ -12,12 +12,23 @@
     -fx-background-color: #1b1e25;
     -fx-background-image: url('../graphics/backgrounds/background.png');
     -fx-background-size: stretch;
+    -fx-font-family: "Tahoma";
   }
 
 
 #displayWelcomeClaim {
     -fx-font-size: 16;
     -fx-text-fill: #fff;
+}
+
+.link {
+    -fx-font-size: 14;
+    -fx-text-fill: #fff;
+    -fx-border-color: transparent;
+    -fx-padding: 5px 15px;
+}
+.link:hover {
+    -fx-text-fill: #93ac9d;
 }
 
 .btnIcon,.btnIcon:default {
@@ -69,12 +80,12 @@
     -fx-graphic: url('../graphics/layout/btnInvader1Hover.png');
 }
 #chatBtn {
-    -fx-border-color: #00ffff;
-    -fx-graphic: url('../graphics/layout/btnInvader1.png');
+    -fx-border-color: #3399cc;
+    -fx-graphic: url('../graphics/layout/btnInvader5.png');
 }
 #chatBtn:hover{
-    -fx-text-fill:  #00ffff;
-    -fx-graphic: url('../graphics/layout/btnInvader1Hover.png');
+    -fx-text-fill:  #3399cc;
+    -fx-graphic: url('../graphics/layout/btnInvader5Hover.png');
 }
 #closeBtn {
     -fx-border-color: #d35f5f;

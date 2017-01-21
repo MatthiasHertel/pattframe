@@ -22,10 +22,11 @@
                           </image>
                       </ImageView>
                       <Label id="displayWelcomeClaim" text="Beschütze die Erde vor den Aliens!">
-                     <VBox.margin>
-                        <Insets bottom="70.0" />
-                     </VBox.margin></Label>
-                  <Hyperlink fx:id="hyperLink" text="Hyperlink" />
+                          <VBox.margin>
+                              <Insets bottom="40.0" />
+                          </VBox.margin>
+                     </Label>
+                      <Hyperlink fx:id="hyperLink" text="www.spaceinvaders.mhertel.de" styleClass="link" />
                       <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreenGameplayView" styleClass="btnIcon" text="Spiel starten" />
                       <Button id="highscoreBtn" mnemonicParsing="false" onAction="#goToScreenHighscoreView" styleClass="btnIcon" text="Highscore" />
                       <Button id="manualBtn" mnemonicParsing="false" onAction="#goToScreenManualView" styleClass="btnIcon" text="Spielanleitung" />
