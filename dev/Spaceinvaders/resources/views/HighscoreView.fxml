@@ -1,87 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
+<?import javafx.geometry.Insets?>
+<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
    <children>
       <AnchorPane id="displayHighscore" fx:id="displayHighscore" maxHeight="600.0" maxWidth="1024.0" prefHeight="600.0" prefWidth="1024.0">
-        <children>
-          <!--header screen description  -->
-          <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
-           <children>
-              <Label text="Highscore" textFill="#797474">
-                 <font>
-                    <Font name="Impact" size="50" />
-                 </font>
-              </Label>
-           </children>
-          </HBox>
-          <!--highscore tableview  -->
-          <TableView fx:id="crudTable" layoutY="83.0" maxWidth="-Infinity" prefHeight="415.0" prefWidth="1024.0">
-          <columns>
-              <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
-              <TableColumn fx:id="nameColumn" editable="false" prefWidth="100.0" text="Name" />
-              <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
-              <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
-          </columns>
-          </TableView>
-          <!--pagination for highscore tableview  -->
-          <HBox alignment="CENTER" layoutY="500.0" prefHeight="40.0" prefWidth="1024.0">
-             <children>
-               <Pagination fx:id="pagination" prefHeight="38.0" prefWidth="262.0" styleClass="circle-pagination" />
-             </children>
-          </HBox>
-          <!--message banner   -->
-          <HBox fx:id="message_banner" alignment="CENTER" layoutY="300.0" prefHeight="77.0" prefWidth="1024.0">
-            <children>
-      </children>
-          </HBox>
-          <!--inputs to save in highscore  -->
-          <HBox fx:id="hbox_input" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
-           <children>
-              <!--<Label fx:id="label" alignment="CENTER" text="Punkteanzahl:" textFill="#1294ff">-->
-                 <!--<HBox.margin>-->
-                    <!--<Insets right="10.0" />-->
-                 <!--</HBox.margin></Label>-->
-              <!--<Label fx:id="punkteField" alignxxxxxxxment="CENTER" text="spieler punkte" textFill="#f103ff">-->
-                 <!--<HBox.margin>-->
-                    <!--<Insets right="50.0" />-->
-                 <!--</HBox.margin></Label>-->
-              <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 4)" styleClass="btnIcon">
-                 <HBox.margin>
-                    <Insets right="50.0" />
-                 </HBox.margin>
-              </TextField>
-              <Button id="addButton" fx:id="addButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onEventOccured" prefHeight="27.0" prefWidth="232.0" styleClass="btnIcon" text="save">
-                 <font>
-                    <Font name="Impact" size="13.0" />
-                 </font>
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-              </Button>
-                  <Button id="cancelBtn" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="cancel">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin></Button>
-           </children>
-          </HBox>
-            <HBox fx:id="hbox_mainmenuBtn" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
-               <children>
-                  <Button id="mainmenuBtn" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenu">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-        </children>
+          <children>
+                <!--header screen description -->
+                <HBox alignment="CENTER" prefHeight="77.0" prefWidth="1024.0">
+                    <children>
+                        <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../theme1/graphics/layout/highscore.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </HBox>
+                <!--highscore tableview -->
+                <TableView fx:id="crudTable" layoutY="83.0" maxWidth="-Infinity" prefHeight="415.0" prefWidth="1024.0">
+                    <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
+                        <TableColumn fx:id="nameColumn" editable="false" prefWidth="100.0" text="Name" />
+                        <TableColumn fx:id="punkteColumn" prefWidth="100.0" text="Punkte" />
+                        <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
+                    </columns>
+                </TableView>
+                <!--pagination for highscore tableview -->
+                <HBox alignment="CENTER" layoutY="500.0" prefHeight="40.0" prefWidth="1024.0">
+                    <children>
+                        <Pagination fx:id="pagination" prefHeight="38.0" prefWidth="500.0" styleClass="pagination" />
+                    </children>
+                </HBox>
+                <!--message banner -->
+                <HBox id="message" fx:id="message_banner" alignment="CENTER" layoutY="300.0" prefHeight="77.0" prefWidth="1024.0">
+                    <children>
+                    </children>
+                </HBox>
+                <!-- inputs to save in highscore -->
+                <HBox fx:id="hbox_input" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
+                    <children>
+                        <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 4)" styleClass="inputField">
+                            <HBox.margin>
+                                <Insets right="30.0" />
+                            </HBox.margin>
+                        </TextField>
+                        <Button id="addButton" fx:id="addButton" alignment="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onEventOccured" styleClass="btnIcon" text="Speichern">
+                            <HBox.margin>
+                                <Insets right="30.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button id="cancelBtn" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Abbrechen" />
+                    </children>
+                </HBox>
+              <HBox fx:id="hbox_mainmenuBtn" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
+                  <children>
+                      <Button id="mainmenuBtn" alignment="CENTER" cancelButton="true" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenu" />
+                  </children>
+              </HBox>
+          </children>
       </AnchorPane>
    </children>
 </StackPane>

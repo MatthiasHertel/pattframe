@@ -50,6 +50,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Screen;
 import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.SpaceInvaders;
@@ -74,10 +75,8 @@ public class GameplayViewController implements Initializable {
     @FXML
     private Pane pane;
 
-//    @FXML
-//    private HBox hbox;
-
-
+    @FXML
+   private HBox infoBar;
 
     /**
      * Inizialisiert die Controller-Klasse.
@@ -95,15 +94,21 @@ public class GameplayViewController implements Initializable {
 //            pane.setMinWidth(1600);
 //                });
 
+        //infoBar.setHgrow(lifesLabel, Priority.ALWAYS);
+        //infoBar.setHgrow(scoreLabel, Priority.ALWAYS);
+        //infoBar.setHgrow(levelLabel, Priority.ALWAYS);
+
+       // infoBar.setSpacing(40);
+
         System.out.println("Gamestatus vor reset:  " + Game.getInstance().getGameStatus());
         Game.reset();
 
         Game game = Game.getInstance();
         System.out.println("Gamestatus nach reset:  " + Game.getInstance().getGameStatus());
 
-        // game.setTheme("theme1"); //optional we
-
         game.constructGame(display);
+
+
 
         scoreLabel.textProperty().bind(game.getPlayer().scoreProperty().asString());
         lifesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
@@ -111,5 +116,4 @@ public class GameplayViewController implements Initializable {
 
         game.play();
     }
-
 }

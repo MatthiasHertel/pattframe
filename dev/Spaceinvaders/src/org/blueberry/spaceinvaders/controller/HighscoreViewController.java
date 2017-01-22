@@ -142,9 +142,6 @@ public class HighscoreViewController implements Initializable {
 //        long end = System.currentTimeMillis();
 //        System.out.println("Zeit: " + (end - start));
 
-
-
-
         // set resize policy
         crudTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -167,10 +164,7 @@ public class HighscoreViewController implements Initializable {
             RankingService rankingService = new RankingService();
             rankingService.setOnSucceeded(t -> {
                 hbox_mainmenuBtn.setVisible(false);
-
-                messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + t.getSource().getValue() + " in der Highscore belegt!!!");
-                messageLabel.setTextFill(Color.GREEN);
-                messageLabel.setFont(Font.font("Impact", 30));
+                messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + t.getSource().getValue() + " in der Highscore belegt! Bitte geben Sie Ihren Namen ein.");
                 message_banner.getChildren().add(messageLabel);
                 hbox_input.setVisible(true);
             });
