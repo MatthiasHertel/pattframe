@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Bunker / Schutz für den Spieler
  */
-public class Shelter {
+public class Shelter implements ISprite{
 
     private AssetController assetController = AssetController.getInstance();
     private int positionX;
@@ -126,5 +126,14 @@ public class Shelter {
      */
     public List<ShelterPart> getShelterParts() {
         return shelterParts;
+    }
+
+    /**
+     * Implementiert die Bewegung des eines Bunker-Teils (z.Z. nicht implementiert, für zuknftige Spielvariante vorgesehen)
+     * @param direction die Bewegungsrichtung
+     */
+    @Override
+    public void move(Direction direction) {
+
     }
 }

@@ -5,12 +5,15 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.controller.AssetController;
 import java.util.*;
 
+import static org.blueberry.spaceinvaders.gameengine.Direction.LEFT;
+import static org.blueberry.spaceinvaders.gameengine.Direction.RIGHT;
 import static org.blueberry.spaceinvaders.gameengine.GameStatus.*;
 
 /**
@@ -18,9 +21,28 @@ import static org.blueberry.spaceinvaders.gameengine.GameStatus.*;
  */
 public class Game {
 
-    /**
-     * Konstruktor (privat), für Singleton
-     */
+    private AssetController assetController = AssetController.getInstance();
+    private List<Timeline> allActiveTimeLines = new ArrayList<>();
+    private InvaderGroup invaderGroup;
+    private AnchorPane display;
+    private Ship ship;
+    private MysteryShip mysteryShip;
+    private List<Shelter> shelterList;
+
+    private Player player;
+    private int currentInvaderBulletsCount = 0;
+    private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
+    private int invaderSpeed1 = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.1"));
+    private int invaderSpeed2 = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.2"));
+    private int invaderSpeed3 = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.3"));
+    private int invaderMoveDuration = invaderSpeed1;
+
+    private int invaderMaxCount;
+    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
+    private IntegerProperty level = new SimpleIntegerProperty(1);
+
+    private GameAnimationTimer gameAnimationTimer;
+
     private static Game ourInstance;
 
     /**
@@ -34,80 +56,33 @@ public class Game {
         return ourInstance;
     }
 
-    private AssetController assetController = AssetController.getInstance();
-    private List<Timeline> allActiveTimeLines = new ArrayList<>();
-    private InvaderGroup invaderGroup;
-    private AnchorPane display;
-    private Ship ship;
-    private MysteryShip mysteryShip;
-    private List<Shelter> shelterList;
-
-    private Player player;
-    private int currentInvaderBulletsCount = 0;
-    private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
-    private ObjectProperty<GameStatus> gameStatus = new SimpleObjectProperty<>(PLAY);
-    private IntegerProperty level = new SimpleIntegerProperty(1);
-
-    private GameAnimationTimer gameAnimationTimer;
-
-
     /**
-     * Fügt die Invaders zur Anchorpane hinzu
-     * @param anchorPane Entrynode in der View
-     * @param invaderList Invaderliste
-     */
-    public void addInvadersToPane(AnchorPane anchorPane, List<Invader> invaderList) {
-
-        for (Invader invader : invaderList) {
-            anchorPane.getChildren().add(invader);
-        }
-    }
-
-    /**
-     * Setzt das MysteryShip und fügt es zur Anchorpane hinzu
-     * @param mysteryShip Geheimschiff
-     */
-    public void setMysteryShip(MysteryShip mysteryShip) {
-        this.mysteryShip = mysteryShip;
-        display.getChildren().add(mysteryShip);
-    }
-
-    /**
-     * Fügt die Shelters (Schutzbunker) zur Anchorpane hinzu
-     * @param anchorPane Entrynode in der View
-     * @param shelter Schutzbunker für den Spielavatar
-     */
-    public void addShelterToPane(AnchorPane anchorPane, Shelter shelter) {
-
-        for (ShelterPart shelterPart : shelter.getShelterParts()) {
-            anchorPane.getChildren().add(shelterPart);
-        }
-    }
-    /**
-     * Löscht die Shelters (Schutzbunker) von der Anchorpane
-     * @param anchorPane Entrynode in der View
-     * @param shelter Schutzbunker für den Spielavatar
-     */
-    public void removeShelterFromPane(AnchorPane anchorPane, Shelter shelter) {
-
-        for (ShelterPart shelterPart : shelter.getShelterParts()) {
-            anchorPane.getChildren().remove(shelterPart);
-        }
-    }
-
-
-    /**
-     * Singleton: - lädt die Assets
-     * erzeugt neue Instanz der Klasse Player
+     * Konstruktor für das Spiel Singleton
+     * erzeugt einen neuen Spieler
      */
     private Game() {
         player = new Player();
     }
 
     /**
+     * Fügt ein Sprite zur Anchorpane hinzu
+     * @param sprite ImageView, die der AnchorPane hinzugefügt wird
+     */
+    private void addSpriteToPane(ISprite sprite){
+        if( sprite instanceof Shelter){
+            Shelter shelter = (Shelter) sprite;
+            for (ShelterPart shelterPart : shelter.getShelterParts()) {
+                display.getChildren().add(shelterPart);
+            }
+            return;
+        }
+        display.getChildren().add((ImageView)sprite);
+    }
+
+
+    /**
      * Konstruiert den Spielplatz für alle Elemente
      * bindet die Spiellogikrelevanten Elemente (Score, Leben) an die View
-     * listener fuer Key interaktionen des Spielers
      * @param pane Entrynode in der View
      */
     public void constructGame(AnchorPane pane) {
@@ -117,7 +92,7 @@ public class Game {
         ship = new Ship(assetController.getImageAsset("ship"));
         display.getChildren().add(ship);
 
-        createShelter();
+        createShelters();
 
         gameStatus.addListener((observable, oldValue, newValue) -> {
             switch (newValue) {
@@ -145,21 +120,35 @@ public class Game {
     }
 
     /**
-     * Erzeugt die Bunker (mit Aufräumen)
+     * Erzeugt die Bunker
      */
-    private void createShelter() {
-
-        if(shelterList != null){
-            for (Shelter shelter : shelterList){
-                removeShelterFromPane(display, shelter);
-            }
-        }
-
+    private void createShelters() {
         shelterList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             shelterList.add(new Shelter(208 + i * 176, Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"))));
-            addShelterToPane(display, shelterList.get(i));
+            addSpriteToPane(shelterList.get(i));
         }
+    }
+
+    /**
+     * Erzeugt und startet das MysteryShip
+     */
+    public void tryCreateMysteryShip(){
+
+        if (mysteryShip != null) return;
+
+        Random random = new Random();
+
+        Direction randomDirection = random.nextInt(2) == 0 ? RIGHT : LEFT;
+        mysteryShip = new MysteryShip(assetController.getImageAsset("mysteryShip"), randomDirection);
+
+        mysteryShip.getTimeLine().setOnFinished(event -> {
+            removeSprite(mysteryShip);
+            mysteryShip = null;
+        });
+
+        addSpriteToPane(mysteryShip);
+        mysteryShip.move(randomDirection);
     }
 
     /**
@@ -195,36 +184,167 @@ public class Game {
         if (sprite instanceof Invader) {
             currentInvaderBulletsCount--;
         }
-//        System.out.println("RemoveBulletAnfang Anzahl aktiver TimeLines: " + allActiveTimeLines.size());
-        sprite.getBullet().getTimeLine().stop();
-        allActiveTimeLines.remove(sprite.getBullet().getTimeLine());
-        display.getChildren().remove(sprite.getBullet());
+
+        removeSprite(sprite.getBullet());
         sprite.removeBullet();
 //        System.out.println("RemoveBulletEndeAnzahl aktiver TimeLines: " + allActiveTimeLines.size());
     }
 
-    /**
-     * Entfernt Invader vom Spiel
-     * @param invader
-     */
-    public void removeInvader(Invader invader) {
-        display.getChildren().remove(invader);
-        invaderGroup.removeInvader(invader);
-    }
 
     /**
-     * Entfernt Sprite vom Spiel(TODO: vereinheitliche mit anderen remove Methoden DRY: removeInvader,removeBullet  )
+     * Entfernt Sprite vom Spiel
      * @param sprite
      */
     public void removeSprite(ISprite sprite) {
+        if (sprite == null) return;
+
         if (sprite instanceof ShelterPart) {
             System.out.println("instance of = shelterpart");
-            display.getChildren().remove(sprite);
             for (Shelter shelter : shelterList) {
                 shelter.getShelterParts().remove(sprite);
             }
         }
+
+        else if (sprite instanceof Invader) {
+            invaderGroup.removeInvader((Invader) sprite);
+        }
+
+        else if( sprite instanceof Bullet){
+            Bullet bullet = (Bullet) sprite;
+            bullet.getTimeLine().stop();
+            allActiveTimeLines.remove(bullet.getTimeLine());
+        }
+
+        else if( sprite instanceof MysteryShip){
+            System.out.println("versuche mystery schiff zulöschen");
+            Timeline timeline = ((MysteryShip) sprite).getTimeLine();
+            timeline.stop();
+            allActiveTimeLines.remove(timeline);
+            display.getChildren().remove(sprite);
+            mysteryShip = null;
+            return;
+        }
+
+        else if (sprite instanceof Shelter){
+            for (ShelterPart shelterPart : ((Shelter)sprite).getShelterParts()) {
+                display.getChildren().remove(shelterPart);
+            }
+        }
+
+        display.getChildren().remove(sprite);
     }
+
+
+    /**
+     * Testet, ob der Spieler das Geheimschiff getroffen hat
+     * und behandelt dementsprechend
+     */
+    public void checkAndHandleMysteryShipCollision(){
+        if (ship.getBullet() != null && mysteryShip != null) {
+            if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())) {
+                assetController.getAudioAsset("mysteryKilled").play();
+                player.setScore(player.getScore() + mysteryShip.getValue());
+                removeBullet(ship);
+                removeSprite(mysteryShip);
+                mysteryShip = null;
+            }
+        }
+    }
+
+    /**
+     * Testet, ob der Spieler einen Invader getroffen hat
+     * und behandelt dementsprechend
+     */
+    public void checkAndHandleInvaderCollision() {
+        if (ship.getBullet() != null) {
+            Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
+            if (collisionedInvader != null) {
+                assetController.getAudioAsset("invaderKilled").play();
+                removeBullet(ship);
+
+                player.setScore(player.getScore() + collisionedInvader.getValue());
+               removeSprite(collisionedInvader);
+
+                //Geschwindigkeit in Abhängigkeit von der Invaderanzahl setzen
+                if(invaderGroup.getInvaderList().size() < invaderMaxCount / 3 ){
+                    invaderMoveDuration = invaderSpeed3;
+                }
+                else if(invaderGroup.getInvaderList().size() < invaderMaxCount * 2/3 ){
+                    invaderMoveDuration = invaderSpeed2;
+                }
+            }
+            if (invaderGroup.getInvaderList().size() == 0) {
+                setGameStatus(WON);
+            }
+        }
+    }
+
+    /**
+     * Testet, ob der Spieler einen Bunker getroffen hat
+     * und behandelt dementsprechend
+     */
+    public void checkAndHandleShipBulletShelterCollision() {
+        if (ship.getBullet() != null) {
+            for (Shelter shelter : getShelterList()) {
+                if(ship.getBullet().intersects(shelter.getLayoutBounds().getMinX(), shelter.getLayoutBounds().getMinY(), shelter.getLayoutBounds().getWidth(), shelter.getLayoutBounds().getHeight())) {
+                    for (ShelterPart shelterPart : shelter.getShelterParts()) {
+                        if (ship.getBullet().intersects(shelterPart.getLayoutBounds())) {
+                            removeBullet(ship);
+                            shelterPart.damagedFromBottom();
+                            if (shelterPart.getState() == 0) {
+                                removeSprite(shelterPart);
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Testet, ob ein Invader einen Bunker getroffen hat
+     * und behandelt dementsprechend
+     */
+    public void checkAndHandleInvaderBulletShelterCollision() {
+        for (Invader invader : invaderGroup.getInvaderList()) {
+            if (invader.getBullet() != null) {
+                for (Shelter shelter : getShelterList()) {
+                    if(invader.getBullet().intersects(shelter.getLayoutBounds().getMinX(), shelter.getLayoutBounds().getMinY(), shelter.getLayoutBounds().getWidth(), shelter.getLayoutBounds().getHeight())) {
+                        for (ShelterPart shelterPart : shelter.getShelterParts()) {
+                            if (invader.getBullet().intersects(shelterPart.getLayoutBounds())) {
+                                removeBullet(invader);
+                                shelterPart.damagedFromTop();
+                                if (shelterPart.getState() == 0) {
+                                    removeSprite(shelterPart);
+                                }
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Testet, ob ein Invader den Spieler getroffen hat
+     * und behandelt dementsprechend
+     */
+    public void checkAndHandleInvaderBulletShipCollision() {
+        for (Invader invader : invaderGroup.getInvaderList()) {
+            if (invader.getBullet() != null) {
+                if (ship.intersects(invader.getBullet().getLayoutBounds())) {
+                    assetController.getAudioAsset("shipExplosion").play();
+                    player.setlives(player.getlives() - 1);
+                    removeBullet(invader);
+                    break;
+                }
+            }
+        }
+    }
+
 
     /**
      * steuert Eigenschussfrequenz , falls noch kein Schuss aktiv ist , schiesse sonst nicht
@@ -264,9 +384,7 @@ public class Game {
             final Invader shootInvader = tempInvader;
 
             shootInvader.newBullet();
-            shootInvader.getBullet().getTimeLine().setOnFinished(event -> {
-                removeBullet(shootInvader);
-            });
+            shootInvader.getBullet().getTimeLine().setOnFinished(event -> removeBullet(shootInvader));
 
             display.getChildren().add(shootInvader.getBullet());
             shootInvader.shoot();
@@ -283,7 +401,8 @@ public class Game {
         int posY = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"));
 
         invaderGroup.createGroup(posX, posY);
-        addInvadersToPane(display, invaderGroup.getInvaderList());
+        invaderGroup.getInvaderList().forEach(this::addSpriteToPane);
+        invaderMaxCount = invaderGroup.getInvaderList().size();
     }
 
 
@@ -311,26 +430,13 @@ public class Game {
         return null;
     }
 
-
-    /**
-     * Entfernt Geheimschiff
-     */
-    public void removeMysteryShip() {
-        if(mysteryShip == null) return;
-
-        mysteryShip.getTimeLine().stop();
-        allActiveTimeLines.remove(mysteryShip.getTimeLine());
-        display.getChildren().remove(mysteryShip);
-        mysteryShip = null;
-//        System.out.println("MysteryShip entfernt");
-    }
-
     /**
      * startet das Spiel
      */
     public void play() {
         gameAnimationTimer = new GameAnimationTimer();
         gameAnimationTimer.start();
+        setGameStatus(PLAY);
     }
 
     /**
@@ -353,14 +459,19 @@ public class Game {
      */
     public void nextLevel(){
         stop();
+
+        if(shelterList != null){
+            shelterList.forEach(this::removeSprite);
+        }
+        removeSprite(mysteryShip);
+
+        invaderMoveDuration = invaderSpeed1;
+
         level.set(level.get() < 10 ? level.get() + 1 : 1);
 
-        removeMysteryShip();
-
         createInvaderGroup();
-        createShelter();
+        createShelters();
 
-        setGameStatus(PLAY);
         play();
     }
 
@@ -412,11 +523,23 @@ public class Game {
     }
 
     /**
+     * Getter-Methode Geheim-Schiff
+     * @return Geheimschiff
+     */
+    public MysteryShip getMysteryShip() {
+        return mysteryShip;
+    }
+
+    /**
      * Getter-Methode für alle Schutzbunker
      * @return ShelterList
      */
     public List<Shelter> getShelterList() {
         return shelterList;
+    }
+
+    public int getInvaderMoveDuration(){
+        return this.invaderMoveDuration;
     }
 
 }

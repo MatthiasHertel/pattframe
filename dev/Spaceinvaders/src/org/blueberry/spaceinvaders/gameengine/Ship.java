@@ -71,8 +71,6 @@ public class Ship extends ImageView implements IGunSprite {
     public void shoot() {
         assetController.getAudioAsset("shipShoot").play();
         bullet.move(UP);
-
-        System.out.println("SchiffSchuss");
     }
 
     /**

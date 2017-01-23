@@ -38,7 +38,7 @@ public class InvaderGroup {
     private Direction lastLeftRightDirection = moveDirection;
 
     /**
-     * Konstruktor für die Invader-Gruppe
+     * Konstruktor für die Invader-Gruppe Singleton
      */
     private InvaderGroup() {
     }
@@ -114,9 +114,7 @@ public class InvaderGroup {
     private List<Invader> invadersToList() {
         List<Invader> invaderReturnList = new ArrayList<>();
         for (List<Invader> invaderList : invaders) {
-            for (Invader invader : invaderList) {
-                invaderReturnList.add(invader);
-            }
+            invaderReturnList.addAll(invaderList);
         }
         return invaderReturnList;
     }

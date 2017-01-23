@@ -42,25 +42,18 @@ package org.blueberry.spaceinvaders.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.stage.Screen;
 import org.blueberry.spaceinvaders.gameengine.Direction;
 import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
-import static org.blueberry.spaceinvaders.gameengine.Direction.LEFT;
-import static org.blueberry.spaceinvaders.gameengine.Direction.RIGHT;
-import static org.blueberry.spaceinvaders.gameengine.GameStatus.PAUSE;
-import static org.blueberry.spaceinvaders.gameengine.GameStatus.PLAY;
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
+import static org.blueberry.spaceinvaders.gameengine.GameStatus.*;
 
 /**
  * GameplayViewController-Klasse
@@ -88,6 +81,7 @@ public class GameplayViewController implements Initializable {
 
     /**
      * Inizialisiert die Controller-Klasse.
+     * listener fuer Key-Interaktionen des Spielers
      * @param url
      * @param rb
      */
