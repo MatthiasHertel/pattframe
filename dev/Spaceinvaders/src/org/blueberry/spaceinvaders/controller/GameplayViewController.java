@@ -47,13 +47,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Screen;
+import org.blueberry.spaceinvaders.gameengine.Direction;
 import org.blueberry.spaceinvaders.gameengine.Game;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+
+import static org.blueberry.spaceinvaders.gameengine.Direction.LEFT;
+import static org.blueberry.spaceinvaders.gameengine.Direction.RIGHT;
+import static org.blueberry.spaceinvaders.gameengine.GameStatus.PAUSE;
+import static org.blueberry.spaceinvaders.gameengine.GameStatus.PLAY;
 
 /**
  * GameplayViewController-Klasse
@@ -75,6 +82,9 @@ public class GameplayViewController implements Initializable {
 
     @FXML
    private HBox infoBar;
+
+
+    private boolean shipSelfMove = Boolean.parseBoolean(SpaceInvaders.getSettings("ship.move.self"));
 
     /**
      * Inizialisiert die Controller-Klasse.
@@ -99,6 +109,42 @@ public class GameplayViewController implements Initializable {
         scoreLabel.textProperty().bind(game.getPlayer().scoreProperty().asString());
         lifesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
         levelLabel.textProperty().bind(game.levelProperty().asString());
+
+        display.setFocusTraversable(true);
+
+        display.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case LEFT:
+                    game.getShip().setMoveDirection(LEFT);
+                    break;
+                case RIGHT:
+                    game.getShip().setMoveDirection(RIGHT);
+                    break;
+                case X:
+                    game.tryShipShoot();
+                    break;
+                case SPACE:
+                    game.tryShipShoot();
+                    break;
+                case ESCAPE:
+                    game.stop();
+                    SpaceInvaders.setScreen("WelcomeView");
+                    break;
+                case P:
+                    game.setGameStatus(game.getGameStatus() == PLAY ? PAUSE : PLAY);
+                    break;
+            }
+        });
+
+        display.setOnKeyReleased(event -> {
+            if (shipSelfMove) {
+                return;
+            }
+            if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
+                game.getShip().setMoveDirection(Direction.NONE);
+            }
+        });
+
 
         game.play();
     }

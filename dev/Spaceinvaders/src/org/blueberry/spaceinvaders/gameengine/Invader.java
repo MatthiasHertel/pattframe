@@ -90,9 +90,8 @@ public class Invader extends ImageView implements IGunSprite {
      * Setzt einen Invade-Schuss ab
      */
     public void shoot() {
-        //Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound
+        //Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound?
         bullet.move(Direction.DOWN);
-        System.out.println("InvaderSchuss");
     }
 
     /**

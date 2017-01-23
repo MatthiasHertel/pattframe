@@ -1,5 +1,6 @@
 package org.blueberry.spaceinvaders.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import javafx.fxml.FXMLLoader;
@@ -33,8 +34,9 @@ public class ScreenController extends StackPane {
             screen.setStyle("-fx-padding:" + paddingTop + "px " + paddingRight +"px");
 
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

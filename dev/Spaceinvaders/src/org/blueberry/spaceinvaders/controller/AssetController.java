@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * AssetController lädt Median für das Spiel und stellt sie g zur Verfügung
+ * AssetController lädt Medien für das Spiel und stellt sie zur Verfügung
  */
 public class AssetController {
     private static AssetController ourInstance = new AssetController();
