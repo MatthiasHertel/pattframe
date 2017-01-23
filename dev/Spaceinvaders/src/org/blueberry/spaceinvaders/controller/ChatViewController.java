@@ -103,7 +103,7 @@ public class ChatViewController implements Initializable {
                 model.connected.set(true);
                 userNameLabel.textProperty().setValue(model.userName.getValue());
             } catch (Exception e) {
-                SpaceInvaders.showDialog("Error: " + e.getMessage());
+                SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
                 System.out.println(e.getMessage());
             }
 

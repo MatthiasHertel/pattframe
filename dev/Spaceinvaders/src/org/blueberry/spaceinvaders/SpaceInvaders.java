@@ -2,15 +2,19 @@ package org.blueberry.spaceinvaders;
 
 import javafx.application.Application;
 import javafx.application.HostServices;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PopupControl;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.stage.*;
 import javafx.scene.Group;
 import org.blueberry.spaceinvaders.controller.ScreenController;
 
@@ -26,6 +30,8 @@ public class SpaceInvaders extends Application {
     private static ScreenController screenController = new ScreenController();
     private static HostServices hostServices ;
 
+    private static Stage myPrimaryStage;
+
 
     /**
      * Start-Methode lädt als Standard-Screen die WelcomeView und lädt die Application-Properties
@@ -34,6 +40,8 @@ public class SpaceInvaders extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        myPrimaryStage = primaryStage;
 
         hostServices = getHostServices();
         settings.load(getClass().getResourceAsStream("/config/application.properties"));
@@ -86,14 +94,46 @@ public class SpaceInvaders extends Application {
      * @param message Meldung
      */
     public static void showDialog(final String message) {
-        Stage dialogStage = new Stage();
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        VBox box = new VBox();
-        box.getChildren().addAll(new Label(message));
-        box.setAlignment(Pos.CENTER);
-        box.setPadding(new Insets(5));
-        dialogStage.setScene(new Scene(box));
-        dialogStage.show();
+//        Stage dialogStage = new Stage();
+//        dialogStage.initModality(Modality.WINDOW_MODAL);
+//        VBox box = new VBox();
+//        box.getChildren().addAll(new Label(message));
+//        box.setAlignment(Pos.CENTER);
+//        box.setPadding(new Insets(5));
+//        dialogStage.setScene(new Scene(box));
+//        dialogStage.show();
+
+        final Popup popup = new Popup();
+        popup.setX(300);
+        popup.setY(200);
+
+        TextArea textArea = new TextArea();
+        textArea.setText(message);
+        textArea.setEditable(false);
+
+        Button button = new Button("OK");
+        button.setOnAction(event -> popup.hide());
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(textArea, button);
+
+        vBox.setStyle(
+                "-fx-font-size: 12;\n" +
+                "-fx-text-fill: #000;\n" +
+                "-fx-background-color: #e8e8e8;\n" +
+                "-fx-background-radius: 5;\n" +
+                "-fx-background-insets: 0;\n" +
+                "-fx-border-radius: 5;\n" +
+                "-fx-border-width: 2;\n" +
+                "-fx-pref-width: 500px;\n" +
+                "-fx-pref-height: 150px;\n" +
+                "-fx-padding: 5px 15px;\n" +
+                "-fx-alignment: center;\n" +
+                "-fx-border-color: #e8e8e8;"
+        );
+
+        popup.getContent().add(vBox);
+        popup.show(myPrimaryStage);
     }
 
     /**

@@ -159,7 +159,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
             return(rs.getInt(1));
 
         } catch (SQLException e) {
-            SpaceInvaders.showDialog(e.getMessage());
+            SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
             e.printStackTrace();
         }
         return 0;
@@ -189,7 +189,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
             return count;
 
         } catch (SQLException e) {
-            SpaceInvaders.showDialog(e.getMessage());
+            SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
             e.printStackTrace();
         }
         return 0;
@@ -225,7 +225,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
 
             ps.close();
         } catch (SQLException e) {
-            SpaceInvaders.showDialog(e.getMessage());
+            SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
             e.printStackTrace();
         }
         return highscoreList;
@@ -239,7 +239,7 @@ public class MySQLDBConnector implements IDatabaseConnector {
                 return  false;
             }
         } catch (SQLException e) {
-            SpaceInvaders.showDialog(e.getMessage());
+            SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
             e.printStackTrace();
         }
         return true;
