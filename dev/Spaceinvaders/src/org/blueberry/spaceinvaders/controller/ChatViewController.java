@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -62,7 +63,10 @@ public class ChatViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         model.userName.bindBidirectional(userNameTextfield.textProperty());
         model.readyToChat.bind(model.userName.isNotEmpty());
-//        connectButton.disableProperty().bind(model.readyToChat.not());
+        connectButton.disableProperty().bind(
+                Bindings.or(
+                        model.readyToChat.not(),
+                        model.connected));
         chatButton.disableProperty().bind(model.connected.not());
         messageTextField.disableProperty().bind(model.connected.not());
         messageTextField.textProperty().bindBidirectional(model.currentMessage);
@@ -95,7 +99,6 @@ public class ChatViewController implements Initializable {
                     });
                 });
                 clientEndPoint.sendMessage(model.userName.getValueSafe());
-                connectButton.setDisable(true);
                 userNameTextfield.setDisable(true);
                 model.connected.set(true);
                 userNameLabel.textProperty().setValue(model.userName.getValue());
