@@ -2,6 +2,7 @@ package org.blueberry.spaceinvaders.gameengine;
 
 import javafx.scene.image.Image;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.controller.AssetController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class InvaderGroup {
     public static InvaderGroup getInstance() {
         return ourInstance;
     }
+
+    private AssetController assetController = AssetController.getInstance();
 
     private List<List<Invader>> invaders;
     private List<Invader> invaderList;
@@ -48,7 +51,7 @@ public class InvaderGroup {
     public void createGroup(int positionX, int positionY) {
         ourInstance = new InvaderGroup();
 
-        Invader invaderDummy = new Invader(Game.getInstance().getImageAsset("invader1a"), Game.getInstance().getImageAsset("invader1b"), 0, 0, 0); //to get height and width
+        Invader invaderDummy = new Invader(assetController.getImageAsset("invader1a"), assetController.getImageAsset("invader1b"), 0, 0, 0); //to get height and width
         int invaderWidth = invaderDummy.getWidth();
         int invaderHeight = invaderDummy.getHeight();
         int invaderXGap = Integer.parseInt(SpaceInvaders.getSettings("invader.gap.x"));
@@ -92,8 +95,8 @@ public class InvaderGroup {
         Image image2;
 
         invaderValue = Integer.parseInt(SpaceInvaders.getSettings("invader." + Integer.toString(invaderType) + ".value"));
-        image1 = Game.getInstance().getImageAsset("invader" + Integer.toString(invaderType) + "a");
-        image2 = Game.getInstance().getImageAsset("invader" + Integer.toString(invaderType) + "b");
+        image1 = assetController.getImageAsset("invader" + Integer.toString(invaderType) + "a");
+        image2 = assetController.getImageAsset("invader" + Integer.toString(invaderType) + "b");
         for (int j = 0; j < Integer.parseInt(SpaceInvaders.getSettings("invader." + Integer.toString(invaderType) + ".lines")); j++) {
             List<Invader> invaderList = new ArrayList<>();
             int posY = positionY + (invaderHeight + invaderYGap) * invaderGroup.size();

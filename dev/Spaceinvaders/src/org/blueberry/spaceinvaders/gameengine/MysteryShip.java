@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.controller.AssetController;
 import org.blueberry.spaceinvaders.gameengine.Direction;
 
 import static org.blueberry.spaceinvaders.gameengine.Direction.*;
@@ -15,6 +16,8 @@ import static org.blueberry.spaceinvaders.gameengine.Direction.*;
  * MysteryShip
  */
 public class MysteryShip extends ImageView implements ISprite {
+
+    private AssetController assetController = AssetController.getInstance();
 
     private int borderXSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xstart"));
     private int borderXEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xend"));
@@ -64,7 +67,7 @@ public class MysteryShip extends ImageView implements ISprite {
 
         timeLine.getKeyFrames().add(keyFrame);
 
-        Game.getInstance().getAudioAsset("mystery").play();
+        assetController.getAudioAsset("mystery").play();
         Game.getInstance().getAllActiveTimeLines().add(timeLine);
         timeLine.play();
 

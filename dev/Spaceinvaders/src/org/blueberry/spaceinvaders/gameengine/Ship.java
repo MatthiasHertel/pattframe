@@ -3,6 +3,7 @@ package org.blueberry.spaceinvaders.gameengine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.controller.AssetController;
 
 import static org.blueberry.spaceinvaders.gameengine.Direction.*;
 
@@ -10,6 +11,8 @@ import static org.blueberry.spaceinvaders.gameengine.Direction.*;
  * Spielfigur
  */
 public class Ship extends ImageView implements IGunSprite {
+
+    private AssetController assetController = AssetController.getInstance();
 
     private int borderXSstart = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xstart"));
     private int borderXEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.xend"));
@@ -66,7 +69,7 @@ public class Ship extends ImageView implements IGunSprite {
      * Setzt einen Schiffs-Schuss ab
      */
     public void shoot() {
-        Game.getInstance().getAudioAsset("shipShoot").play();
+        assetController.getAudioAsset("shipShoot").play();
         bullet.move(UP);
 
         System.out.println("SchiffSchuss");
@@ -96,7 +99,7 @@ public class Ship extends ImageView implements IGunSprite {
         int bulletPositionX = (int) (getX() + Integer.parseInt(SpaceInvaders.getSettings("ship.width")) / 2);
 //        int bulletPositionY = (int)getY()-30;
         int bulletPositionY = (int) getY();
-        bullet = new Bullet(Game.getInstance().getImageAsset("shipBullet"), bulletPositionX, bulletPositionY);
+        bullet = new Bullet(assetController.getImageAsset("shipBullet"), bulletPositionX, bulletPositionY);
     }
 
     /**

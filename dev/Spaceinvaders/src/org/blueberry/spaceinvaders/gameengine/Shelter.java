@@ -3,6 +3,7 @@ package org.blueberry.spaceinvaders.gameengine;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.controller.AssetController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public class Shelter {
 
+    private AssetController assetController = AssetController.getInstance();
     private int positionX;
     private int positionY;
     private int shelterPartWidth = Integer.parseInt(SpaceInvaders.getSettings("shelter.part.width"));
@@ -91,20 +93,19 @@ public class Shelter {
      */
     private void addNewShelterPart(int x, int y, int typ, int rotation) {
 
-        Game game = Game.getInstance();
         List<Image> shelterPartsImageList = new ArrayList<>();
 
         if (typ == 1) {
-            shelterPartsImageList.add(game.getImageAsset("shelter1a"));
-            shelterPartsImageList.add(game.getImageAsset("shelter1b"));
-            shelterPartsImageList.add(game.getImageAsset("shelter1c"));
-            shelterPartsImageList.add(game.getImageAsset("shelter1d"));
-            shelterPartsImageList.add(game.getImageAsset("shelter1e"));
-            shelterPartsImageList.add(game.getImageAsset("shelter1f"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter1a"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter1b"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter1c"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter1d"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter1e"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter1f"));
         } else if (typ == 2) {
-            shelterPartsImageList.add(game.getImageAsset("shelter2a"));
-            shelterPartsImageList.add(game.getImageAsset("shelter2b"));
-            shelterPartsImageList.add(game.getImageAsset("shelter2c"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter2a"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter2b"));
+            shelterPartsImageList.add(assetController.getImageAsset("shelter2c"));
         }
         shelterParts.add(new ShelterPart(shelterPartsImageList, x, y, typ, rotation));
     }

@@ -3,12 +3,15 @@ package org.blueberry.spaceinvaders.gameengine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.controller.AssetController;
 import org.blueberry.spaceinvaders.gameengine.Direction.*;
 
 /**
  * Invader
  */
 public class Invader extends ImageView implements IGunSprite {
+
+    private AssetController assetController = AssetController.getInstance();
 
     private int value;
     private int width;
@@ -99,7 +102,7 @@ public class Invader extends ImageView implements IGunSprite {
     public void newBullet() {
         int bulletPositionX = (int) (getX() + width / 2);
         int bulletPositionY = (int) getY();
-        bullet = new Bullet(Game.getInstance().getImageAsset("invaderBullet"), bulletPositionX, bulletPositionY);
+        bullet = new Bullet(assetController.getImageAsset("invaderBullet"), bulletPositionX, bulletPositionY);
     }
 
     /**

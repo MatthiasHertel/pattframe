@@ -72,8 +72,6 @@ public class GameplayViewController implements Initializable {
     @FXML
     private Label levelLabel;
 
-    @FXML
-    private Pane pane;
 
     @FXML
    private HBox infoBar;
@@ -86,13 +84,6 @@ public class GameplayViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-//        pane.setMinWidth(20);
-//        pane.setMinWidth(1000);
-//        pane.setPrefWidth(1000);
-
-//        Platform.runLater(() -> {
-//            pane.setMinWidth(1600);
-//                });
 
         //infoBar.setHgrow(lifesLabel, Priority.ALWAYS);
         //infoBar.setHgrow(scoreLabel, Priority.ALWAYS);
@@ -100,14 +91,9 @@ public class GameplayViewController implements Initializable {
 
        // infoBar.setSpacing(40);
 
-        System.out.println("Gamestatus vor reset:  " + Game.getInstance().getGameStatus());
         Game.reset();
-
         Game game = Game.getInstance();
-        System.out.println("Gamestatus nach reset:  " + Game.getInstance().getGameStatus());
-
         game.constructGame(display);
-
 
 
         scoreLabel.textProperty().bind(game.getPlayer().scoreProperty().asString());
