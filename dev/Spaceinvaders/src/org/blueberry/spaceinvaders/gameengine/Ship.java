@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
+
 /**
  * Spielfigur
  */
@@ -15,7 +17,7 @@ public class Ship extends ImageView implements IGunSprite {
     private int shipPositionY =  Integer.parseInt(SpaceInvaders.getSettings("ship.position.y"));
 
     private Bullet bullet;
-    private InvaderGroup.MoveDirection moveDirection = InvaderGroup.MoveDirection.NONE;
+    private Direction moveDirection = Direction.NONE;
 
     /**
      * Konstruktor für die Spielfigur
@@ -41,16 +43,16 @@ public class Ship extends ImageView implements IGunSprite {
      * @param direction die Bewegungsrichtung
      */
     @Override
-    public void move(InvaderGroup.MoveDirection direction) {
-        if (Game.getInstance().getGameStatus() != Game.GameStatus.PLAY || direction == InvaderGroup.MoveDirection.NONE) {
+    public void move(Direction direction) {
+        if (Game.getInstance().getGameStatus() != GameStatus.PLAY || direction == Direction.NONE) {
             return;
         }
         int positionX = (int) getX();
         int x = 0;
 
-        if (direction == InvaderGroup.MoveDirection.RIGHT) {
+        if (direction == Direction.RIGHT) {
             x = Integer.parseInt(SpaceInvaders.getSettings("ship.move.step"));
-        } else if (direction == InvaderGroup.MoveDirection.LEFT) {
+        } else if (direction == Direction.LEFT) {
             x = Integer.parseInt(SpaceInvaders.getSettings("ship.move.step")) * -1;
         }
 
@@ -65,7 +67,7 @@ public class Ship extends ImageView implements IGunSprite {
      */
     public void shoot() {
         Game.getInstance().getAudioAsset("shipShoot").play();
-        bullet.move(InvaderGroup.MoveDirection.UP);
+        bullet.move(UP);
 
         System.out.println("SchiffSchuss");
     }
@@ -74,7 +76,7 @@ public class Ship extends ImageView implements IGunSprite {
      * Setter-Methode für die Bewegungsrichtung
      * @param direction die Bewegungsrichtung
      */
-    public void setMoveDirection(InvaderGroup.MoveDirection direction) {
+    public void setMoveDirection(Direction direction) {
         this.moveDirection = direction;
     }
 
@@ -82,7 +84,7 @@ public class Ship extends ImageView implements IGunSprite {
      * Getter-Methode für die Bewegungsrichtung
      * @return die Bewegungsrichtung
      */
-    public InvaderGroup.MoveDirection getMoveDirection() {
+    public Direction getMoveDirection() {
         return this.moveDirection;
     }
 

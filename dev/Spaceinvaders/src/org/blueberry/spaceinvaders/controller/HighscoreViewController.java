@@ -34,8 +34,8 @@ import org.blueberry.spaceinvaders.highscore.Highscore;
 import org.blueberry.spaceinvaders.highscore.IDatabaseConnector;
 import org.blueberry.spaceinvaders.highscore.MySQLDBConnector;
 
-import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.PAUSE;
-import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.PLAY;
+import static org.blueberry.spaceinvaders.gameengine.GameStatus.PAUSE;
+import static org.blueberry.spaceinvaders.gameengine.GameStatus.PLAY;
 
 /**
  * HighscoreViewController-Klasse

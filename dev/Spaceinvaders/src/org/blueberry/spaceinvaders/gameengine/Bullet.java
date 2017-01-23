@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
+
 
 /**
  * Stellt das Projektil des Spielers und der Invaders dar
@@ -44,9 +46,9 @@ public class Bullet extends ImageView implements ISprite {
      * @param direction die Bewegungsrichtung
      */
     @Override
-    public void move(InvaderGroup.MoveDirection direction){
+    public void move(Direction direction){
         int duration = Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.duration"));
-        int yEndPosition = direction == InvaderGroup.MoveDirection.DOWN ? Integer.parseInt(SpaceInvaders.getSettings("invader.shoot.end.y"))  : Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.end.y"));
+        int yEndPosition = direction == DOWN ? Integer.parseInt(SpaceInvaders.getSettings("invader.shoot.end.y"))  : Integer.parseInt(SpaceInvaders.getSettings("ship.shoot.end.y"));
 
         KeyValue keyValue = new KeyValue(this.yProperty(), yEndPosition);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(duration), keyValue);

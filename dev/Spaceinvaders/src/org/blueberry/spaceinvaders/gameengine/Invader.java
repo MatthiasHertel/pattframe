@@ -3,6 +3,7 @@ package org.blueberry.spaceinvaders.gameengine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.gameengine.Direction.*;
 
 /**
  * Invader
@@ -66,7 +67,7 @@ public class Invader extends ImageView implements IGunSprite {
      * @param direction die Bewegungsrichtung
      */
     @Override
-    public void move(InvaderGroup.MoveDirection direction) {
+    public void move(Direction direction) {
 
         switch (direction) {
             case DOWN:
@@ -87,7 +88,7 @@ public class Invader extends ImageView implements IGunSprite {
      */
     public void shoot() {
         //Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound
-        bullet.move(InvaderGroup.MoveDirection.DOWN);
+        bullet.move(Direction.DOWN);
         System.out.println("InvaderSchuss");
     }
 

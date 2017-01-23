@@ -19,13 +19,13 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 
 import java.util.*;
 
-import static org.blueberry.spaceinvaders.gameengine.Game.GameStatus.*;
+import static org.blueberry.spaceinvaders.gameengine.GameStatus.*;
 
-import org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection;
+import org.blueberry.spaceinvaders.gameengine.Direction;
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
 
 import javax.xml.bind.SchemaOutputResolver;
 
-import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
 
 /**
  * Spiel, enthält die gesamte Spielelogik
@@ -203,10 +203,10 @@ public class Game {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case LEFT:
-                        ship.setMoveDirection(InvaderGroup.MoveDirection.LEFT);
+                        ship.setMoveDirection(LEFT);
                         break;
                     case RIGHT:
-                        ship.setMoveDirection(InvaderGroup.MoveDirection.RIGHT);
+                        ship.setMoveDirection(RIGHT);
                         break;
                     case X:
                         tryShipShoot();
@@ -233,7 +233,7 @@ public class Game {
                     return;
                 }
                 if (event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT) {
-                    ship.setMoveDirection(InvaderGroup.MoveDirection.NONE);
+                    ship.setMoveDirection(Direction.NONE);
                 }
             }
         });
@@ -578,7 +578,7 @@ public class Game {
                     }
                     mysteryShipLastTime = now;
 
-                    MoveDirection randomDirection = random.nextInt(2) == 0 ? RIGHT : LEFT;
+                    Direction randomDirection = random.nextInt(2) == 0 ? RIGHT : LEFT;
                     mysteryShip = new MysteryShip(getImageAsset("mysteryShip"), randomDirection);
                     mysteryShip.getTimeLine().setOnFinished(event -> removeMysteryShip());
                     display.getChildren().add(mysteryShip);
@@ -679,14 +679,4 @@ public class Game {
         return player;
     }
 
-    // TODO: Refactoring (GameStatus)
-    /**
-     * GameStatus
-     */
-    public enum GameStatus {
-        PLAY,
-        PAUSE,
-        WON,
-        GAMEOVER;
-    }
 }

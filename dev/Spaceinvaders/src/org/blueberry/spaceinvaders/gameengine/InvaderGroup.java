@@ -6,7 +6,7 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
 
 /**
  * Invader-Gruppe
@@ -31,8 +31,8 @@ public class InvaderGroup {
     private int borderYEend = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.border.yend"));
     private int yGap = Integer.parseInt(SpaceInvaders.getSettings("invader.move.ypixel"));
 
-    private MoveDirection moveDirection = MoveDirection.RIGHT;
-    private MoveDirection lastLeftRightDirection = moveDirection;
+    private Direction moveDirection = RIGHT;
+    private Direction lastLeftRightDirection = moveDirection;
 
     /**
      * Konstruktor für die Invader-Gruppe
@@ -139,7 +139,7 @@ public class InvaderGroup {
      */
     public void move() {
 
-        setNextGroupMoveDirection();
+        setNextGroupDirection();
 
         if (moveDirection != NONE) {
             for (Invader invader : invaderList) {
@@ -155,7 +155,7 @@ public class InvaderGroup {
      */
     private void gameOver() {
         ourInstance = new InvaderGroup();
-        Game.getInstance().setGameStatus(Game.GameStatus.GAMEOVER);
+        Game.getInstance().setGameStatus(GameStatus.GAMEOVER);
     }
 
     /**
@@ -163,7 +163,7 @@ public class InvaderGroup {
      * @param direction die Bewegungsrichtung
      * @return boolean
      */
-    private boolean testNextGroupMove(MoveDirection direction) {
+    private boolean testNextGroupMove(Direction direction) {
 
         switch (direction) {
             case RIGHT: {
@@ -204,7 +204,7 @@ public class InvaderGroup {
     /**
      * Setzt die Bewegungsrichtungsänderung der Invader-Gruppe
      */
-    private void setNextGroupMoveDirection() {
+    private void setNextGroupDirection() {
 
         if (moveDirection == RIGHT || moveDirection == LEFT) {
             if (testNextGroupMove(moveDirection)) {
@@ -217,7 +217,7 @@ public class InvaderGroup {
             }
         } else if (moveDirection == DOWN) {
             moveDirection = lastLeftRightDirection == LEFT ? RIGHT : LEFT;
-//            setNextGroupMoveDirection();
+//            setNextGroupDirection();
         }
     }
 
@@ -232,15 +232,4 @@ public class InvaderGroup {
         }
     }
 
-    // TODO: Refactoring (Direction kk)
-    /**
-     * Bewegungsrichtung
-     */
-    public enum MoveDirection {
-        RIGHT,
-        LEFT,
-        DOWN,
-        UP,
-        NONE;
-    }
 }

@@ -3,6 +3,8 @@ package org.blueberry.spaceinvaders.gameengine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
+
 
 import java.util.List;
 
@@ -60,7 +62,7 @@ public class ShelterPart extends ImageView implements ISprite {
      * @param direction die Bewegungsrichtung
      */
     @Override
-    public void move(InvaderGroup.MoveDirection direction) {
+    public void move(Direction direction) {
 
     }
 

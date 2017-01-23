@@ -7,9 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
-import org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection;
+import org.blueberry.spaceinvaders.gameengine.Direction;
 
-import static org.blueberry.spaceinvaders.gameengine.InvaderGroup.MoveDirection.*;
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
 
 /**
  * MysteryShip
@@ -21,14 +21,14 @@ public class MysteryShip extends ImageView implements ISprite {
 
     private Timeline timeLine = new Timeline();
     private int value = Integer.parseInt(SpaceInvaders.getSettings("mysteryship.value"));
-    private MoveDirection moveDirection;
+    private Direction moveDirection;
 
     /**
      * Konstruktor für ein MysteryShip
      * @param image Bildelement
      * @param direction die Bewedungsrichting
      */
-    public MysteryShip(Image image, MoveDirection direction) {
+    public MysteryShip(Image image, Direction direction) {
 
         this.moveDirection = direction;
 
@@ -50,7 +50,7 @@ public class MysteryShip extends ImageView implements ISprite {
      * @param direction die Bewegungsrichtung
      */
     @Override
-    public void move(MoveDirection direction) {
+    public void move(Direction direction) {
         if (!(direction == RIGHT || direction == LEFT)) {
             System.out.println("Das MysteryShip kann sich nur nach links oder rechts bewegen. Bewegung (" + direction + ") abgebrochen");
             return;
