@@ -25,7 +25,7 @@ public class Game {
     private List<Timeline> allActiveTimeLines = new ArrayList<>();
     private InvaderGroup invaderGroup;
     private AnchorPane display;
-    private Ship ship;
+    private Ship ship = new Ship(assetController.getImageAsset("ship"));
     private MysteryShip mysteryShip;
     private List<Shelter> shelterList;
 
@@ -82,17 +82,15 @@ public class Game {
 
     /**
      * Konstruiert den Spielplatz für alle Elemente
-     * bindet die Spiellogikrelevanten Elemente (Score, Leben) an die View
+     * bindet die spiellogikrelevanten Elemente (Score, Leben) an die View
      * @param pane Entrynode in der View
      */
     public void constructGame(AnchorPane pane) {
         this.display = pane;
         createInvaderGroup();
-
-        ship = new Ship(assetController.getImageAsset("ship"));
-        display.getChildren().add(ship);
-
         createShelters();
+
+        addSpriteToPane(ship);
 
         gameStatus.addListener((observable, oldValue, newValue) -> {
             switch (newValue) {

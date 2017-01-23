@@ -10,12 +10,12 @@
 }
 .link {
     -fx-font-size: 14;
-    -fx-text-fill: #fff;
+    -fx-text-fill: #93ac9d;
     -fx-border-color: transparent;
     -fx-padding: 5px 15px;
 }
-.link:hover {
-    -fx-text-fill: #93ac9d;
+.link:hover, .link:focused {
+    -fx-text-fill: #fff;
 }
 
 .btnIcon,.btnIcon:default {
@@ -59,59 +59,66 @@
 
 #gameplayBtn, #addButton {
     -fx-border-color: #997aff;
+    -fx-text-fill:  #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3.png');
   }
-#gameplayBtn:hover, #addButton:hover {
-    -fx-text-fill:  #997aff;
+#gameplayBtn:hover, #gameplayBtn:focused,  #addButton:hover, #addButton:focused {
+    -fx-text-fill: #fff;
     -fx-graphic: url('../graphics/layout/btnInvader3Hover.png');
 }
 #highscoreBtn {
     -fx-border-color: #ffb66f;
+    -fx-text-fill:  #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2.png');
 }
-#highscoreBtn:hover{
-    -fx-text-fill:  #ffb66f;
+#highscoreBtn:hover, #highscoreBtn:focused{
+    -fx-text-fill: #fff;
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
 #manualBtn {
     -fx-border-color: #6f917c;
+    -fx-text-fill:  #6f917c;
     -fx-graphic: url('../graphics/layout/btnInvader1.png');
 }
-#manualBtn:hover {
-    -fx-text-fill:  #6f917c;
+#manualBtn:hover, #manualBtn:focused {
+    -fx-text-fill: #fff;
     -fx-graphic: url('../graphics/layout/btnInvader1Hover.png');
 }
 #chatBtn, #connectBtn {
     -fx-border-color: #3399cc;
+    -fx-text-fill:  #3399cc;
     -fx-graphic: url('../graphics/layout/btnInvader5.png');
 }
-#chatBtn:hover, #connectBtn:hover {
-    -fx-text-fill:  #3399cc;
+#chatBtn:hover, #chatBtn:focused, #connectBtn:hover, #connectBtn:focused {
+    -fx-text-fill: #fff;
     -fx-graphic: url('../graphics/layout/btnInvader5Hover.png');
 }
 #closeBtn, #cancelBtn {
     -fx-border-color: #d35f5f;
+    -fx-text-fill: #d35f5f;
     -fx-graphic: url('../graphics/layout/btnInvader4.png');
 }
-#closeBtn:hover, #cancelBtn:hover {
-    -fx-text-fill: #d35f5f;
+#closeBtn:hover, #closeBtn:focused, #cancelBtn:hover, #cancelBtn:focused {
+    -fx-text-fill: #fff;
     -fx-graphic: url('../graphics/layout/btnInvader4Hover.png');
 }
 #mainmenuBtn {
     -fx-border-color: #ffb66f;
+    -fx-text-fill:  #ffb66f;
     -fx-graphic: url('../graphics/layout/btnInvader2.png');
 }
-#mainmenuBtn:hover {
-    -fx-text-fill:  #ffb66f;
+#mainmenuBtn:hover, #mainmenuBtn:focused {
+    -fx-text-fill: #fff;
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
 #sendBtn {
     -fx-pref-width: 150px;
     -fx-border-color: #997aff;
+    -fx-text-fill:  #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3.png');
 }
-sendBtn:hover {
-    -fx-text-fill:  #997aff;
+#sendBtn:hover, #sendBtn:focused {
+    -fx-text-fill: #fff;
     -fx-graphic: url('../graphics/layout/btnInvader3Hover.png');
 }
 #scoreLabelText, #lifesLabelText, #levelLabelText {

@@ -167,6 +167,7 @@ public class HighscoreViewController implements Initializable {
                 messageLabel.setText("Sie haben " + punkt + " Punkte erreicht und damit Platz " + t.getSource().getValue() + " in der Highscore belegt! Bitte geben Sie Ihren Namen ein.");
                 message_banner.getChildren().add(messageLabel);
                 hbox_input.setVisible(true);
+                nameField.requestFocus();
             });
             rankingService.start();
         }

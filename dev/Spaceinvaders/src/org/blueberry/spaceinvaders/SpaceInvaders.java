@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PopupControl;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.VBox;
@@ -54,6 +55,8 @@ public class SpaceInvaders extends Application {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Space Invaders");
+        primaryStage.getIcons().add(new Image(String.valueOf(getClass().getResource("../../../images/invader.png"))));
 
         primaryStage.setFullScreen(true);
         primaryStage.setFullScreenExitHint("");
