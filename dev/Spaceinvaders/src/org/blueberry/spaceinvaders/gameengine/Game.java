@@ -157,7 +157,6 @@ public class Game {
      */
     private void pauseActiveTimeLines(List<Timeline> timeLines) {
         timeLines.forEach(Timeline::pause);
-//        System.out.println("Anzahl aktiver TimeLines: " + timeLines.size());
     }
 
     /**
@@ -187,7 +186,6 @@ public class Game {
 
         removeSprite(sprite.getBullet());
         sprite.removeBullet();
-//        System.out.println("RemoveBulletEndeAnzahl aktiver TimeLines: " + allActiveTimeLines.size());
     }
 
 
@@ -216,7 +214,6 @@ public class Game {
         }
 
         else if( sprite instanceof MysteryShip){
-            System.out.println("versuche mystery schiff zulöschen");
             Timeline timeline = ((MysteryShip) sprite).getTimeLine();
             timeline.stop();
             allActiveTimeLines.remove(timeline);
@@ -285,7 +282,7 @@ public class Game {
      */
     public void checkAndHandleShipBulletShelterCollision() {
         if (ship.getBullet() != null) {
-            for (Shelter shelter : getShelterList()) {
+            for (Shelter shelter : shelterList) {
                 if(ship.getBullet().intersects(shelter.getLayoutBounds().getMinX(), shelter.getLayoutBounds().getMinY(), shelter.getLayoutBounds().getWidth(), shelter.getLayoutBounds().getHeight())) {
                     for (ShelterPart shelterPart : shelter.getShelterParts()) {
                         if (ship.getBullet().intersects(shelterPart.getLayoutBounds())) {
@@ -309,7 +306,7 @@ public class Game {
     public void checkAndHandleInvaderBulletShelterCollision() {
         for (Invader invader : invaderGroup.getInvaderList()) {
             if (invader.getBullet() != null) {
-                for (Shelter shelter : getShelterList()) {
+                for (Shelter shelter : shelterList) {
                     if(invader.getBullet().intersects(shelter.getLayoutBounds().getMinX(), shelter.getLayoutBounds().getMinY(), shelter.getLayoutBounds().getWidth(), shelter.getLayoutBounds().getHeight())) {
                         for (ShelterPart shelterPart : shelter.getShelterParts()) {
                             if (invader.getBullet().intersects(shelterPart.getLayoutBounds())) {
@@ -355,7 +352,6 @@ public class Game {
             ship.newBullet();
             ship.getBullet().getTimeLine().setOnFinished(event -> {
                 removeBullet(ship);
-//                System.out.println("Schussanimation fertig");
             });
 
             display.getChildren().add(ship.getBullet());
@@ -523,21 +519,9 @@ public class Game {
     }
 
     /**
-     * Getter-Methode Geheim-Schiff
-     * @return Geheimschiff
+     * Getter-Methode für die Zeit zwischen der Invaderbewegung
+     * @return invaderMoveDuration
      */
-    public MysteryShip getMysteryShip() {
-        return mysteryShip;
-    }
-
-    /**
-     * Getter-Methode für alle Schutzbunker
-     * @return ShelterList
-     */
-    public List<Shelter> getShelterList() {
-        return shelterList;
-    }
-
     public int getInvaderMoveDuration(){
         return this.invaderMoveDuration;
     }
