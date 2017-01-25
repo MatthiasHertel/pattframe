@@ -38,8 +38,8 @@ public class GameAnimationTimer extends AnimationTimer {
 
             ship.move(ship.getMoveDirection());
 
-            game.checkAndHandleMysteryShipCollision();
-            game.checkAndHandleInvaderCollision();
+            game.checkAndHandleShipBulletMysteryShipCollision();
+            game.checkAndHandleShipBulletInvaderCollision();
             game.checkAndHandleShipBulletShelterCollision();
             game.checkAndHandleInvaderBulletShelterCollision();
             game.checkAndHandleInvaderBulletShipCollision();
