@@ -3,7 +3,7 @@ package org.blueberry.spaceinvaders.chat;
 import java.util.Collection;
 
 /**
- * Created by matthias on 15.01.17.
+ * MessageTypeHistory handle für das Chatobjekttype History
  */
 public class MessageTypeHistory implements ChatObject{
     public Collection<MessageTypeMessage> messageTypeMessages;
@@ -16,6 +16,10 @@ public class MessageTypeHistory implements ChatObject{
         this.messageTypeMessages = messageTypeMessages;
     }
 
+    /**
+     * Helper toString() Methode
+     * @return JSON String
+     */
     @Override
     public String toString() {
         return "MessageTypeHistory{" +
@@ -23,6 +27,10 @@ public class MessageTypeHistory implements ChatObject{
                 '}';
     }
 
+    /**
+     * Handlemethode fuer jede Message einer History rufe handle der Message auf
+     * @param chat
+     */
     @Override
     public void handle(ChatModel chat) {
         for (MessageTypeMessage messageTypeMessage : messageTypeMessages) {

@@ -8,7 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
- * Created by matthias on 15.01.17.
+ * Modelklasse des Chats
  */
 public class ChatModel {
     public final BooleanProperty connected = new SimpleBooleanProperty(false);

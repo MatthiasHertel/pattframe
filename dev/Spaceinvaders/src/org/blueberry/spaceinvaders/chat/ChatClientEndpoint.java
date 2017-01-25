@@ -9,13 +9,21 @@ import java.net.URI;
 import javax.websocket.*;
 
 /**
- * Created by matthias on 15.01.17.
+ * ClientEndpoint - Annotation Driven - Darstellung des WebsocketClients als POJO (PlainOldJavaObject)
+ * OnOpen	        Darstellung einer Methode als Callback für öffnende Verbindungsevents.
+ * OnMessage        Darstellung einer Methode als Callback für eingehende Nachrichten.
+ * onClose	        Darstellung einer Methode als Callback für schliessende Verbindungsevents.
+ * onError	        Darstellung einer Methode als Callback für jegliche Fehler. (nicht implementiert)
  */
 @ClientEndpoint
 public class ChatClientEndpoint {
     private Session userSession = null;
     private MessageHandler messageHandler;
 
+    /**
+     * Konstruktor Verbindungsaufbau
+     * @param endpointURI
+     */
     public ChatClientEndpoint(final URI endpointURI) {
 
         try {
@@ -42,16 +50,37 @@ public class ChatClientEndpoint {
         }
     }
 
+    /**
+     * Callback hook für Verbindungsaufbau (open) Events
+     *
+     * @param userSession
+     *            die userSession die geöffnet wurde.
+     */
     @OnOpen
     public void onOpen(final Session userSession) {
         this.userSession = userSession;
     }
 
+    /**
+     * Callback hook für Verbindungsabbau (close) Events
+     *
+     * @param userSession
+     *            die userSession welche geschlossen wird.
+     * @param reason
+     *            der Grund für das Schliessen der Verbindung
+     */
     @OnClose
     public void onClose(final Session userSession, final CloseReason reason) {
         this.userSession = null;
     }
 
+    /**
+     * Callback hook für Nachrichten Events
+     * Diese Methode wird aufgerufen wenn ein Client eine Nachricht sendet.
+     *
+     * @param message
+     *            Die Text Nachricht (String build as JSON)
+     */
     @OnMessage
     public void onMessage(final String message) {
         if (messageHandler != null) {
@@ -59,15 +88,28 @@ public class ChatClientEndpoint {
         }
     }
 
+    /**
+     * registriert den MesssageHandler
+     *
+     * @param msgHandler
+     */
     public void addMessageHandler(final MessageHandler msgHandler) {
         messageHandler = msgHandler;
     }
 
+    /**
+     * Sendet eine Nachricht.
+     *
+     * @param message
+     */
     public void sendMessage(final String message) {
         userSession.getAsyncRemote().sendText(message);
     }
 
-    public static interface MessageHandler {
-        public void handleMessage(String message);
+    /**
+     * inner Interface MessageHandler (more readable and maintainabl - does not belong to globalscope)
+     */
+    public interface MessageHandler {
+        void handleMessage(String message);
     }
 }

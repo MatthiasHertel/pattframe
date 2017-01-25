@@ -1,7 +1,7 @@
 package org.blueberry.spaceinvaders.chat;
 
 /**
- * Created by matthias on 15.01.17.
+ * Interface Handle für ein Chatobjekt
  */
 public interface ChatObject {
     public void handle(ChatModel chat);
