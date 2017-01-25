@@ -24,7 +24,7 @@ public class Player {
      * Setter-Methode für den Punkte-Wert
      * @param value Punkte-Wert
      */
-    public void setScore(int value) {
+    void setScore(int value) {
         score.set(value);
     }
 
@@ -51,7 +51,7 @@ public class Player {
      * Setter-Methode für die Spieler-Leben
      * @param value Spieler-Leben
      */
-    public void setlives(int value) {
+    void setlives(int value) {
         lives.set(value);
     }
 
@@ -59,7 +59,7 @@ public class Player {
      * Getter-Methode für die Spieler-Leben
      * @return Spieler-Leben
      */
-    public int getlives() {
+    int getlives() {
         return lives.get();
     }
 }

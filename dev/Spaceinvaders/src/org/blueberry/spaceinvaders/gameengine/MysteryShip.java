@@ -8,8 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.controller.AssetController;
-import org.blueberry.spaceinvaders.gameengine.Direction;
-
 import static org.blueberry.spaceinvaders.gameengine.Direction.*;
 
 /**
@@ -24,7 +22,6 @@ public class MysteryShip extends ImageView implements ISprite {
 
     private Timeline timeLine = new Timeline();
     private int value = Integer.parseInt(SpaceInvaders.getSettings("mysteryship.value"));
-    private Direction moveDirection;
 
     /**
      * Konstruktor für ein MysteryShip
@@ -32,8 +29,6 @@ public class MysteryShip extends ImageView implements ISprite {
      * @param direction die Bewedungsrichting
      */
     public MysteryShip(Image image, Direction direction) {
-
-        this.moveDirection = direction;
 
         this.setImage(image);
         this.setPreserveRatio(true);
@@ -70,14 +65,13 @@ public class MysteryShip extends ImageView implements ISprite {
         assetController.getAudioAsset("mystery").play();
         Game.getInstance().getAllActiveTimeLines().add(timeLine);
         timeLine.play();
-
     }
 
     /**
      * Getter-Methode für das Timeline-Objekt
      * @return Timeline
      */
-    public Timeline getTimeLine() {
+    Timeline getTimeLine() {
         return timeLine;
     }
 
@@ -85,7 +79,7 @@ public class MysteryShip extends ImageView implements ISprite {
      * Getter-Methode für den Punkt-Wert, der dem Spieler gutgeschrieben wird
      * @return Punkt-Wert
      */
-    public int getValue() {
+    int getValue() {
         return value;
     }
 }

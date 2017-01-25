@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.controller.AssetController;
-import org.blueberry.spaceinvaders.gameengine.Direction.*;
 
 /**
  * Invader
@@ -89,7 +88,7 @@ public class Invader extends ImageView implements IGunSprite {
     /**
      * Setzt einen Invade-Schuss ab
      */
-    public void shoot() {
+    void shoot() {
         //Game.getInstance().getAudioAsset("invaderShoot").play(); TODO: invaderShootsound?
         bullet.move(Direction.DOWN);
     }

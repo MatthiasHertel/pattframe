@@ -17,6 +17,7 @@ public class Shelter implements ISprite{
     private int positionX;
     private int positionY;
     private int shelterPartWidth = Integer.parseInt(SpaceInvaders.getSettings("shelter.part.width"));
+    private int shelterPartHeight = Integer.parseInt(SpaceInvaders.getSettings("shelter.part.height"));
     private List<ShelterPart> shelterParts = new ArrayList<>();
 
     Shelter(int x, int y) {
@@ -29,59 +30,59 @@ public class Shelter implements ISprite{
     /**
      * Erzeugt einen Bunker aus vielen Teilen
      */
-    public void constructShelter() {
+    private void constructShelter() {
 
-        int positionX = this.positionX;
-        int positionY = this.positionY;
+        int x = this.positionX;
+        int y = this.positionY;
 
         // first line
-        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 2, 0);
-        addNewShelterPart(positionX + 1 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 2 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 3 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 4 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 5 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 6 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 2, 90);
+        addNewShelterPart(x                         , y, 2, 0);
+        addNewShelterPart(x +       shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   2 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   3 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   4 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   5 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   6 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   7 * shelterPartWidth, y, 2, 90);
 
         // second line
-        positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 2, 0);
-        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 1 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 2 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 3 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 4 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 5 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 6 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 2, 90);
+        y += shelterPartHeight;
+        addNewShelterPart(x +  -1 * shelterPartWidth, y, 2, 0);
+        addNewShelterPart(x                         , y, 1, 0);
+        addNewShelterPart(x +       shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   2 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   3 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   4 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   5 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   6 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   7 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   8 * shelterPartWidth, y, 2, 90);
 
         // third line
-        positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 1 * shelterPartWidth, positionY, 2, 180);
+        y += shelterPartHeight;
+        addNewShelterPart(x +  -1 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x                         , y, 1, 0);
+        addNewShelterPart(x +       shelterPartWidth, y, 2, 180);
 
-        addNewShelterPart(positionX + 6 * shelterPartWidth, positionY, 2, 270);
-        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(x +   6 * shelterPartWidth, y, 2, 270);
+        addNewShelterPart(x +   7 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   8 * shelterPartWidth, y, 1, 0);
 
         // fourth line
-        positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
+        y += shelterPartHeight;
+        addNewShelterPart(x +  -1 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x                         , y, 1, 0);
 
-        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(x +   7 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   8 * shelterPartWidth, y, 1, 0);
 
         // fifth line
-        positionY += shelterPartWidth;
-        addNewShelterPart(positionX + -1 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 0 * shelterPartWidth, positionY, 1, 0);
+        y += shelterPartHeight;
+        addNewShelterPart(x +  -1 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x                         , y, 1, 0);
 
-        addNewShelterPart(positionX + 7 * shelterPartWidth, positionY, 1, 0);
-        addNewShelterPart(positionX + 8 * shelterPartWidth, positionY, 1, 0);
+        addNewShelterPart(x +   7 * shelterPartWidth, y, 1, 0);
+        addNewShelterPart(x +   8 * shelterPartWidth, y, 1, 0);
     }
 
     /**
@@ -116,7 +117,7 @@ public class Shelter implements ISprite{
      */
     public Rectangle2D getLayoutBounds(){
         int width = 10 * shelterPartWidth;
-        int height = 5 * shelterPartWidth;
+        int height = 5 * shelterPartHeight;
         return new Rectangle2D(positionX - shelterPartWidth, positionY, width, height);
     }
 
@@ -124,7 +125,7 @@ public class Shelter implements ISprite{
      * Gibt die Bunker-Teile zurück
      * @return Liste der Bunker-Teile
      */
-    public List<ShelterPart> getShelterParts() {
+    List<ShelterPart> getShelterParts() {
         return shelterParts;
     }
 

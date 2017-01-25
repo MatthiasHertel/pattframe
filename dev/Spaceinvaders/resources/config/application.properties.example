@@ -66,7 +66,7 @@ mysteryship.delay.random.max = 30000
 #mysteryship.delay.random.min = 15000
 #mysteryship.delay.random.max = 50000
 
-#shelter.part.width = 8
+shelter.part.height = 8
 shelter.part.width = 8
 
 game.standardtheme = theme1

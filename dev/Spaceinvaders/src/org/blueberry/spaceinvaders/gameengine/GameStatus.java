@@ -7,5 +7,5 @@ public enum GameStatus {
     PLAY,
     PAUSE,
     WON,
-    GAMEOVER;
+    GAMEOVER
 }

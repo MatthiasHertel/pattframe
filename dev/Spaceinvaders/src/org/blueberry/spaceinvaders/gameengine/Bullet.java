@@ -37,7 +37,7 @@ public class Bullet extends ImageView implements ISprite {
      * Getter-Methode für das Timeline-Objekt
      * @return Timeline
      */
-    public Timeline getTimeLine(){
+    Timeline getTimeLine(){
         return timeLine;
     }
 

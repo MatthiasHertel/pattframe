@@ -48,7 +48,7 @@ public class InvaderGroup {
      * @param positionX X-Position
      * @param positionY Y-Position
      */
-    public void createGroup(int positionX, int positionY) {
+    void createGroup(int positionX, int positionY) {
         ourInstance = new InvaderGroup();
 
         Invader invaderDummy = new Invader(assetController.getImageAsset("invader1a"), assetController.getImageAsset("invader1b"), 0, 0, 0); //to get height and width
@@ -113,9 +113,7 @@ public class InvaderGroup {
      */
     private List<Invader> invadersToList() {
         List<Invader> invaderReturnList = new ArrayList<>();
-        for (List<Invader> invaderList : invaders) {
-            invaderReturnList.addAll(invaderList);
-        }
+        invaders.forEach(invaderReturnList::addAll);
         return invaderReturnList;
     }
 
@@ -123,7 +121,7 @@ public class InvaderGroup {
      * Getter-Methode für die eindimensionale Invader-Liste
      * @return Invader-Liste
      */
-    public List<Invader> getInvaderList() {
+    List<Invader> getInvaderList() {
         return invaderList;
     }
 
@@ -191,11 +189,8 @@ public class InvaderGroup {
             }
             case DOWN: {
                 Invader invader = invaderList.get(invaderList.size() - 1);
-                int invaderBottomY = (int) invader.getY() + 1*invader.getHeight() ;
-                if (invaderBottomY + yGap > borderYEend) {
-                    return false;
-                }
-                return true;
+                int invaderBottomY = (int) invader.getY() + invader.getHeight();
+                return invaderBottomY + yGap <= borderYEend;
             }
         }
 
@@ -224,9 +219,9 @@ public class InvaderGroup {
 
     /**
      * Entfernt einen Invader aus der Gruppe
-     * @param invader
+     * @param invader - der zu entfernende Invader
      */
-    public void removeInvader(Invader invader) {
+    void removeInvader(Invader invader) {
         invaderList.remove(invader);
         for (List<Invader> iList : invaders) {
             iList.remove(invader);

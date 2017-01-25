@@ -3,9 +3,6 @@ package org.blueberry.spaceinvaders.gameengine;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.blueberry.spaceinvaders.SpaceInvaders;
-import static org.blueberry.spaceinvaders.gameengine.Direction.*;
-
-
 import java.util.List;
 
 /**
@@ -51,9 +48,9 @@ public class ShelterPart extends ImageView implements ISprite {
 
     /**
      * Getter-Methode für den Zerstörungsstatus eines Bunker-Teiles
-     * @return
+     * @return state
      */
-    public int getState() {
+    int getState() {
         return this.state;
     }
 
@@ -69,7 +66,7 @@ public class ShelterPart extends ImageView implements ISprite {
     /**
      * Visuelle Darstellung der Zerstörung von oben (Typ 1: a-b; Typ 2: a)
      */
-    public void damagedFromTop() {
+    void damagedFromTop() {
         if (shelterType == 1) {
             switch (state) {
                 case 3:
@@ -88,7 +85,7 @@ public class ShelterPart extends ImageView implements ISprite {
     /**
      * Visuelle Darstellung der Zerstörung von unten (Typ 1: e-f; Typ 2: c)
      */
-    public void damagedFromBottom() {
+    void damagedFromBottom() {
         if (shelterType == 1) {
             switch (state) {
                 case 3:
@@ -102,5 +99,21 @@ public class ShelterPart extends ImageView implements ISprite {
             this.setImage(imageList.get(2));
         }
         state--;
+    }
+
+    /**
+     * Getter-Methode für dieBrei te eines Bunker-Teiles
+     * @return state
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Getter-Methode für die Höhe eines Bunker-Teiles
+     * @return state
+     */
+    public int getHeight() {
+        return height;
     }
 }
