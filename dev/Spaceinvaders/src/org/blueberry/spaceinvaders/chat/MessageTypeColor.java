@@ -1,11 +1,15 @@
 package org.blueberry.spaceinvaders.chat;
 
 /**
- * Created by matthias on 15.01.17.
+ * MessageTypeColor handle für das Chatobjekttype Farbe
  */
 public class MessageTypeColor implements ChatObject{
     public String color;
 
+    /**
+     * Helper toString() Methode
+     * @return JSON String
+     */
     @Override
     public String toString() {
         return "MessageTypeColor{" +
@@ -21,6 +25,10 @@ public class MessageTypeColor implements ChatObject{
         this.color = color;
     }
 
+    /**
+     * Handle Methode zum setzen der Farbe
+     * @param chat
+     */
     @Override
     public void handle(ChatModel chat) {
         // TODO

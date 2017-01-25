@@ -4,7 +4,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by matthias on 15.01.17.
+ * MessageTypeMessage handle für das Chatobjekttype Message
  */
 public class MessageTypeMessage implements ChatObject{
     String time;
@@ -13,24 +13,30 @@ public class MessageTypeMessage implements ChatObject{
     String text;
 
 
-
+    /**
+     * Helper toString() Methode
+     * @return
+     */
     public String toChatString() {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-
         long unixTimestamp = new Long(time);
         String strtime = formatter.format(unixTimestamp);
-
         String afterDecoding = StringEscapeUtils.unescapeHtml(text);
-
-//        return "" + "(" + color + ")" + author + '@' + strtime + ": " + afterDecoding;
         return "" + author + '@' + strtime + ": " + afterDecoding;
     }
 
+    /**
+     * Handle Methode zum Hinzufuegen eines Chatitems zur chatHistory (List)
+     * @param chat
+     */
     public void handle(ChatModel chat) {
-//        System.out.println(color);
         chat.chatHistory.add(this);
     }
 
+    /**
+     * Helper toString() Methode
+     * @return JSON String
+     */
     @Override
     public String toString() {
         return "MessageTypeMessage{" +
@@ -62,10 +68,6 @@ public class MessageTypeMessage implements ChatObject{
     }
 
     public void setColor(String color) {
-
-
-
-
     }
 
     public String getText() {

@@ -56,6 +56,7 @@ public class ChatViewController implements Initializable {
 
     /**
      * Inizialisiert die Controller-Klasse.
+     * setzt die Bindings
      * @param url
      * @param rb
      */
@@ -111,14 +112,20 @@ public class ChatViewController implements Initializable {
 
     }
 
-
+    /**
+     * Handlemethode zum Absender einer Nachricht
+     */
     private void handleSendMessage() {
         clientEndPoint.sendMessage(model.currentMessage.get());
         model.currentMessage.set("");
         messageTextField.requestFocus();
     }
 
-
+    /**
+     * Bestimmung des empfangenen Chatobjektestypes
+     * @param json
+     * @return messageType
+     */
     public static ChatObject getChatObject(String json) {
         // wenn typ color -> ColorObject
         // wenn text -> MessageObject

@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 
 
 /**
- * Created by mhertel on 19.01.17.
+ * Klasse zur Darstellung einer Listzelle
  */
 public class ChatMessageListViewCell extends ListCell<MessageTypeMessage>{
 	@FXML
@@ -40,6 +40,11 @@ public class ChatMessageListViewCell extends ListCell<MessageTypeMessage>{
 
 	private FXMLLoader mLLoader;
 
+	/**
+	 * Override für ListCellFactorymethode
+	 * @param message
+	 * @param empty
+	 */
 	@Override
 	protected void updateItem(MessageTypeMessage message, boolean empty) {
 		super.updateItem(message, empty);
