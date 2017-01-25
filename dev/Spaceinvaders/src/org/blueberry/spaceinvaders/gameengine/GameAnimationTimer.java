@@ -36,22 +36,12 @@ public class GameAnimationTimer extends AnimationTimer {
 
         if (game.getGameStatus() == PLAY) {
 
-            // ship bewegen
             ship.move(ship.getMoveDirection());
 
-            // hat die Schiffskanone das MysteryShip getroffen
             game.checkAndHandleMysteryShipCollision();
-
-            // hat die Schiffskanone einen invader getroffen
             game.checkAndHandleInvaderCollision();
-
-            // hat die Schiffskanone den Bunker getroffen
             game.checkAndHandleShipBulletShelterCollision();
-
-            // hat ein Invader den Bunker getroffen
             game.checkAndHandleInvaderBulletShelterCollision();
-
-            // hat ein Invader das Schiff getroffen
             game.checkAndHandleInvaderBulletShipCollision();
 
             //InvaderGroup bewegen (zeitabhängig)

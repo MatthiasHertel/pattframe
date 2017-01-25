@@ -95,10 +95,8 @@ public class GameplayViewController implements Initializable {
 
        // infoBar.setSpacing(40);
 
-        Game.reset();
         Game game = Game.getInstance();
         game.constructGame(display);
-
 
         scoreLabel.textProperty().bind(game.getPlayer().scoreProperty().asString());
         lifesLabel.textProperty().bind(game.getPlayer().livesProperty().asString());
@@ -122,6 +120,7 @@ public class GameplayViewController implements Initializable {
                     break;
                 case ESCAPE:
                     game.stop();
+                    game.reset();
                     SpaceInvaders.setScreen("WelcomeView");
                     break;
                 case P:

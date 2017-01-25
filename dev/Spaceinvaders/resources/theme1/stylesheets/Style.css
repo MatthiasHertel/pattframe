@@ -191,7 +191,8 @@
     -fx-tooltip-visible: false;
 }
 .pagination .toggle-button, .pagination .button {
-    -fx-border-color: #ffb66f;
+    /*-fx-border-color: #ffb66f;*/
+    -fx-border-color: #6f917c;
     -fx-background-radius: 5;
     -fx-background-insets: 0;
     -fx-border-radius: 5;
@@ -200,13 +201,16 @@
 }
 .pagination .toggle-button:hover,.pagination .button:hover {
     -fx-background-color: #1b1e25;
-    -fx-text-fill: #ffb66f;
+    /*-fx-text-fill: #ffb66f;*/
+    -fx-text-fill: #6f917c;
 }
 .pagination .button:hover {
-    -fx-background-color: #ffb66f;
+    /*-fx-background-color: #ffb66f;*/
+    -fx-background-color: #6f917c;
 }
 .pagination .toggle-button:selected {
-    -fx-background-color: #ffb66f;
+    /*-fx-background-color: #ffb66f;*/
+    -fx-background-color: #6f917c;
     -fx-text-fill: #000;
 }
 

@@ -12,8 +12,7 @@ import org.blueberry.spaceinvaders.SpaceInvaders;
 import org.blueberry.spaceinvaders.controller.AssetController;
 import java.util.*;
 
-import static org.blueberry.spaceinvaders.gameengine.Direction.LEFT;
-import static org.blueberry.spaceinvaders.gameengine.Direction.RIGHT;
+import static org.blueberry.spaceinvaders.gameengine.Direction.*;
 import static org.blueberry.spaceinvaders.gameengine.GameStatus.*;
 
 /**
@@ -191,11 +190,10 @@ public class Game {
      * Entfernt Sprite vom Spiel
      * @param sprite
      */
-    public void removeSprite(ISprite sprite) {
+    private void removeSprite(ISprite sprite) {
         if (sprite == null) return;
 
         if (sprite instanceof ShelterPart) {
-            System.out.println("instance of = shelterpart");
             for (Shelter shelter : shelterList) {
                 shelter.getShelterParts().remove(sprite);
             }
@@ -224,6 +222,7 @@ public class Game {
             for (ShelterPart shelterPart : ((Shelter)sprite).getShelterParts()) {
                 display.getChildren().remove(shelterPart);
             }
+            return;
         }
 
         display.getChildren().remove(sprite);
@@ -352,7 +351,7 @@ public class Game {
                 removeBullet(ship);
             });
 
-            display.getChildren().add(ship.getBullet());
+            addSpriteToPane(ship.getBullet());
             ship.shoot();
         }
     }
@@ -380,7 +379,7 @@ public class Game {
             shootInvader.newBullet();
             shootInvader.getBullet().getTimeLine().setOnFinished(event -> removeBullet(shootInvader));
 
-            display.getChildren().add(shootInvader.getBullet());
+            addSpriteToPane(shootInvader.getBullet());
             shootInvader.shoot();
         }
     }
@@ -388,7 +387,7 @@ public class Game {
     /**
      * erzeugt Invadergruppe im Spiel und fügt sie zur Pane hinzu
      */
-    public void createInvaderGroup() {
+    private void createInvaderGroup() {
         invaderGroup = InvaderGroup.getInstance();
 
         int posX = Integer.parseInt(SpaceInvaders.getSettings("invadergroup.position.x"));
@@ -415,7 +414,7 @@ public class Game {
      * @param invaders Invader
      * @return null oder den getroffenen Invader
      */
-    public Invader detectCollisionedInvader(Bullet bullet, List<Invader> invaders) {
+    private Invader detectCollisionedInvader(Bullet bullet, List<Invader> invaders) {
         for (Invader invader : invaders) {
             if (bullet.intersects(invader.getLayoutBounds())) {
                 return invader;
@@ -444,7 +443,7 @@ public class Game {
     /**
      * setzt das spiel zurück
      */
-    public static void reset() {
+    public void reset() {
         ourInstance = null;
     }
 
@@ -454,13 +453,11 @@ public class Game {
     public void nextLevel(){
         stop();
 
-        if(shelterList != null){
-            shelterList.forEach(this::removeSprite);
-        }
+        if(shelterList != null) shelterList.forEach( this::removeSprite);
+
         removeSprite(mysteryShip);
 
         invaderMoveDuration = invaderSpeed1;
-
         level.set(level.get() < 10 ? level.get() + 1 : 1);
 
         createInvaderGroup();

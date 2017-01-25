@@ -234,7 +234,7 @@ public class HighscoreViewController implements Initializable {
 //        refreshList();
         hbox_input.setVisible(false);
 
-        Game.reset();
+        Game.getInstance().reset();
         message_banner.setVisible(false);
         // TODO show toast message crud successfully
         // controlfx notification toast message
@@ -309,6 +309,7 @@ public class HighscoreViewController implements Initializable {
      */
     @FXML
     private void goToScreenWelcomeView(ActionEvent event) {
+        Game.getInstance().reset();
         SpaceInvaders.setScreen("WelcomeView");
     }
 
