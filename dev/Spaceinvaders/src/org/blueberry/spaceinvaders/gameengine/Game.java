@@ -28,7 +28,7 @@ public class Game {
     private MysteryShip mysteryShip;
     private List<Shelter> shelterList;
 
-    private Player player;
+    private Player player = new Player();
     private int currentInvaderBulletsCount = 0;
     private int maxInvaderBulletsCount = Integer.parseInt(SpaceInvaders.getSettings("invader.shoots.parallel"));
     private int invaderSpeed1 = Integer.parseInt(SpaceInvaders.getSettings("invader.move.speed.1"));
@@ -56,11 +56,9 @@ public class Game {
     }
 
     /**
-     * Konstruktor für das Spiel Singleton
-     * erzeugt einen neuen Spieler
+     * Konstruktor für das Spiel, Singleton
      */
     private Game() {
-        player = new Player();
     }
 
     /**
@@ -135,7 +133,6 @@ public class Game {
         if (mysteryShip != null) return;
 
         Random random = new Random();
-
         Direction randomDirection = random.nextInt(2) == 0 ? RIGHT : LEFT;
         mysteryShip = new MysteryShip(assetController.getImageAsset("mysteryShip"), randomDirection);
 
@@ -233,14 +230,13 @@ public class Game {
      * Testet, ob der Spieler das Geheimschiff getroffen hat
      * und behandelt dementsprechend
      */
-    public void checkAndHandleMysteryShipCollision(){
+    public void checkAndHandleShipBulletMysteryShipCollision(){
         if (ship.getBullet() != null && mysteryShip != null) {
             if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())) {
                 assetController.getAudioAsset("mysteryKilled").play();
                 player.setScore(player.getScore() + mysteryShip.getValue());
                 removeBullet(ship);
                 removeSprite(mysteryShip);
-                mysteryShip = null;
             }
         }
     }
@@ -249,7 +245,7 @@ public class Game {
      * Testet, ob der Spieler einen Invader getroffen hat
      * und behandelt dementsprechend
      */
-    public void checkAndHandleInvaderCollision() {
+    public void checkAndHandleShipBulletInvaderCollision() {
         if (ship.getBullet() != null) {
             Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
             if (collisionedInvader != null) {
@@ -347,9 +343,7 @@ public class Game {
 
         if (ship.getBullet() == null && gameStatus.get() == PLAY) {
             ship.newBullet();
-            ship.getBullet().getTimeLine().setOnFinished(event -> {
-                removeBullet(ship);
-            });
+            ship.getBullet().getTimeLine().setOnFinished(event -> removeBullet(ship));
 
             addSpriteToPane(ship.getBullet());
             ship.shoot();
