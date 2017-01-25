@@ -29,7 +29,7 @@ public class GameAnimationTimer extends AnimationTimer {
 
     /**
      * handle - wird ca. 60 mal pro Sekunde aufgerufen, behandelt die Spielereignisse
-     * @param now
+     * @param now -aktuelle Zeit
      */
     @Override
     public void handle(long now) {
@@ -38,11 +38,11 @@ public class GameAnimationTimer extends AnimationTimer {
 
             ship.move(ship.getMoveDirection());
 
-            game.checkAndHandleShipBulletMysteryShipCollision();
-            game.checkAndHandleShipBulletInvaderCollision();
-            game.checkAndHandleShipBulletShelterCollision();
-            game.checkAndHandleInvaderBulletShelterCollision();
-            game.checkAndHandleInvaderBulletShipCollision();
+            game.handleShipBulletMysteryShipCollision();
+            game.handleShipBulletInvaderCollision();
+            game.handleShipBulletShelterCollision();
+            game.handleInvaderBulletShelterCollision();
+            game.handleInvaderBulletShipCollision();
 
             //InvaderGroup bewegen (zeitabhängig)
             if (now > invaderMoveLastTime + game.getInvaderMoveDuration() * 1000000) {

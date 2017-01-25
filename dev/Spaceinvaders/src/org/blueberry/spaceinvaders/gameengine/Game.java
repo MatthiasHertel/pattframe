@@ -128,7 +128,7 @@ public class Game {
     /**
      * Erzeugt und startet das MysteryShip
      */
-    public void tryCreateMysteryShip(){
+    void tryCreateMysteryShip(){
 
         if (mysteryShip != null) return;
 
@@ -147,7 +147,7 @@ public class Game {
 
     /**
      * setzt alle Timelines auf Pause
-     * @param timeLines
+     * @param timeLines -Liste der aktiven TimeLines (animierte Sprites)
      */
     private void pauseActiveTimeLines(List<Timeline> timeLines) {
         timeLines.forEach(Timeline::pause);
@@ -155,7 +155,7 @@ public class Game {
 
     /**
      * setzt alle Timelines auf Play
-     * @param timeLines
+     * @param timeLines Liste der aktiven TimeLines (animierte Sprites)
      */
     private void playActiveTimeLines(List<Timeline> timeLines) {
         timeLines.forEach(Timeline::play);
@@ -165,15 +165,15 @@ public class Game {
      * Getter-Methode für alle Timelines
      * @return Timeline-Liste
      */
-    public List<Timeline> getAllActiveTimeLines() {
+    List<Timeline> getAllActiveTimeLines() {
         return this.allActiveTimeLines;
     }
 
     /**
      * Entfernt Projektil vom Spielelement und von der View
-     * @param sprite
+     * @param sprite - Spielelement
      */
-    public void removeBullet(IGunSprite sprite) {
+    private void removeBullet(IGunSprite sprite) {
         if (sprite instanceof Invader) {
             currentInvaderBulletsCount--;
         }
@@ -185,7 +185,7 @@ public class Game {
 
     /**
      * Entfernt Sprite vom Spiel
-     * @param sprite
+     * @param sprite - Spielelement
      */
     private void removeSprite(ISprite sprite) {
         if (sprite == null) return;
@@ -230,7 +230,7 @@ public class Game {
      * Testet, ob der Spieler das Geheimschiff getroffen hat
      * und behandelt dementsprechend
      */
-    public void checkAndHandleShipBulletMysteryShipCollision(){
+    void handleShipBulletMysteryShipCollision(){
         if (ship.getBullet() != null && mysteryShip != null) {
             if (ship.getBullet().intersects(mysteryShip.getLayoutBounds())) {
                 assetController.getAudioAsset("mysteryKilled").play();
@@ -245,7 +245,7 @@ public class Game {
      * Testet, ob der Spieler einen Invader getroffen hat
      * und behandelt dementsprechend
      */
-    public void checkAndHandleShipBulletInvaderCollision() {
+    void handleShipBulletInvaderCollision() {
         if (ship.getBullet() != null) {
             Invader collisionedInvader = detectCollisionedInvader(ship.getBullet(), invaderGroup.getInvaderList());
             if (collisionedInvader != null) {
@@ -253,7 +253,7 @@ public class Game {
                 removeBullet(ship);
 
                 player.setScore(player.getScore() + collisionedInvader.getValue());
-               removeSprite(collisionedInvader);
+                removeSprite(collisionedInvader);
 
                 //Geschwindigkeit in Abhängigkeit von der Invaderanzahl setzen
                 if(invaderGroup.getInvaderList().size() < invaderMaxCount / 3 ){
@@ -273,7 +273,7 @@ public class Game {
      * Testet, ob der Spieler einen Bunker getroffen hat
      * und behandelt dementsprechend
      */
-    public void checkAndHandleShipBulletShelterCollision() {
+    void handleShipBulletShelterCollision() {
         if (ship.getBullet() != null) {
             for (Shelter shelter : shelterList) {
                 if(ship.getBullet().intersects(shelter.getLayoutBounds().getMinX(), shelter.getLayoutBounds().getMinY(), shelter.getLayoutBounds().getWidth(), shelter.getLayoutBounds().getHeight())) {
@@ -296,7 +296,7 @@ public class Game {
      * Testet, ob ein Invader einen Bunker getroffen hat
      * und behandelt dementsprechend
      */
-    public void checkAndHandleInvaderBulletShelterCollision() {
+    void handleInvaderBulletShelterCollision() {
         for (Invader invader : invaderGroup.getInvaderList()) {
             if (invader.getBullet() != null) {
                 for (Shelter shelter : shelterList) {
@@ -322,7 +322,7 @@ public class Game {
      * Testet, ob ein Invader den Spieler getroffen hat
      * und behandelt dementsprechend
      */
-    public void checkAndHandleInvaderBulletShipCollision() {
+    void handleInvaderBulletShipCollision() {
         for (Invader invader : invaderGroup.getInvaderList()) {
             if (invader.getBullet() != null) {
                 if (ship.intersects(invader.getBullet().getLayoutBounds())) {
@@ -353,7 +353,7 @@ public class Game {
     /**
      * steuert Invaderschussfrequenz , falls noch kein Schuss aktiv ist , schiesse sonst nicht
      */
-    public void tryInvaderShoot() {
+    void tryInvaderShoot() {
 
         if (currentInvaderBulletsCount < maxInvaderBulletsCount && currentInvaderBulletsCount < invaderGroup.getInvaderList().size()) {
 
@@ -397,7 +397,7 @@ public class Game {
      * Getter-Methode für Invadergroup
      * @return InvaderGroup
      */
-    public InvaderGroup getInvaderGroup() {
+    InvaderGroup getInvaderGroup() {
         return invaderGroup;
     }
 
@@ -444,7 +444,7 @@ public class Game {
     /**
      * initiiert das nächste Spiellevel
      */
-    public void nextLevel(){
+    private void nextLevel(){
         stop();
 
         if(shelterList != null) shelterList.forEach( this::removeSprite);
@@ -473,22 +473,14 @@ public class Game {
      * Getter-Methode
      * @return Spielstatus
      */
-    public final GameStatus getGameStatus() { return gameStatus.get(); }
+    public GameStatus getGameStatus() { return gameStatus.get(); }
 
     /**
      * Setter-Methode
      * @param status Spielstatus
      */
-    public final void setGameStatus(GameStatus status) {
-        gameStatusProperty().set(status);
-    }
-
-    /**
-     * Property Spielstatus
-     * @return Spielstatus
-     */
-    public final ObjectProperty<GameStatus> gameStatusProperty() {
-        return gameStatus;
+    public void setGameStatus(GameStatus status) {
+        gameStatus.set(status);
     }
 
     /**
@@ -511,8 +503,16 @@ public class Game {
      * Getter-Methode für die Zeit zwischen der Invaderbewegung
      * @return invaderMoveDuration
      */
-    public int getInvaderMoveDuration(){
+    int getInvaderMoveDuration(){
         return this.invaderMoveDuration;
     }
+
+//     /**
+//     * Property Spielstatus
+//     * @return Spielstatus
+//     */
+//    public ObjectProperty<GameStatus> gameStatusProperty() {
+//        return gameStatus;
+//    }
 
 }
