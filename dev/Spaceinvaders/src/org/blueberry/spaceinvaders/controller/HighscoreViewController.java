@@ -80,7 +80,13 @@ public class HighscoreViewController implements Initializable {
     private SimpleIntegerProperty highScoreCompleteCount= new SimpleIntegerProperty(0);
 
     /**
-     * Initializes the controller class.
+     * Inizialisiert die Controller-Klasse
+     * Eventfilter fuer die Tableview (Sortierung)
+     * KeyEvent fuer Paginationnavigation ueber CursorTasten
+     * Population der Tableview ueber Bindings
+     * Abhaengig vom Gamestate einblenden des Platzierungsbanner
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -199,10 +205,8 @@ public class HighscoreViewController implements Initializable {
         getDBData(0);
     }
 
-
-
     /**
-     * onEventOccured
+     * Eventhandlemethode zum Aufruf der Handlemethode
      * @param event
      */
     // if there multiple action buttons (for settingsview)
@@ -221,9 +225,9 @@ public class HighscoreViewController implements Initializable {
         }
     }
 
-
     /**
-     * addNewHighscore
+     * Handlemethode zum Einfügen des Datensatzes
+     * @param punkte
      */
     public void addNewHighscore(int punkte) {
         int id = 1;
@@ -244,6 +248,10 @@ public class HighscoreViewController implements Initializable {
         hbox_mainmenuBtn.setVisible(true);
     }
 
+    /**
+     * Task zum Abrufen des Datensatzes einer Seite
+     * @param page
+     */
     public void getDBData(int page){
 
         Task task = new Task<Void>() {
@@ -275,7 +283,6 @@ public class HighscoreViewController implements Initializable {
      * @param itemsPerPage
      * @return
      */
-    // determine pagecount for pagination
     private int getPageCount(int totalCount, int itemsPerPage) {
         float floatCount = Float.valueOf(totalCount) / Float.valueOf(itemsPerPage);
         int intCount = totalCount / itemsPerPage;
@@ -283,6 +290,9 @@ public class HighscoreViewController implements Initializable {
 
     }
 
+    /**
+     * Nested Class - Service zur Platzierungsbestimmung
+     */
     private class RankingService extends Service<Integer> {
 
         @Override
@@ -300,9 +310,6 @@ public class HighscoreViewController implements Initializable {
         }
     }
 
-
-
-
     /**
      * Wechselt zur Welcome-View.
      * @param event
@@ -312,6 +319,4 @@ public class HighscoreViewController implements Initializable {
         Game.getInstance().reset();
         SpaceInvaders.setScreen("WelcomeView");
     }
-
-
 }

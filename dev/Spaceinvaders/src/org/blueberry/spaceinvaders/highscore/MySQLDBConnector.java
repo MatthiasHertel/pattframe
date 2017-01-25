@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 
 
 /**
- * Created by KK on 19.01.2017.
+ * MySQL-Datenbank-Connector, handled die Datenbankoperationen
  */
 public class MySQLDBConnector implements IDatabaseConnector {
 
@@ -20,10 +20,20 @@ public class MySQLDBConnector implements IDatabaseConnector {
 
     private MySQLDBConnector(){}
 
+    /**
+     * Getter-Methode für die Datenbank-Instanz
+     * @return mySQLDBConnector
+     */
     public static MySQLDBConnector getInstance(){
         return mySQLDBConnector;
     }
 
+    /**
+     * Methode zum Verbinden mit der Datenbank
+     * @param url URL zum DB-Host
+     * @param user Username Anmeldedaten (user credential)
+     * @param pw Passwort Anmeldedaten (passphrase credential)
+     */
     @Override
     public void connect(String url, String user, String pw) {
 
@@ -58,6 +68,10 @@ public class MySQLDBConnector implements IDatabaseConnector {
         });
     }
 
+    /**
+     * Handlemethode zur Datenbankpopulation
+     * @return highscorelist
+     */
     @Override
     public ObservableList<Highscore> getHighscoreList(){
         String query = "SELECT * FROM highscore ORDER BY punkte DESC";
@@ -92,7 +106,10 @@ public class MySQLDBConnector implements IDatabaseConnector {
     }
 
 
-
+    /**
+     * Handlemethode zur Einfuegen eines Datensatzes in die Datenbank
+     * @param highscore
+     */
     @Override
     public void insertHighscore(Highscore highscore){
         try {
@@ -109,6 +126,10 @@ public class MySQLDBConnector implements IDatabaseConnector {
 
     }
 
+    /**
+     * Handlemethode zur Updaten eines Datensatzes
+     * @param highscore
+     */
     @Override
     public void updateHighscore(Highscore highscore){
         try {
@@ -129,7 +150,10 @@ public class MySQLDBConnector implements IDatabaseConnector {
         }
     }
 
-
+    /**
+     * Handlemethode zur Löschen eines Datensatzes
+     * @param highscore
+     */
     @Override
     public void deleteHighscore(Highscore highscore){
         try {
@@ -145,7 +169,11 @@ public class MySQLDBConnector implements IDatabaseConnector {
     }
 
 
-
+    /**
+     * Handlemethode zur Bestimmung der Platzierung in der Highscore
+     * @param punkte
+     * @return Platzierung in der Highscore (int)
+     */
     @Override
     public int determinePosition(int punkte) {
         try {
@@ -165,6 +193,9 @@ public class MySQLDBConnector implements IDatabaseConnector {
         return 0;
     }
 
+    /**
+     * Handlemethode zum Loeschen der Datenbank
+     */
     public void resetHighscoreTable() {
         String query = "TRUNCATE highscore;";
         try {
@@ -177,6 +208,10 @@ public class MySQLDBConnector implements IDatabaseConnector {
         }
     }
 
+    /**
+     * Handlemethode zur Bestimmung der Anzahl der Datensaetze in der Datenbank
+     * @return
+     */
     @Override
     public int getCount() {
         String query = "SELECT COUNT(*) FROM highscore;";
@@ -195,7 +230,13 @@ public class MySQLDBConnector implements IDatabaseConnector {
         return 0;
     }
 
-
+    /**
+     * Handlemethode für Pagination
+     * @param from
+     * @param till
+     * @param orderBy
+     * @return highscorelist
+     */
     @Override
     public ObservableList<Highscore> getHighscoreListPage(int from, int till, String orderBy){
 //        String query = "SELECT * FROM highscore ORDER BY " + orderBy + " LIMIT " + from + "," + till ;
@@ -231,6 +272,10 @@ public class MySQLDBConnector implements IDatabaseConnector {
         return highscoreList;
     }
 
+    /**
+     * Handlemethode zum Verbindungsstatus der Datenbankverbindung
+     * @return
+     */
     public boolean isClosed()  {
 
         if (connection == null) return true;
