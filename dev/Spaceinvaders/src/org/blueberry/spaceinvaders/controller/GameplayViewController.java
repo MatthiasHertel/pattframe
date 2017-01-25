@@ -121,7 +121,6 @@ public class GameplayViewController implements Initializable {
                 case ESCAPE:
                     game.stop();
                     game.reset();
-                    SpaceInvaders.setScreen("WelcomeView");
                     break;
                 case P:
                     game.setGameStatus(game.getGameStatus() == PLAY ? PAUSE : PLAY);

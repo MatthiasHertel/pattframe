@@ -19,7 +19,7 @@
 }
 
 .btnIcon,.btnIcon:default {
-    -fx-font-size: 16;
+    -fx-font-size: 14;
     -fx-text-fill: #fff;
     -fx-graphic-text-gap: 20px;
     -fx-background-color: #1b1e25;

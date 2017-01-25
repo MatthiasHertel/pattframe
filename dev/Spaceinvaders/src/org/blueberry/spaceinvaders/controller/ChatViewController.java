@@ -56,12 +56,13 @@ public class ChatViewController implements Initializable {
 
     /**
      * Inizialisiert die Controller-Klasse.
-     * setzt die Bindings
+     * Bindings der Viewelemente
      * @param url
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         model.userName.bindBidirectional(userNameTextfield.textProperty());
         model.readyToChat.bind(model.userName.isNotEmpty());
         connectButton.disableProperty().bind(
@@ -72,44 +73,64 @@ public class ChatViewController implements Initializable {
         messageTextField.disableProperty().bind(model.connected.not());
         messageTextField.textProperty().bindBidirectional(model.currentMessage);
 
+        Platform.runLater(()->userNameTextfield.requestFocus());
+
         chatListView.setItems(model.chatHistory);
+
         messageTextField.setOnAction(event -> {
             handleSendMessage();
         });
         chatButton.setOnAction(evt -> {
             handleSendMessage();
         });
-        connectButton.setOnAction(evt -> {
-            try {
-                // for production environment (wss required)
-                clientEndPoint = new ChatClientEndpoint(new URI("wss://mhertel.de:1337"));
-                // for development environment (ws)
-//				clientEndPoint = new ChatClientEndpoint(new URI("ws://localhost:1337"));
-                clientEndPoint.addMessageHandler(responseString -> {
-                    Platform.runLater(() -> {
-                        System.out.println(responseString);
-                        ChatObject chatObject = getChatObject(responseString);
-                        chatObject.handle(model);
-                        String color = model.color.get();
-                        if (color == null) {
-                            color = "black";
-                        }
-                        userNameLabel.setStyle("-fx-text-fill:" + color);
-                        chatListView.scrollTo(model.chatHistory.size());
-                        chatListView.setCellFactory(chatListView -> new ChatMessageListViewCell());
-                    });
-                });
-                clientEndPoint.sendMessage(model.userName.getValueSafe());
-                userNameTextfield.setDisable(true);
-                model.connected.set(true);
-                userNameLabel.textProperty().setValue(model.userName.getValue());
-            } catch (Exception e) {
-                SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
-                System.out.println(e.getMessage());
-            }
 
+        if (model.readyToChat.not().getValue()) {
+            userNameTextfield.setOnAction(evt -> {
+                connect();
+            });
+        }
+        connectButton.setOnAction(evt -> {
+            connect();
         });
 
+    }
+
+    /**
+     * Verbindungsaufbau zum ServerEndpoint
+     */
+    private void connect() {
+        try {
+            // for production environment (wss required)
+            clientEndPoint = new ChatClientEndpoint(new URI("wss://mhertel.de:1337"));
+
+            // for development environment (ws)
+            // clientEndPoint = new ChatClientEndpoint(new URI("ws://localhost:1337"));
+
+            clientEndPoint.addMessageHandler(responseString -> {
+                Platform.runLater(() -> {
+                    System.out.println(responseString);
+                    ChatObject chatObject = getChatObject(responseString);
+                    chatObject.handle(model);
+                    String color = model.color.get();
+                    if (color == null) {
+                        color = "black";
+                    }
+                    userNameLabel.setStyle("-fx-text-fill:" + color);
+                    messageTextField.setStyle("-fx-border-color: " + color + "; -fx-text-fill: "+ color );
+
+                    chatListView.scrollTo(model.chatHistory.size());
+                    chatListView.setCellFactory(chatListView -> new ChatMessageListViewCell());
+                });
+            });
+            clientEndPoint.sendMessage(model.userName.getValueSafe());
+            userNameTextfield.setDisable(true);
+            model.connected.set(true);
+            userNameLabel.textProperty().setValue(model.userName.getValue());
+            messageTextField.requestFocus();
+        } catch (Exception e) {
+            SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
