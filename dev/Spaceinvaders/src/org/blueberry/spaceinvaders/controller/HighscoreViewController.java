@@ -137,6 +137,9 @@ public class HighscoreViewController implements Initializable {
                 case RIGHT:
                     if (index < pagination.getPageCount()) pagination.setCurrentPageIndex(++index);
                     break;
+                case ESCAPE:
+                    SpaceInvaders.setScreen("WelcomeView");
+                    break;
 
             }
         });
