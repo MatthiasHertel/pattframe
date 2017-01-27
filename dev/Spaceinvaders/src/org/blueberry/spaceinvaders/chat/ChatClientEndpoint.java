@@ -110,6 +110,8 @@ public class ChatClientEndpoint {
 //        }
         userSession.getAsyncRemote().sendText(message);
 
+//        userSession.getAsyncRemote().sendText(message == null ? "" : message);
+
     }
 
     /**
