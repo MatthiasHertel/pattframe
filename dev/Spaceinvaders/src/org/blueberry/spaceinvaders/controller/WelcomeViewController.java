@@ -44,7 +44,7 @@ public class WelcomeViewController implements Initializable {
     }
 
     /**
-     * Wechselt zur Highscore-View.
+     * Wechselt zur Score-View.
      * @param event
      */
     @FXML

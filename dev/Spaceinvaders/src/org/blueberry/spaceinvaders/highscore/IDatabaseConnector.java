@@ -1,8 +1,6 @@
 package org.blueberry.spaceinvaders.highscore;
 
-import javafx.collections.ObservableList;
-
-import java.util.List;
+        import javafx.collections.ObservableList;
 
 /**
  * Interface für die Datenbankconnectoren
@@ -16,32 +14,31 @@ public interface IDatabaseConnector {
      * @param pw Passwort Anmeldedaten (passphrase credential)
      */
     void connect(String url, String user, String pw);
-//    List<Object> getRecords(String table);
-    ObservableList<Highscore> getHighscoreList();
-    ObservableList<Highscore> getHighscoreListPage(int from, int till, String orderBy);
+    //    List<Object> getRecords(String table);
+    ObservableList<Score> getHighscoreListPage(int from, int count, String orderBy);
 
     /**
      * Handlemethode zur Einfuegen eines Datensatzes in die Datenbank
-     * @param highscore
+     * @param score
      */
-    void insertHighscore(Highscore highscore);
+    void insertHighscore(Score score);
 
     /**
      * Handlemethode zur Updaten eines Datensatzes
-     * @param highscore
+     * @param score
      */
-    void updateHighscore(Highscore highscore);
+    void updateHighscore(Score score);
 
     /**
      * Handlemethode zur Läschen eines Datensatzes
-     * @param highscore
+     * @param score
      */
-    void deleteHighscore(Highscore highscore);
+    void deleteHighscore(Score score);
 
     /**
-     * Handlemethode zur Bestimmung der Platzierung in der Highscore
+     * Handlemethode zur Bestimmung der Platzierung in der Score
      * @param punkte
-     * @return Platzierung in der Highscore (int)
+     * @return Platzierung in der Score (int)
      */
     int determinePosition(int punkte);
 

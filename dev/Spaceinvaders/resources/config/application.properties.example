@@ -73,6 +73,7 @@ game.standardtheme = theme1
 
 player.lives = 3
 
+highscore.itemsperpage = 15
 
 
 # db credentials

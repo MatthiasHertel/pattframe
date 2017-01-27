@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
@@ -10,9 +15,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
-
 <?import javafx.geometry.Insets?>
-<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
+
+<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.HighscoreViewController">
    <children>
       <AnchorPane id="displayHighscore" fx:id="displayHighscore" maxHeight="600.0" maxWidth="1024.0" prefHeight="600.0" prefWidth="1024.0">
           <children>
@@ -21,12 +26,12 @@
                     <children>
                         <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../theme1/graphics/layout/highscore.png" />
+                                <Image url="@../theme1/graphics/layout/score.png" />
                             </image>
                         </ImageView>
                     </children>
                 </HBox>
-                <!--highscore tableview -->
+                <!--score tableview -->
                 <TableView fx:id="crudTable" layoutY="83.0" maxWidth="-Infinity" prefHeight="415.0" prefWidth="1024.0">
                     <columns>
                         <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
@@ -35,19 +40,20 @@
                         <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
                     </columns>
                 </TableView>
-                <!--pagination for highscore tableview -->
+                <!--pagination for score tableview -->
                 <HBox alignment="CENTER" layoutY="500.0" prefHeight="40.0" prefWidth="1024.0">
                     <children>
                         <Pagination fx:id="pagination" prefHeight="38.0" prefWidth="500.0" styleClass="pagination" />
                     </children>
                 </HBox>
                 <!--message banner -->
-                <HBox id="message" fx:id="message_banner" alignment="CENTER" layoutY="300.0" prefHeight="77.0" prefWidth="1024.0">
-                    <children>
-                    </children>
+                <HBox id="message" fx:id="message_banner" alignment="CENTER" layoutY="300.0" prefHeight="77.0" prefWidth="1024.0" visible="false">
+               <children>
+                  <Label fx:id="messageLabel" />
+               </children>
                 </HBox>
-                <!-- inputs to save in highscore -->
-                <HBox fx:id="hbox_input" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0">
+                <!-- inputs to save in score -->
+                <HBox fx:id="hbox_input" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0" visible="false">
                     <children>
                         <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 4)" styleClass="inputField">
                             <HBox.margin>

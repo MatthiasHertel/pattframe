@@ -4,9 +4,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Highscore - Entspricht dem Model welches das Datenbankschema repräsentiert (Darstellung eines Datensatzes)
+ * Score - Entspricht dem Model welches das Datenbankschema repräsentiert (Darstellung eines Datensatzes)
  */
-public class Highscore {
+public class Score {
 
     private SimpleIntegerProperty id;
     private SimpleStringProperty name;
@@ -20,7 +20,7 @@ public class Highscore {
      * @param xpunkte spielerpunkte
      * @param xcreated_at Zeitstempel für das Erzeugen der row
      */
-    public Highscore(Integer xid, String xname, Integer xpunkte, String xcreated_at) {
+    public Score(Integer xid, String xname, Integer xpunkte, String xcreated_at) {
         this.id = new SimpleIntegerProperty(xid);
         this.name = new SimpleStringProperty(xname);
         this.punkte= new SimpleIntegerProperty(xpunkte);

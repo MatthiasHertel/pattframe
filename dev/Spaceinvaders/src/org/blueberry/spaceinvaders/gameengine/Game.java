@@ -438,6 +438,7 @@ public class Game {
      * setzt das spiel zurück
      */
     public void reset() {
+        player.scoreProperty().set(0);
         ourInstance = null;
     }
 
