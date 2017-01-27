@@ -49,8 +49,8 @@
     -fx-border-color: #e8e8e8;
 }
 #messageTextField {
-    -fx-min-width: 655px;
-    -fx-padding: 7px 15px;
+    -fx-min-width: 780px;
+    -fx-padding: 7px 20px;
 }
 #userNameLabel {
     -fx-font-size: 25;
@@ -112,7 +112,7 @@
     -fx-graphic: url('../graphics/layout/btnInvader2Hover.png');
 }
 #sendBtn {
-    -fx-pref-width: 150px;
+
     -fx-border-color: #997aff;
     -fx-text-fill:  #997aff;
     -fx-graphic: url('../graphics/layout/btnInvader3.png');
