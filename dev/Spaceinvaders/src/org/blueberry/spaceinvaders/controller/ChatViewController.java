@@ -115,7 +115,7 @@ public class ChatViewController implements Initializable {
                     if (color == null) {
                         color = "black";
                     }
-                    userNameLabel.setStyle("-fx-text-fill:" + color);
+                    //userNameLabel.setStyle("-fx-text-fill:" + color);
                     messageTextField.setStyle("-fx-border-color: " + color + "; -fx-text-fill: "+ color );
 
                     chatListView.scrollTo(model.chatHistory.size());
@@ -125,7 +125,7 @@ public class ChatViewController implements Initializable {
             clientEndPoint.sendMessage(model.userName.getValueSafe());
             userNameTextfield.setDisable(true);
             model.connected.set(true);
-            userNameLabel.textProperty().setValue(model.userName.getValue());
+            //userNameLabel.textProperty().setValue(model.userName.getValue());
             messageTextField.requestFocus();
         } catch (Exception e) {
             SpaceInvaders.showDialog("Error in Class: " + this.getClass().getSimpleName() + ".\n" + e.getMessage());
