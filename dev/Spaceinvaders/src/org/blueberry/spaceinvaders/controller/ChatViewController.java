@@ -54,6 +54,8 @@ public class ChatViewController implements Initializable {
 
     private ChatClientEndpoint clientEndPoint;
 
+
+
     /**
      * Inizialisiert die Controller-Klasse.
      * Bindings der Viewelemente
@@ -62,6 +64,8 @@ public class ChatViewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        model.currentMessage.setValue("");
 
         model.userName.bindBidirectional(userNameTextfield.textProperty());
         model.readyToChat.bind(model.userName.isNotEmpty());
