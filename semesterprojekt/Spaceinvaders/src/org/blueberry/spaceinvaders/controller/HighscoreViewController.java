@@ -75,6 +75,8 @@ public class HighscoreViewController implements Initializable {
             highscoreDB.determineRanking(scoreProperty.intValue());
         }
 
+        highscoreDB.setOrderBy("punkte DESC");
+
         highscoreDB.setItemsPerPage(itemsPerPage);
 
         highscoreDB.addedProperty().addListener((observable, oldValue, newValue) -> {

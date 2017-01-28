@@ -36,7 +36,7 @@
                       <Button id="manualBtn" mnemonicParsing="false" onAction="#goToScreenManualView" styleClass="btnIcon" text="Spielanleitung" />
                       <Button id="chatBtn" mnemonicParsing="false" onAction="#goToScreenChatView" styleClass="btnIcon" text="Chat" />
                       <Button id="closeBtn" mnemonicParsing="false" onAction="#closeGame" styleClass="btnIcon" text="Spiel beenden" />
-                      <Hyperlink fx:id="hyperLink" styleClass="link" text="www.spaceinvaders.de" />
+                      <Hyperlink fx:id="hyperLink" styleClass="link" text="Spaceinvaders im WWW" />
                   </children>
               </VBox>
           </children>
