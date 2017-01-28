@@ -103,15 +103,7 @@ public class ChatClientEndpoint {
      * @param message
      */
     public void sendMessage(final String message) {
-//        if (message == null) {
-//            userSession.getAsyncRemote().sendText("");
-//        } else {
-//            userSession.getAsyncRemote().sendText(message);
-//        }
         userSession.getAsyncRemote().sendText(message);
-
-//        userSession.getAsyncRemote().sendText(message == null ? "" : message);
-
     }
 
     /**
