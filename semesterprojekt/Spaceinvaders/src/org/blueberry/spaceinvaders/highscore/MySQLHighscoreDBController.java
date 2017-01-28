@@ -70,17 +70,17 @@ public class MySQLHighscoreDBController extends AHighscoreDBController {
 
     /**
      * Speichert einen Punktwert in die Datenbank
-     * @param score Punktwert, der in die DB eingetragen werden soll
+     * @param highscore Punktwert, der in die DB eingetragen werden soll
      */
     @Override
-    public void insertScore(Score score) {
+    public void insertScore(Highscore highscore) {
         waitForConnection();
 
         try {
             PreparedStatement ps = connection
                     .prepareStatement("INSERT INTO highscore (name, punkte) VALUES  (?,?);");
-            ps.setString(1, score.getName());
-            ps.setInt(2, score.getPunkte());
+            ps.setString(1, highscore.getName());
+            ps.setInt(2, highscore.getPunkte());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -123,13 +123,13 @@ public class MySQLHighscoreDBController extends AHighscoreDBController {
      * @return highscorelist
      */
     @Override
-    public ObservableList<Score> getHighscoreList(int from, int count, String orderBy){
+    public ObservableList<Highscore> getHighscoreList(int from, int count, String orderBy){
         waitForConnection();
 
         orderBy = orderBy == null ? "" : "ORDER BY " + orderBy;
         String query = "SELECT name, created_at, punkte, (select COUNT(DISTINCT punkte)+1 from highscore WHERE punkte > h.punkte) AS position FROM highscore h " + orderBy + " LIMIT " + from + "," + count ;
 
-        ObservableList<Score> highscoreList = FXCollections.observableArrayList();
+        ObservableList<Highscore> highscoreList = FXCollections.observableArrayList();
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet selectionResult = ps.executeQuery();
@@ -141,7 +141,7 @@ public class MySQLHighscoreDBController extends AHighscoreDBController {
                 DateFormat df = new SimpleDateFormat("dd.MM.YY  HH:mm");
                 String created_at = df.format(selectionResult.getTimestamp("created_at")).concat(" Uhr");
 
-                Score selectedHighscore = new Score(position, name, punkte, created_at);
+                Highscore selectedHighscore = new Highscore(position, name, punkte, created_at);
                 highscoreList.add(selectedHighscore);
             }
 

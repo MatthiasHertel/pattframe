@@ -11,6 +11,10 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 
+/**
+ * Abstrakter Highscore DB-Controller
+ * implementiert Highscore Interface
+ */
 abstract class AHighscoreDBController implements IHighscoreDBController {
 
     private String orderBy = "punkte DESC";
@@ -20,11 +24,11 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
     private String url;
     private String user;
     private String pw;
-    private Score score;
+    private Highscore highscore;
 
     private IntegerProperty pageCount = new SimpleIntegerProperty(0);
     private IntegerProperty ranking = new SimpleIntegerProperty(0);
-    private ObservableList<Score> highscoreList = FXCollections.observableArrayList();
+    private ObservableList<Highscore> highscoreList = FXCollections.observableArrayList();
     private BooleanProperty added = new SimpleBooleanProperty(false);
 
     private RankingService rankingService = new RankingService();
@@ -57,7 +61,7 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
         });
 
         listService.setOnSucceeded(event -> {
-            highscoreList.setAll((ObservableList<Score>)event.getSource().getValue());
+            highscoreList.setAll((ObservableList<Highscore>)event.getSource().getValue());
             listService.reset();
         });
         listService.setOnCancelled(event -> {
@@ -86,55 +90,132 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
     }
 
 
+    /**
+     * Abstrakte Methode, die von der konkreten Klasse implementiert wurden müssen
+     * @return Anzahl der gesamten Datensätze in der Datenbank
+     */
     abstract public int getRecordCount();
-    abstract public ObservableList<Score> getHighscoreList(int from, int count, String orderBy);
+
+    /**
+     * Abstrakte Methode, die von der konkreten Klasse implementiert wurden müssen
+     *
+     * @param from Startpunkt der Query
+     * @param count Anzahl der gewünschten Datensätze
+     * @param orderBy ORDER BY Klausel
+     * @return Liste der Datensätze (Ergebnisse des SELECET-Statements)
+     */
+    abstract public ObservableList<Highscore> getHighscoreList(int from, int count, String orderBy);
+
+    /**
+     * Abstrakte Methode, die von der konkreten Klasse implementiert wurden müssen
+     *
+     * Bestimmt die Platzierung
+     * @param points - Spielerpunkte
+     * @return Platz
+     */
     abstract public int detectRanking(int points);
+
+    /**
+     * Abstrakte Methode, die von der konkreten Klasse implementiert wurden müssen
+     *
+     * Verbidung zum DB Server
+     * @param url URL
+     * @param user USER
+     * @param pw PASSWORD
+     */
     abstract public void connectServer(String url, String user, String pw);
-    abstract public void insertScore(Score score);
+
+    /**
+     * Abstrakte Methode, die von der konkreten Klasse implementiert wurden müssen
+     *
+     * Fügt einen neuen Datensatz ein
+     * @param highscore HIGHSCORE (Name und Punkte des Spielers)
+     */
+    abstract public void insertScore(Highscore highscore);
 
 
-
+    /**
+     * Getter-Methode
+     * wonach und in welcher Reihenfolge sortiert wird
+     * @return ORDER BY Klausel
+     */
     @Override
     public String getOrderBy() {
         return orderBy;
     }
 
+    /**
+     * Setter-Methode
+     * wonach und in welcher Reihenfolge sortiert wird
+     * @param orderBy -DESC/ASC Spaltennname
+     */
     @Override
     public void setOrderBy(String orderBy){
         this.orderBy = orderBy;
     }
 
+    /**
+     * Setter-Methode
+     * relevant für die pagination-Logik
+     * @param from -für DB Query Index
+     */
     @Override
     public void setFrom(int from) {
         this.from = from;
     }
 
+    /**
+     * Setter-Methode
+     * @param itemsPerPage -für DB Query Anzahl der Datensätze
+     */
     @Override
     public void setItemsPerPage(int itemsPerPage) {
         this.itemsPerPage = itemsPerPage;
     }
 
+
+    /**
+     * Getter-Methode für das Property
+     * @return ranking
+     */
     @Override
     public IntegerProperty rankingProperty(){
         return ranking;
     }
 
+    /**
+     * Getter-Methode für das Property
+     * @return pageCount
+     */
     @Override
     public IntegerProperty pageCountProperty(){
         return pageCount;
     }
 
+    /**
+     * Getter-Methode für das Property
+     * @return highscoreListe
+     */
     @Override
-    public ObservableList<Score> highscoreListProperty() {
+    public ObservableList<Highscore> highscoreListProperty() {
         return highscoreList;
     }
 
 
+    /**
+     * Getter-Methode für das Property
+     * Flag, Wann ist der Insert in der Datenbank abgeschlossen?
+     * @return added
+     */
     @Override
     public BooleanProperty addedProperty(){
         return added;
     }
 
+    /**
+     * Bestimmt die Platzierung (auf dem Server)
+     * @param points Spielerpunkte
+     */
     @Override
     public void determineRanking(int points){
         this.points = points;
@@ -143,6 +224,9 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
         rankingService.start();
     }
 
+    /**
+     * Akualisiert die Daten vom DBServer
+     */
     @Override
     public void refreshDBData(){
         if (listService.getState() != Worker.State.READY){
@@ -156,6 +240,13 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
         else pageCountService.start();
     }
 
+    /**
+     * Verbindung zum Remote DBMS
+     *
+     * @param url URL
+     * @param user USER
+     * @param pw PASSWORD
+     */
     @Override
     public void connect(String url, String user, String pw){
         this.url = url;
@@ -165,9 +256,13 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
         connectService.start();
     }
 
+    /**
+     * Fügt einen einen Highscore in die DB ein (insert)
+     * @param highscore HIGHSCORE (Punktwert + Spielername)
+     */
     @Override
-    public void addHighscore(Score score){
-        this.score = score;
+    public void addHighscore(Highscore highscore){
+        this.highscore = highscore;
         scoreService.start();
     }
 
@@ -185,7 +280,7 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
     }
 
     /**
-     * Nested Class - Service zum Einfügen eines Spieler Score in die DB
+     * Nested Class - Service zum Einfügen eines Spieler Highscore in die DB
      */
     private class ScoreService extends Service<Void> {
         @Override
@@ -194,7 +289,7 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
                 @Override
                 protected Void call() {
                     added.set(false);
-                    insertScore(score);
+                    insertScore(highscore);
                     return null;
                 }
             };
@@ -238,12 +333,12 @@ abstract class AHighscoreDBController implements IHighscoreDBController {
     /**
      * Nested Class - Service zum Holen der Datensätze aus der Datenbank
      */
-    private class ListService extends Service<ObservableList<Score>> {
+    private class ListService extends Service<ObservableList<Highscore>> {
         @Override
-        protected Task<ObservableList<Score>> createTask() {
-            return new Task<ObservableList<Score>>() {
+        protected Task<ObservableList<Highscore>> createTask() {
+            return new Task<ObservableList<Highscore>>() {
                 @Override
-                protected ObservableList<Score> call() {
+                protected ObservableList<Highscore> call() {
                     return getHighscoreList(from, itemsPerPage, orderBy);
                 }
             };

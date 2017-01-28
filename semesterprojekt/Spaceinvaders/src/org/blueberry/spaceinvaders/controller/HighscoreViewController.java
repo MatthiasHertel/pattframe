@@ -27,15 +27,15 @@ import org.blueberry.spaceinvaders.highscore.*;
 public class HighscoreViewController implements Initializable {
 
     @FXML
-    private TableView<Score> crudTable;
+    private TableView<Highscore> crudTable;
     @FXML
-    private TableColumn<Score, String> nameColumn;
+    private TableColumn<Highscore, String> nameColumn;
     @FXML
-    private TableColumn<Score, Integer> idColumn;
+    private TableColumn<Highscore, Integer> idColumn;
     @FXML
-    private TableColumn<Score, Integer> punkteColumn;
+    private TableColumn<Highscore, Integer> punkteColumn;
     @FXML
-    private TableColumn<Score, String> dateColumn;
+    private TableColumn<Highscore, String> dateColumn;
     @FXML
     private TextField nameField;
     @FXML
@@ -76,6 +76,7 @@ public class HighscoreViewController implements Initializable {
         }
 
         highscoreDB.setOrderBy("punkte DESC");
+        highscoreDB.setFrom(0);
 
         highscoreDB.setItemsPerPage(itemsPerPage);
 
@@ -109,7 +110,7 @@ public class HighscoreViewController implements Initializable {
 
         messageLabel.textProperty().bind(
                 new SimpleStringProperty("Sie haben " + scoreProperty.intValue() + " Punkte erreicht und damit Platz ")
-                        .concat(highscoreDB.rankingProperty().asString().concat(" in der Score belegt! Bitte geben Sie Ihren Namen ein."))
+                        .concat(highscoreDB.rankingProperty().asString().concat(" in der Highscore belegt! Bitte geben Sie Ihren Namen ein."))
         );
 
         hbox_mainmenuBtn.visibleProperty().bind(
@@ -210,9 +211,9 @@ public class HighscoreViewController implements Initializable {
      */
     private void addScore(int punkte) {
 
-        Score score = new Score(0 , nameField.getText(), punkte, "");
+        Highscore highscore = new Highscore(0 , nameField.getText(), punkte, "");
 
-        highscoreDB.addHighscore(score);
+        highscoreDB.addHighscore(highscore);
 
         Game.getInstance().reset();
 

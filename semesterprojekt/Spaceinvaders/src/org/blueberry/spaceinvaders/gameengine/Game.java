@@ -79,7 +79,7 @@ public class Game {
 
     /**
      * Konstruiert den Spielplatz für alle Elemente
-     * bindet die spiellogikrelevanten Elemente (Score, Leben) an die View
+     * bindet die spiellogikrelevanten Elemente (Highscore, Leben) an die View
      * @param pane Entrynode in der View
      */
     public void constructGame(AnchorPane pane) {

@@ -31,7 +31,7 @@
                         </ImageView>
                     </children>
                 </HBox>
-                <!--score tableview -->
+                <!--highscore tableview -->
                 <TableView fx:id="crudTable" layoutY="83.0" maxWidth="-Infinity" prefHeight="415.0" prefWidth="1024.0">
                     <columns>
                         <TableColumn fx:id="idColumn" prefWidth="75.0" text="#" />
@@ -40,7 +40,7 @@
                         <TableColumn fx:id="dateColumn" prefWidth="100.0" text="Datum" />
                     </columns>
                 </TableView>
-                <!--pagination for score tableview -->
+                <!--pagination for highscore tableview -->
                 <HBox alignment="CENTER" layoutY="500.0" prefHeight="40.0" prefWidth="1024.0">
                     <children>
                         <Pagination fx:id="pagination" prefHeight="38.0" prefWidth="500.0" styleClass="pagination" />
@@ -52,7 +52,7 @@
                   <Label fx:id="messageLabel" />
                </children>
                 </HBox>
-                <!-- inputs to save in score -->
+                <!-- inputs to save in highscore -->
                 <HBox fx:id="hbox_input" alignment="CENTER" layoutY="540.0" prefHeight="50.0" prefWidth="1024.0" visible="false">
                     <children>
                         <TextField fx:id="nameField" alignment="CENTER" promptText="Name (min 4)" styleClass="inputField">
