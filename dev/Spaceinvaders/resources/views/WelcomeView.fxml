@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.WelcomeViewController">
+   <children>
+      <AnchorPane id="displayWelcome" prefHeight="600.0" prefWidth="1024">
+          <children>
+              <VBox alignment="CENTER" prefHeight="222.0" prefWidth="301.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                  <children>
+                      <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true" scaleX="1.5" scaleY="1.5">
+                          <image>
+                              <Image url="@../theme1/graphics/layout/logo.png" />
+                          </image>
+                      </ImageView>
+                      <Label id="displayWelcomeClaim" text="Beschütze die Erde vor den Aliens!">
+                          <VBox.margin>
+                              <Insets bottom="40.0" />
+                          </VBox.margin>
+                     </Label>
+                      <Button id="gameplayBtn" mnemonicParsing="false" onAction="#goToScreenGameplayView" styleClass="btnIcon" text="Spiel starten" />
+                      <Button id="highscoreBtn" mnemonicParsing="false" onAction="#goToScreenHighscoreView" styleClass="btnIcon" text="Highscore" />
+                      <Button id="manualBtn" mnemonicParsing="false" onAction="#goToScreenManualView" styleClass="btnIcon" text="Spielanleitung" />
+                      <Button id="chatBtn" mnemonicParsing="false" onAction="#goToScreenChatView" styleClass="btnIcon" text="Chat" />
+                      <Button id="closeBtn" mnemonicParsing="false" onAction="#closeGame" styleClass="btnIcon" text="Spiel beenden" />
+                      <Hyperlink fx:id="hyperLink" styleClass="link" text="www.spaceinvaders.de" />
+                  </children>
+              </VBox>
+          </children>
+      </AnchorPane>
+   </children>
+</StackPane>

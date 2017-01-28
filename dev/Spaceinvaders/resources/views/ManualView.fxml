@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.web.WebView?>
+
+<StackPane id="stackPane" stylesheets="@../theme1/stylesheets/Style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.blueberry.spaceinvaders.controller.ManualViewController">
+   <children>
+       <HBox alignment="TOP_CENTER" prefHeight="77.0" prefWidth="1024.0">
+           <children>
+               <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../theme1/graphics/layout/spielanleitung.png" />
+                   </image>
+               </ImageView>
+           </children>
+       </HBox>
+      <AnchorPane id="displayManual" prefHeight="600.0" prefWidth="1024.0">
+          <children>
+
+              <WebView fx:id="manualView" layoutX="106.0" layoutY="58.0" prefHeight="470.0" prefWidth="806.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" />
+              <HBox alignment="CENTER" layoutY="540.0" prefHeight="57.0" prefWidth="1024.0" spacing="20.0">
+                  <children>
+                      <Button id="mainmenuBtn" fx:id="button" mnemonicParsing="false" onAction="#goToScreenWelcomeView" styleClass="btnIcon" text="Hauptmenü" />
+                  </children>
+              </HBox>
+          </children>
+      </AnchorPane>
+   </children>
+</StackPane>

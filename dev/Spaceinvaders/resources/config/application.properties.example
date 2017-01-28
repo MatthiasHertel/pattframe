@@ -1,0 +1,83 @@
+application.title = Space Invaders
+
+window.width = 800.0
+window.height = 600.0
+window.icon = images/beuth-logo.png
+
+# entweder heigth oder width setzen (PreserveRatio)
+invader.height = 23
+invader.widht = 0
+invader.move.xpixel = 15
+invader.move.ypixel = 20
+
+# speed in millisekunden
+invader.move.speed.1 = 500
+#invader.move.speed.1 = 50
+invader.move.speed.2 = 300
+#invader.move.speed.3 = 150
+invader.move.speed.3 = 200
+
+invader.1.value = 10
+invader.2.value = 20
+invader.3.value = 30
+
+invader.1.lines = 2
+invader.2.lines = 2
+invader.3.lines = 1
+
+
+invader.line.count = 11
+#invader.line.count = 1
+invader.gap.x = 20
+invader.gap.y = 20
+
+invader.shoot.end.y = 574
+invader.shoots.parallel = 3
+invader.shoots.delay.random.min = 500
+invader.shoots.delay.random.max = 4000
+#invader.shoots.delay.random.min = 5550
+#invader.shoots.delay.random.max = 15000
+
+invadergroup.border.xstart = 112
+invadergroup.border.xend = 912
+#invadergroup.border.ystart = 0
+invadergroup.border.yend = 500
+
+
+# relativ zu invadergroup.border
+invadergroup.position.x = 50
+invadergroup.position.y = 50
+
+ship.width = 50
+ship.position.y = 550
+ship.shoot.duration = 1000
+ship.shoot.end.y = 30
+ship.move.step = 5
+ship.move.self = false
+
+mysteryship.width = 50
+mysteryship.value = 300
+mysteryship.position.y = 30
+
+mysteryship.duration = 2500
+#mysteryship.duration = 10000
+mysteryship.delay.random.min = 10000
+mysteryship.delay.random.max = 30000
+#mysteryship.delay.random.min = 15000
+#mysteryship.delay.random.max = 50000
+
+shelter.part.height = 8
+shelter.part.width = 8
+
+game.standardtheme = theme1
+
+player.lives = 3
+
+highscore.itemsperpage = 15
+
+
+# db credentials
+
+db.url = 
+db.username = 
+db.password = 
