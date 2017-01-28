@@ -120,7 +120,7 @@ public class GameplayViewController implements Initializable {
                     break;
                 case ESCAPE:
                     game.stop();
-//                    game.reset();
+                    game.reset();
                     break;
                 case P:
                     game.setGameStatus(game.getGameStatus() == PLAY ? PAUSE : PLAY);
