@@ -30,9 +30,7 @@ https://github.com/MatthiasHertel/spaceinvaders_web
 
 ### Dokumentation
 
-JavaDoc
-
-[linkzurdoku]()
+[JavaDoc](https://www.spaceinvaders.mhertel.de/javadoc/index.html)
 
 ### Technologien
 
