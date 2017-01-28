@@ -26,7 +26,7 @@
                     <children>
                         <ImageView fitHeight="88.0" fitWidth="375.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../theme1/graphics/layout/score.png" />
+                                <Image url="@../theme1/graphics/layout/highscore.png" />
                             </image>
                         </ImageView>
                     </children>
