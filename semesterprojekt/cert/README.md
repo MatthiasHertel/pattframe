@@ -9,6 +9,8 @@ sollte es zu einer pw abfrage kommen ist das default passwort von java `changeit
 `sudo keytool -import -file cert.pem -alias mhertel.de -keystore /usr/lib/jvm/java-8-oracle/jre/lib/security/cacerts`
 ## for mac
 `sudo keytool -import -file cert.pem -alias mhertel.de -keystore /Library/Java/Home/jre/lib/security/cacerts`
+oder
+`sudo keytool -import -file cert.pem -alias mhertel.de -keystore /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/security/cacerts`
 
 ## for windows
 Open a command prompt and run the following “keytool” command from the bin directory of the JRE. This starts the certificate installation. You must insert the directory path to the downloaded certificate from step 1 before running the command. If you are running the Windows operating system, you will need to run the command prompt as an administrator.
