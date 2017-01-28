@@ -8,8 +8,8 @@ sollte es zu einer pw abfrage kommen ist das default passwort von java `changeit
 ## for unix
 `sudo keytool -import -file cert.pem -alias mhertel.de -keystore /usr/lib/jvm/java-8-oracle/jre/lib/security/cacerts`
 ## for mac
-`sudo keytool -import -file cert.pem -alias mhertel.de -keystore /Library/Java/Home/jre/lib/security/cacerts`
-oder
+`sudo keytool -import -file cert.pem -alias mhertel.de -keystore /Library/Java/Home/jre/lib/security/cacerts`  
+oder  
 `sudo keytool -import -file cert.pem -alias mhertel.de -keystore /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/security/cacerts`
 
 ## for windows
