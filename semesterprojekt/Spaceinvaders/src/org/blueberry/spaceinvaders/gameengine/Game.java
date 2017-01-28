@@ -403,7 +403,7 @@ public class Game {
 
 
     /**
-     * Kollisionsdetektion Eigenprojektil <-> Invader
+     * Kollisionsdetektion Eigenprojektil - Invader
      * @param bullet Projektil
      * @param invaders Invader
      * @return null oder den getroffenen Invader

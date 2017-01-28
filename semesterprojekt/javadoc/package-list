@@ -1,0 +1,5 @@
+org.blueberry.spaceinvaders
+org.blueberry.spaceinvaders.chat
+org.blueberry.spaceinvaders.controller
+org.blueberry.spaceinvaders.gameengine
+org.blueberry.spaceinvaders.highscore
