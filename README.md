@@ -6,14 +6,14 @@ Beuth Hochschule für Technik Berlin / Medieninformatik B. online
 
 
 
-### Description
+### Beschreibung
 
 **Spaceinvaders - Beschütze die Erde vor den Aliens!**
 
 *Das bekannte Spaceinvader Spiel umgesetzt mit JavaFx. Die Punkte werden in einer Datenbank gespeichert. Die Spielclients können über einen Chat kommunizieren.*
 
 
-### Features
+### Funktionsumfang
 
 
 - Gameengine
@@ -30,9 +30,7 @@ https://github.com/MatthiasHertel/spaceinvaders_web
 
 ### Dokumentation
 
-JavaDoc
-
-[linkzurdoku]()
+[JavaDoc](https://www.spaceinvaders.mhertel.de/javadoc/index.html)
 
 ### Technologien
 
@@ -44,4 +42,8 @@ Server:
 - Laravel 5.3
 - NodeJS
 - MySQL
+
+### Download
+
+[Release v.0.0.1](https://github.com/MatthiasHertel/pattframe/releases/download/v0.0.1/SpaceInvaders.jar)
 
