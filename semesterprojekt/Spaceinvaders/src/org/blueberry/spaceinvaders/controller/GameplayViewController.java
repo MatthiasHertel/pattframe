@@ -88,13 +88,6 @@ public class GameplayViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-
-        //infoBar.setHgrow(lifesLabel, Priority.ALWAYS);
-        //infoBar.setHgrow(scoreLabel, Priority.ALWAYS);
-        //infoBar.setHgrow(levelLabel, Priority.ALWAYS);
-
-       // infoBar.setSpacing(40);
-
         Game game = Game.getInstance();
         game.constructGame(display);
 

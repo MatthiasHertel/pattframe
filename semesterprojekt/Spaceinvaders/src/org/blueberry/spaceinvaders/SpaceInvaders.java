@@ -57,7 +57,7 @@ public class SpaceInvaders extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Space Invaders");
-        primaryStage.getIcons().add(new Image(String.valueOf(getClass().getResource("../../../images/invader.png"))));
+        primaryStage.getIcons().add(new Image(getClass().getResource("/images/invader.png").toExternalForm()));
 
         primaryStage.setFullScreen(true);
         primaryStage.setFullScreenExitHint("");

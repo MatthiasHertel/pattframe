@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import org.blueberry.spaceinvaders.SpaceInvaders;
+import org.blueberry.spaceinvaders.gameengine.Game;
 
 /**
  * ScreenController
@@ -33,6 +34,7 @@ public class ScreenController extends StackPane {
             this.screen.setOnKeyPressed(evt -> {
                 switch (evt.getCode()) {
                     case ESCAPE:
+                        Game.getInstance().reset();
                         SpaceInvaders.setScreen("WelcomeView");
                         break;
                 }
